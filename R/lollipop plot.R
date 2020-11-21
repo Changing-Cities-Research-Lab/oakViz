@@ -1,12 +1,14 @@
 #' Produce lollipop plot by gentrification, ethnoracial, and income category.
 #'
 #' This function takes in data and produces a horizontal lollipop plot by
-#' gentrification, ethnoracial, and income category.
+#' gentrification, ethnoracial, and income category. Input data needs columns for
+#' variable of interest (titled "var") and tract number (titled "tractid10").
 #'
 #' @param data Data with a column containing census tracts and variable of interest.
-#' @param limits Y-axis limits
+#' @param limits Y-axis limits. Default is (min, max) of variable of interest.
 #' @param y_title Y-axis title
 #' @param title Figure title
+#' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption
 #' @return Lollipop plot of variable by gentrification, ethnoracial, and income category.
@@ -14,10 +16,11 @@
 # Lollipop Plot
 plot_lollipop <- function(
   dat,
-  limits,
-  y_title,
-  title,
-  savename,
+  limits = c(min(dat$var), max(dat$var)),
+  y_title = "Y-axis Title",
+  title = "Title",
+  save = F,
+  savename = "plot.png",
   caption = "Data was aggregated by taking mean of all tracts in a category"
 ) {
   library("ggplot2")
@@ -80,7 +83,7 @@ plot_lollipop <- function(
   plot <-
     ggplot(data, aes(x = cat, y = value, fill = cat)) +
     geom_segment(aes(x=cat, xend=cat,
-                     y=limits[1], yend=value),size=0.25,
+                     y=limits[1], yend=value), size=0.25,
                  show.legend = FALSE) +
     geom_point(aes(color = factor(cat)),size = 3.25,shape = 21,
                colour = "black",show.legend = TRUE) +
@@ -101,7 +104,11 @@ plot_lollipop <- function(
     theme(plot.title = element_text(size = 18, hjust = .5),
           plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
     coord_flip()
-  # return(plot)
-  ggsave("test_plot.png", plot, height = 4.5, width = 4.5)
+  if (save == F) {
+    return(plot)
+  } else {
+    return(plot)
+    ggsave(savename, plot, height = 4.5, width = 4.5)
+  }
 }
 
