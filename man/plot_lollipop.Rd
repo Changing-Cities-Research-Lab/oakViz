@@ -6,19 +6,22 @@
 \usage{
 plot_lollipop(
   dat,
-  limits,
-  y_title,
-  title,
-  savename,
+  limits = c(min(dat$var), max(dat$var)),
+  y_title = "Y-axis Title",
+  title = "Title",
+  save = F,
+  savename = "plot.png",
   caption = "Data was aggregated by taking mean of all tracts in a category"
 )
 }
 \arguments{
-\item{limits}{Y-axis limits}
+\item{limits}{Y-axis limits. Default is (min, max) of variable of interest.}
 
 \item{y_title}{Y-axis title}
 
 \item{title}{Figure title}
+
+\item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
 \item{savename}{File name of map for saving.}
 
@@ -29,5 +32,6 @@ Lollipop plot of variable by gentrification, ethnoracial, and income category.
 }
 \description{
 This function takes in data and produces a horizontal lollipop plot by
-gentrification, ethnoracial, and income category.
+gentrification, ethnoracial, and income category. Input data needs columns for
+variable of interest (titled "var") and tract number (titled "tractid10").
 }

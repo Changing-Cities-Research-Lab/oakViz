@@ -4,12 +4,21 @@
 \alias{make_map}
 \title{Produce Oakland map of continuous variable with gradient color scale}
 \usage{
-make_map(data, var, savename, labs, scale_label = scales::label_comma())
+make_map(
+  data,
+  var,
+  shp_tracts,
+  savename,
+  labs,
+  scale_label = scales::label_comma()
+)
 }
 \arguments{
 \item{data}{Data with a column containing census tracts and variable of interest.}
 
 \item{var}{Name of column containing variable to plot.}
+
+\item{shp_tracts}{"US_tract_2010.shp" loaded object}
 
 \item{savename}{File name of map for saving.}
 
