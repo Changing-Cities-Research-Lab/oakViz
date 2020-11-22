@@ -7,6 +7,7 @@
 plot_lollipop(
   dat,
   limits = c(min(dat$var), max(dat$var)),
+  compute = "mean",
   y_title = "Y-axis Title",
   title = "Title",
   save = F,
@@ -16,6 +17,8 @@ plot_lollipop(
 }
 \arguments{
 \item{limits}{Y-axis limits. Default is (min, max) of variable of interest.}
+
+\item{compute}{"mean", "median", or "sum"}
 
 \item{y_title}{Y-axis title}
 
