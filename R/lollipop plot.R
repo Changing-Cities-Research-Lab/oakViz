@@ -4,7 +4,7 @@
 #' gentrification, ethnoracial, and income category. Input data needs columns for
 #' variable of interest (titled "var") and tract number (titled "tractid10").
 #'
-#' @param dat Data with column for variable of interest.
+#' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits. Default is (min, max) of variable of interest.
 #' @param y_title Y-axis title
@@ -16,7 +16,7 @@
 #' @export
 # Lollipop Plot
 plot_lollipop <- function(
-  dat,
+  data,
   var,
   limits = c(min(dat[,var]), max(dat[,var])),
   y_title = "Y-axis Title",

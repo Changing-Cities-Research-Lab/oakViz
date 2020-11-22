@@ -5,7 +5,7 @@
 \title{Produce lollipop plot by gentrification, ethnoracial, and income category.}
 \usage{
 plot_lollipop(
-  dat,
+  data,
   var,
   limits = c(min(dat[, var]), max(dat[, var])),
   y_title = "Y-axis Title",
@@ -16,6 +16,8 @@ plot_lollipop(
 )
 }
 \arguments{
+\item{data}{Data with column for variable of interest.}
+
 \item{var}{Column name of variable of interest.}
 
 \item{limits}{Y-axis limits. Default is (min, max) of variable of interest.}
@@ -27,8 +29,6 @@ plot_lollipop(
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
 \item{savename}{File name of map for saving.}
-
-\item{data}{Data with column for variable of interest.}
 }
 \value{
 Lollipop plot of variable by gentrification, ethnoracial, and income category.
