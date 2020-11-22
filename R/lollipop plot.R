@@ -5,8 +5,8 @@
 #' variable of interest (titled "var") and tract number (titled "tractid10").
 #'
 #' @param data Data with a column containing census tracts and variable of interest.
+#' @param var Column name of variable of interest.
 #' @param limits Y-axis limits. Default is (min, max) of variable of interest.
-#' @param compute "mean", "median", or "sum"
 #' @param y_title Y-axis title
 #' @param title Figure title
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
@@ -17,8 +17,8 @@
 # Lollipop Plot
 plot_lollipop <- function(
   dat,
-  limits = c(min(dat$var), max(dat$var)),
-  compute = "mean",
+  var,
+  limits = c(min(dat[,var]), max(dat[,var])),
   y_title = "Y-axis Title",
   title = "Title",
   save = F,
@@ -64,41 +64,10 @@ plot_lollipop <- function(
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
 
-  dat = dat %>% inner_join(oak_tracts, by = "tractid10") %>%
-    select(tractid10, var)
-
-  # Combine gentcat, racecat, & inccat with data
-  data <- rbind(
-    dat %>% mutate(cat = "Overall", facet = "All"),
-    dat %>% left_join(gentcat, by = "tractid10"),
-    dat %>% left_join(racecat, by = "tractid10"),
-    dat %>% left_join(inccat, by = "tractid10")
-  ) %>%
-    select(-tractid10) %>%
-    mutate(cat = factor(cat, levels = c("Overall", gent_cat_plot_order, race_cat_plot_order, inc_cat_plot_order))) %>%
-    mutate(facet = factor(facet, levels = c("All", "Gentrification", "Race/Ethnicity", "Income"))) %>%
-    drop_na()
-
-  if (compute == "mean") {
-    data = data %>%
-      group_by(cat, facet) %>%
-      dplyr::summarise_all((mean(., na.rm = T)))
-  } else if (compute == "median") {
-    data = data %>%
-      group_by(cat, facet) %>%
-      dplyr::summarise_all((median(., na.rm = T)))
-  } else if (compute == "sum") {
-    data = data %>%
-      group_by(cat, facet) %>%
-      dplyr::summarise_all((sum(., na.rm = T)))
-  } else {
-    return("Please select mean, median, or sum.")
-  }
-
   plot <-
-    ggplot(data, aes(x = cat, y = var, fill = cat)) +
+    ggplot(data, aes(x = cat, y = {{var}}, fill = cat)) +
     geom_segment(aes(x=cat, xend=cat,
-                     y=limits[1], yend=var), size=0.25,
+                     y=limits[1], yend={{var}}), size=0.25,
                  show.legend = FALSE) +
     geom_point(aes(color = factor(cat)),size = 3.25,shape = 21,
                colour = "black",show.legend = TRUE) +
