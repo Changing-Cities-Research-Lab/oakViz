@@ -6,6 +6,7 @@
 #'
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
+#' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param coord T if plotting coordinate values (lat, lon)
 #' @param savename File name of map for saving.
 #' @param title Title for panel of maps.
@@ -14,7 +15,7 @@
 #' @return Map panel of variable of interest across four periods.
 #' @export
 
-make_map_panel <- function(data, var, coord = F, savename, title,
+make_map_panel <- function(data, var, shp_tracts, coord = F, savename, title,
                            scale_label = scales::label_comma(), periods) {
   library(devtools)
   library(roxygen2)
