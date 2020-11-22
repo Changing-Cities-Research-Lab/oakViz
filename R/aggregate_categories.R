@@ -7,8 +7,8 @@
 #' @return Aggregated data frame.
 #' @export
 aggregate_categories = function(
-dat,
-compute
+  dat,
+  compute
 ) {
   library("ggplot2")
   library("readxl")
