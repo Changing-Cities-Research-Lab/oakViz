@@ -6,7 +6,7 @@
 #' @param compute "mean", "median", or "sum"
 #' @return Aggregated data frame.
 #' @export
-aggregate = function(
+aggregate_categories = function(
 dat,
 compute
 ) {
