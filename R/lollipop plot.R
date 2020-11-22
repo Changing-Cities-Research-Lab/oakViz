@@ -18,7 +18,7 @@
 plot_lollipop <- function(
   data,
   var,
-  limits = c(min(dat[,var]), max(dat[,var])),
+  limits = c(min(dat[,{{var}}]), max(dat[,{{var}}])),
   y_title = "Y-axis Title",
   title = "Title",
   save = F,
