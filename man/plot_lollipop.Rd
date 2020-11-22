@@ -6,8 +6,8 @@
 \usage{
 plot_lollipop(
   dat,
-  limits = c(min(dat$var), max(dat$var)),
-  compute = "mean",
+  var,
+  limits = c(min(dat[, var]), max(dat[, var])),
   y_title = "Y-axis Title",
   title = "Title",
   save = F,
@@ -16,9 +16,9 @@ plot_lollipop(
 )
 }
 \arguments{
-\item{limits}{Y-axis limits. Default is (min, max) of variable of interest.}
+\item{var}{Column name of variable of interest.}
 
-\item{compute}{"mean", "median", or "sum"}
+\item{limits}{Y-axis limits. Default is (min, max) of variable of interest.}
 
 \item{y_title}{Y-axis title}
 
@@ -28,7 +28,7 @@ plot_lollipop(
 
 \item{savename}{File name of map for saving.}
 
-\item{data}{Data with a column containing census tracts and variable of interest.}
+\item{data}{Data with column for variable of interest.}
 }
 \value{
 Lollipop plot of variable by gentrification, ethnoracial, and income category.

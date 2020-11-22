@@ -4,7 +4,7 @@
 #' gentrification, ethnoracial, and income category. Input data needs columns for
 #' variable of interest (titled "var") and tract number (titled "tractid10").
 #'
-#' @param data Data with a column containing census tracts and variable of interest.
+#' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits. Default is (min, max) of variable of interest.
 #' @param y_title Y-axis title
