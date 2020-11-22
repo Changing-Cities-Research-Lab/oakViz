@@ -67,17 +67,17 @@ compute
   if (compute == "mean") {
     data = data %>%
       group_by(cat, facet) %>%
-      dplyr::summarise_all((mean(., na.rm = T)))
+      dplyr::summarise_all(funs(mean(., na.rm = T)))
     return(data)
   } else if (compute == "median") {
     data = data %>%
       group_by(cat, facet) %>%
-      dplyr::summarise_all((median(., na.rm = T)))
+      dplyr::summarise_all(funs(median(., na.rm = T)))
     return(data)
   } else if (compute == "sum") {
     data = data %>%
       group_by(cat, facet) %>%
-      dplyr::summarise_all((sum(., na.rm = T)))
+      dplyr::summarise_all(funs(sum(., na.rm = T)))
     return(data)
   } else {
     return("Please select mean, median, or sum.")
