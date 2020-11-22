@@ -49,8 +49,7 @@ aggregate_categories = function(
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
 
-  dat = dat %>% inner_join(oak_tracts, by = "tractid10") %>%
-    select(tractid10, var)
+  dat = dat %>% inner_join(oak_tracts, by = "tractid10")
 
   # Combine gentcat, racecat, & inccat with data
   data <- rbind(
