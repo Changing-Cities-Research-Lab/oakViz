@@ -6,6 +6,7 @@
 #'
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
+#' @param coord T if plotting coordinate values (lat, lon)
 #' @param savename File name of map for saving.
 #' @param title Title for panel of maps.
 #' @param scale_label Adjust scales of gradient key (need to fix).
@@ -13,7 +14,7 @@
 #' @return Map panel of variable of interest across four periods.
 #' @export
 
-make_map_panel <- function(data, var, savename, title,
+make_map_panel <- function(data, var, coord = F, savename, title,
                            scale_label = scales::label_comma(), periods) {
   library(devtools)
   library(roxygen2)
@@ -125,11 +126,6 @@ make_map_panel <- function(data, var, savename, title,
         alpha = 0,
         inherit.aes = FALSE
       ) +
-      geom_point(
-        data = data,
-        aes(x = lon, y = lat),
-        color = "navy", size = 2
-      ) +
       scale_fill_gradientn(
         breaks = scales::extended_breaks(n = 6),
         labels = scale_label,
@@ -154,6 +150,14 @@ make_map_panel <- function(data, var, savename, title,
         plot.caption = element_text(size = 8)
       ) +
       labs(title = period_panels[i])
+    if (coord == T) {
+      + geom_point(
+        data = data,
+        aes(x = lon, y = lat),
+        color = "navy", size = 2
+      )
+    }
+
 
     # add map to list of grobs
     maps_all = c(maps_all, list(map))
