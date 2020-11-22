@@ -90,7 +90,7 @@ plot_lollipop <- function(
     coord_flip()
   if (save == F) {
     return(plot)
-  } else {
+  } else if (save == T){
     return(plot)
     ggsave(savename, plot, height = 4.5, width = 4.5)
   }
