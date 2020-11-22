@@ -81,13 +81,13 @@ plot_lollipop <- function(
 
   if (compute == "mean") {
     group_by(cat, facet) %>%
-      dplyr::summarise_all(funs(mean(., na.rm = T)))
+      dplyr::summarise_all((mean(., na.rm = T)))
   } else if (compute == "median") {
     group_by(cat, facet) %>%
-      dplyr::summarise_all(funs(median(., na.rm = T)))
+      dplyr::summarise_all((median(., na.rm = T)))
   } else if (compute == "sum") {
     group_by(cat, facet) %>%
-      dplyr::summarise_all(funs(sum(., na.rm = T)))
+      dplyr::summarise_all((sum(., na.rm = T)))
   } else {
     return("Please select mean, median, or sum.")
   }
