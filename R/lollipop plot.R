@@ -6,6 +6,7 @@
 #'
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param limits Y-axis limits. Default is (min, max) of variable of interest.
+#' @param compute "mean", "median", or "sum"
 #' @param y_title Y-axis title
 #' @param title Figure title
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
@@ -17,6 +18,7 @@
 plot_lollipop <- function(
   dat,
   limits = c(min(dat$var), max(dat$var)),
+  compute = "mean",
   y_title = "Y-axis Title",
   title = "Title",
   save = F,
@@ -75,15 +77,25 @@ plot_lollipop <- function(
     select(-tractid10) %>%
     mutate(cat = factor(cat, levels = c("Overall", gent_cat_plot_order, race_cat_plot_order, inc_cat_plot_order))) %>%
     mutate(facet = factor(facet, levels = c("All", "Gentrification", "Race/Ethnicity", "Income"))) %>%
-    drop_na() %>%
+    drop_na()
+
+  if (compute == "mean") {
     group_by(cat, facet) %>%
-    # Provide option of mean or median
-    dplyr::summarise(value = mean(var, na.rm = T))
+      dplyr::summarise_all(funs(mean(., na.rm = T)))
+  } else if (compute == "median") {
+    group_by(cat, facet) %>%
+      dplyr::summarise_all(funs(median(., na.rm = T)))
+  } else if (compute == "sum") {
+    group_by(cat, facet) %>%
+      dplyr::summarise_all(funs(sum(., na.rm = T)))
+  } else {
+    return("Please select mean, median, or sum.")
+  }
 
   plot <-
-    ggplot(data, aes(x = cat, y = value, fill = cat)) +
+    ggplot(data, aes(x = cat, y = var, fill = cat)) +
     geom_segment(aes(x=cat, xend=cat,
-                     y=limits[1], yend=value), size=0.25,
+                     y=limits[1], yend=var), size=0.25,
                  show.legend = FALSE) +
     geom_point(aes(color = factor(cat)),size = 3.25,shape = 21,
                colour = "black",show.legend = TRUE) +
