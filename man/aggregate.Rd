@@ -11,6 +11,9 @@ aggregate(dat, compute)
 
 \item{compute}{"mean", "median", or "sum"}
 }
+\value{
+Aggregated data frame.
+}
 \description{
 Take mean, median, or sum of variables by gentrification, ethnoracial, and income grouping.
 }

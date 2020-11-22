@@ -4,6 +4,7 @@
 #'
 #' @param dat Data with a column containing census tracts ("tractid10") and variable of interest ("var").
 #' @param compute "mean", "median", or "sum"
+#' @return Aggregated data frame.
 #' @export
 aggregate = function(
 dat,
@@ -67,14 +68,17 @@ compute
     data = data %>%
       group_by(cat, facet) %>%
       dplyr::summarise_all((mean(., na.rm = T)))
+    return(data)
   } else if (compute == "median") {
     data = data %>%
       group_by(cat, facet) %>%
       dplyr::summarise_all((median(., na.rm = T)))
+    return(data)
   } else if (compute == "sum") {
     data = data %>%
       group_by(cat, facet) %>%
       dplyr::summarise_all((sum(., na.rm = T)))
+    return(data)
   } else {
     return("Please select mean, median, or sum.")
   }
