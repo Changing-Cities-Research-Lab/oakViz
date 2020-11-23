@@ -1,7 +1,8 @@
 #' Produce Oakland map of continuous variable with gradient color scale
 #'
 #' This function takes in data and produces a census tract map of Oakland
-#' representing the variable using a gradient color scale.
+#' representing the variable using a gradient color scale. Census tract
+#' column must be named "tractid10".
 #'
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.

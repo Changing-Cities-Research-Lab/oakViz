@@ -34,5 +34,6 @@ Map of variable of interest.
 }
 \description{
 This function takes in data and produces a census tract map of Oakland
-representing the variable using a gradient color scale.
+representing the variable using a gradient color scale. Census tract
+column must be named "tractid10".
 }
