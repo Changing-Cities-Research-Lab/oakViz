@@ -24,11 +24,7 @@ make_map_panel <- function(
   coord = F,
   save = F,
   savename = "plot.png",
-  caption = "\nSES Ranges by Equifax Risk Scores:
-  Low = missing or <580, Moderate = 580-649,
-  Middle = 650-749, High = 750+\nHousing Period Ranges:
-  Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014,
-  Post-Recovery = 2015-2017.\n") {
+  caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n") {
 
   library(devtools)
   library(roxygen2)
@@ -76,10 +72,12 @@ make_map_panel <- function(
     )
 
   # Get max and min values for common gradient scale
-  max = data[, var] %>%
+  max = data %>%
+    select({{var}})%>%
     st_drop_geometry() %>%
     max(na.rm = T)
-  min = data[, var] %>%
+  min = data %>%
+    select({{var}})
     st_drop_geometry() %>%
     min(na.rm = T)
 
