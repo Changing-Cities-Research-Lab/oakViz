@@ -81,11 +81,6 @@ make_map <- function(data,
       alpha = 0,
       inherit.aes = FALSE
     ) +
-    geom_point(
-      data = data,
-      aes(x = lon, y = lat),
-      color = "navy", size = 2
-    ) +
     scale_fill_gradientn(
       breaks = scales::extended_breaks(n = 6),
       labels = scale_label,
@@ -110,6 +105,13 @@ make_map <- function(data,
       plot.caption = element_text(size = 8)
     ) +
     labs(title = title)
+  if (coord == T) {
+    + geom_point(
+      data = data,
+      aes(x = lon, y = lat),
+      color = "navy", size = 2
+    )
+  }
 
   if (save == F) {
     return(map)
