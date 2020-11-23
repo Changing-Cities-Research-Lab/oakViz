@@ -76,10 +76,10 @@ make_map_panel <- function(
     )
 
   # Get max and min values for common gradient scale
-  max = data[var] %>%
+  max = data[, var] %>%
     st_drop_geometry() %>%
     max(na.rm = T)
-  min = data[var] %>%
+  min = data[, var] %>%
     st_drop_geometry() %>%
     min(na.rm = T)
 
