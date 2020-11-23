@@ -15,8 +15,15 @@
 #' @return Map panel of variable of interest across four periods.
 #' @export
 
-make_map_panel <- function(data, var, shp_tracts, coord = F, savename, title,
-                           scale_label = scales::label_comma(), periods) {
+make_map_panel <- function(
+  data,
+  var,
+  shp_tracts,
+  coord = F,
+  savename,
+  title,
+  scale_label = scales::label_comma(),
+  periods) {
   library(devtools)
   library(roxygen2)
   library(tidyverse)

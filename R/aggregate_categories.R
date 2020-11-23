@@ -8,8 +8,8 @@
 #' @export
 aggregate_categories = function(
   dat,
-  compute = "mean"
-) {
+  compute = "mean") {
+
   library("ggplot2")
   library("readxl")
   library("plyr")

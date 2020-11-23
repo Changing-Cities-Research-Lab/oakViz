@@ -6,19 +6,19 @@
 #'
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
-#' @param limits Y-axis limits. Default is (min, max) of variable of interest.
+#' @param limits Y-axis limits.
 #' @param y_title Y-axis title
 #' @param title Figure title
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
-#' @param caption
+#' @param caption Figure caption
 #' @return Lollipop plot of variable by gentrification, ethnoracial, and income category.
 #' @export
 # Lollipop Plot
 plot_lollipop <- function(
   data,
   var,
-  limits = c(min(dat %>% select(var)), max(dat %>% select(var))),
+  limits,
   y_title = "Y-axis Title",
   title = "Title",
   save = F,
