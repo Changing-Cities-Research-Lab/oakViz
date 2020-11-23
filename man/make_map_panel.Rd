@@ -11,12 +11,11 @@ make_map_panel(
   shp_tracts,
   coord = F,
   save = F,
-  savename = "plot.png",
-  periods
+  savename = "plot.png"
 )
 }
 \arguments{
-\item{data}{Data with a column containing census tracts and variable of interest.}
+\item{data}{Data with a column containing census tracts, distinct periods, and variable of interest.}
 
 \item{var}{Name of column containing variable to plot.}
 
@@ -29,8 +28,6 @@ make_map_panel(
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
 \item{savename}{File name of map for saving.}
-
-\item{periods}{Name of column containing four distinct time periods for mapping.}
 }
 \value{
 Map panel of variable of interest across four periods.
@@ -38,5 +35,6 @@ Map panel of variable of interest across four periods.
 \description{
 This function takes in data and produces a panel of census tract maps of
 Oakland representing the variable using a gradient color scale, across
-four distinct periods. Should have "tractid10" column for census tracts.
+four distinct periods. Should have "tractid10" column for census tracts
+and "periods" column for distinct time periods.
 }

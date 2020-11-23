@@ -3,6 +3,7 @@
 #' This function takes in data and produces a horizontal lollipop plot by
 #' gentrification, ethnoracial, and income category. Input data needs columns for
 #' variable of interest (titled "var") and tract number (titled "tractid10").
+#' Intended to be used after oakViz::aggregate_categories().
 #'
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
