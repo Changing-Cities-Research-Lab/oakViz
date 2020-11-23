@@ -7,8 +7,8 @@
 #'
 #' @param data Data with a column containing census tracts, distinct periods, and variable of interest.
 #' @param var Name of column containing variable to plot.
-#' @param title Title for panel of maps.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
+#' @param title Title for panel of maps.
 #' @param coord T if plotting coordinate values (lat, lon). Default is F.
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -17,8 +17,8 @@
 
 make_map_panel <- function(data,
                            var,
-                           title = "Title",
                            shp_tracts,
+                           title = "Title",
                            coord = F,
                            save = F,
                            savename = "plot.png") {
