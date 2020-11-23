@@ -114,10 +114,10 @@ make_map <- function(data,
     )
   }
 
-  if (save == F) {
-    return(map)
-  } else if (save == T){
-    return(map)
+  if (save) {
     ggsave(savename, map)
+    return(map)
+  } else {
+    return(map)
   }
 }

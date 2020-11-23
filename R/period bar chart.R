@@ -154,11 +154,12 @@ plot_bar_periods <- function(
           plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
     labs(title = title, y = y_title, x = "")
 
-  if (save == F) {
-    return(plot)
-  } else if (save == T){
-    return(map)
+
+  if (save) {
     ggsave(savename, plot, height = 5, width = 7)
+    return(plot)
+  } else {
+    return(plot)
   }
 
 }

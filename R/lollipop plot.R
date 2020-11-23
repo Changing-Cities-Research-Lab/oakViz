@@ -90,11 +90,11 @@ plot_lollipop <- function(
           plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
     coord_flip()
 
-  if (save == F) {
-    return(plot)
-  } else if (save == T){
-    return(plot)
+  if (save) {
     ggsave(savename, plot, height = 4.5, width = 4.5)
+    return(plot)
+  } else {
+    return(plot)
   }
 }
 

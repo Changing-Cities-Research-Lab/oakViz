@@ -182,10 +182,10 @@ make_map_panel <- function(data,
                  top=textGrob(title,
                               gp=gpar(fontsize=21,font=2)))
 
-  if (save == F) {
-    return(map_panel)
-  } else if (save == T){
-    return(map_panel)
+  if (save) {
     ggsave(savename, map_panel)
+    return(map_panel)
+  } else {
+    return(map_panel)
   }
 }
