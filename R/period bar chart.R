@@ -35,7 +35,6 @@ plot_bar_periods <- function(
   ## Read Data
   library("ggplot2")
   library("readxl")
-  library("plyr")
   library("dplyr")
   library("foreach")
   library("reshape")
@@ -146,7 +145,7 @@ plot_bar_periods <- function(
     facet_grid(~ period) +
     scale_fill_manual(values = colors,
                       labels = labels) +
-    # scale_y_continuous(limits = limits, expand = c(0, 0)) +
+    scale_y_continuous(limits = limits, expand = c(0, 0)) +
     theme_bw() +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),

@@ -32,7 +32,6 @@ plot_lollipop <- function(
 ) {
   library("ggplot2")
   library("readxl")
-  library("plyr")
   library("dplyr")
   library("foreach")
   library("reshape")
