@@ -26,7 +26,11 @@ plot_bar_periods <- function(
   y_title = "Y-axis title",
   save = F,
   savename = "plot.png",
-  caption = "Data was aggregated by taking mean of all tracts in a category"
+  caption = "\nSES Ranges by Equifax Risk Scores:
+  Low = missing or <580, Moderate = 580-649,
+  Middle = 650-749, High = 750+\nHousing Period Ranges:
+  Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014,
+  Post-Recovery = 2015-2017.\n"
 ) {
   ## Read Data
   library("ggplot2")
@@ -152,7 +156,7 @@ plot_bar_periods <- function(
           legend.position = "none",
           plot.title = element_text(size = 18, hjust = .5),
           plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
-    labs(title = title, y = y_title, x = "")
+    labs(title = title, y = y_title, x = "", caption = caption)
 
 
   if (save) {

@@ -12,7 +12,8 @@ plot_lollipop(
   y_title = "Y-axis Title",
   save = F,
   savename = "plot.png",
-  caption = "Data was aggregated by taking mean of all tracts in a category"
+ 
+    caption = "\\nSES Ranges by Equifax Risk Scores:\\n  Low = missing or <580, Moderate = 580-649,\\n  Middle = 650-749, High = 750+\\nHousing Period Ranges:\\n  Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014,\\n  Post-Recovery = 2015-2017.\\n"
 )
 }
 \arguments{
