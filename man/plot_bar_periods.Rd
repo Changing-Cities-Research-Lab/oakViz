@@ -7,12 +7,13 @@
 plot_bar_periods(
   dat,
   var,
-  group,
-  compute = "mean",
   limits,
-  y_title,
-  title,
-  savename,
+  group = "gent",
+  compute = "mean",
+  title = "Title",
+  y_title = "Y-axis title",
+  save = F,
+  savename = "plot.png",
   caption = "Data was aggregated by taking mean of all tracts in a category"
 )
 }
@@ -21,15 +22,17 @@ plot_bar_periods(
 
 \item{var}{Name of column containing variable to plot.}
 
-\item{group}{Category for x-axis grouping: "gent", "ethnoracial", or "income"}
+\item{limits}{Y-axis limits}
+
+\item{group}{Category for x-axis grouping: "gent" (default), "ethnoracial", or "income"}
 
 \item{compute}{Method of summarizing values: "mean" (default) or "median"}
 
-\item{limits}{Y-axis limits}
+\item{title}{Figure title}
 
 \item{y_title}{Y-axis title}
 
-\item{title}{Figure title}
+\item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
 \item{savename}{File name of map for saving.}
 

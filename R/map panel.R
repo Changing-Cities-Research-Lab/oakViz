@@ -6,24 +6,23 @@
 #'
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
-#' @param shp_tracts "US_tract_2010.shp" loaded object
-#' @param coord T if plotting coordinate values (lat, lon)
-#' @param savename File name of map for saving.
 #' @param title Title for panel of maps.
-#' @param scale_label Adjust scales of gradient key (need to fix).
+#' @param shp_tracts "US_tract_2010.shp" loaded object
+#' @param coord T if plotting coordinate values (lat, lon). Default is F.
+#' @param save T if user would like to return plot object and save file, F (default) to just return object.
+#' @param savename File name of map for saving.
 #' @param periods Name of column containing four distinct time periods for mapping.
 #' @return Map panel of variable of interest across four periods.
 #' @export
 
-make_map_panel <- function(
-  data,
-  var,
-  shp_tracts,
-  coord = F,
-  savename,
-  title,
-  scale_label = scales::label_comma(),
-  periods) {
+make_map_panel <- function(data,
+                           var,
+                           title = "Title",
+                           shp_tracts,
+                           coord = F,
+                           save = F,
+                           savename = "plot.png",
+                           periods) {
   library(devtools)
   library(roxygen2)
   library(tidyverse)
@@ -35,6 +34,8 @@ make_map_panel <- function(
   library(grid)
   library(scales)
   library(dplyr)
+
+  scale_label = scales::label_comma()
 
   # county tract map
   oak_tracts <-
@@ -181,5 +182,11 @@ make_map_panel <- function(
                  heights = c(5, 5, 1),
                  top=textGrob(title,
                               gp=gpar(fontsize=21,font=2)))
-  return(map_panel)
+
+  if (save == F) {
+    return(map_panel)
+  } else if (save == T){
+    return(map_panel)
+    ggsave(savename, map_panel)
+  }
 }

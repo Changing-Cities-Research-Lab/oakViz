@@ -7,9 +7,9 @@
 plot_lollipop(
   data,
   var,
-  limits = c(min(dat[, var]), max(dat[, var])),
-  y_title = "Y-axis Title",
+  limits,
   title = "Title",
+  y_title = "Y-axis Title",
   save = F,
   savename = "plot.png",
   caption = "Data was aggregated by taking mean of all tracts in a category"
@@ -20,15 +20,17 @@ plot_lollipop(
 
 \item{var}{Column name of variable of interest.}
 
-\item{limits}{Y-axis limits. Default is (min, max) of variable of interest.}
-
-\item{y_title}{Y-axis title}
+\item{limits}{Y-axis limits.}
 
 \item{title}{Figure title}
+
+\item{y_title}{Y-axis title}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
 \item{savename}{File name of map for saving.}
+
+\item{caption}{Figure caption}
 }
 \value{
 Lollipop plot of variable by gentrification, ethnoracial, and income category.

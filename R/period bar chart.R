@@ -5,11 +5,12 @@
 #'
 #' @param dat Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
-#' @param group Category for x-axis grouping: "gent", "ethnoracial", or "income"
-#' @param compute Method of summarizing values: "mean" (default) or "median"
 #' @param limits Y-axis limits
-#' @param y_title Y-axis title
+#' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", or "income"
+#' @param compute Method of summarizing values: "mean" (default) or "median"
 #' @param title Figure title
+#' @param y_title Y-axis title
+#' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
 #' @return Grouped bar chart across four periods.
@@ -17,13 +18,14 @@
 # Plot bar chart by group across periods
 plot_bar_periods <- function(
   dat,
-  var, # name of variable to plot
-  group, # gent, ethnoracial, income
-  compute = "mean",
+  var,
   limits,
-  y_title,
-  title,
-  savename,
+  group = "gent", # gent, ethnoracial, income
+  compute = "mean",
+  title = "Title",
+  y_title = "Y-axis title",
+  save = F,
+  savename = "plot.png",
   caption = "Data was aggregated by taking mean of all tracts in a category"
 ) {
   ## Read Data
@@ -152,6 +154,11 @@ plot_bar_periods <- function(
           plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
     labs(title = title, y = y_title, x = "")
 
-  ggsave(savename, plot, height = 5, width = 7)
+  if (save == F) {
+    return(plot)
+  } else if (save == T){
+    return(map)
+    ggsave(savename, plot, height = 5, width = 7)
+  }
 
 }

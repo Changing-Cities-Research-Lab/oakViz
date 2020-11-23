@@ -7,8 +7,8 @@
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits.
-#' @param y_title Y-axis title
 #' @param title Figure title
+#' @param y_title Y-axis title
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Figure caption
@@ -19,8 +19,8 @@ plot_lollipop <- function(
   data,
   var,
   limits,
-  y_title = "Y-axis Title",
   title = "Title",
+  y_title = "Y-axis Title",
   save = F,
   savename = "plot.png",
   caption = "Data was aggregated by taking mean of all tracts in a category"
@@ -88,6 +88,7 @@ plot_lollipop <- function(
     theme(plot.title = element_text(size = 18, hjust = .5),
           plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
     coord_flip()
+
   if (save == F) {
     return(plot)
   } else if (save == T){

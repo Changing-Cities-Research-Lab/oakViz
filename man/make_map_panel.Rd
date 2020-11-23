@@ -7,9 +7,11 @@
 make_map_panel(
   data,
   var,
-  savename,
-  title,
-  scale_label = scales::label_comma(),
+  title = "Title",
+  shp_tracts,
+  coord = F,
+  save = F,
+  savename = "plot.png",
   periods
 )
 }
@@ -18,11 +20,15 @@ make_map_panel(
 
 \item{var}{Name of column containing variable to plot.}
 
-\item{savename}{File name of map for saving.}
-
 \item{title}{Title for panel of maps.}
 
-\item{scale_label}{Adjust scales of gradient key (need to fix).}
+\item{shp_tracts}{"US_tract_2010.shp" loaded object}
+
+\item{coord}{T if plotting coordinate values (lat, lon). Default is F.}
+
+\item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
+
+\item{savename}{File name of map for saving.}
 
 \item{periods}{Name of column containing four distinct time periods for mapping.}
 }

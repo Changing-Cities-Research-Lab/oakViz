@@ -5,19 +5,21 @@
 #'
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
+#' @param title Figure title
 #' @param shp_tracts "US_tract_2010.shp" loaded object
+#' @param coord T if plotting coordinate values (lat, lon). Default is F.
+#' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
-#' @param labs Adjust map title and axes (must be in the form "labs(title = "TITLE HERE")")
-#' @param scale_label Adjust scales of gradient key (need to fix)
 #' @return Map of variable of interest.
 #' @export
 ## Single Map
 make_map <- function(data,
                      var,
+                     title = "Title",
                      shp_tracts,
-                     savename,
-                     labs,
-                     scale_label = scales::label_comma()) {
+                     coord = F,
+                     save = F,
+                     savename = "plot.png") {
 
   library(devtools)
   library(roxygen2)
@@ -30,6 +32,8 @@ make_map <- function(data,
   library(grid)
   library(scales)
   library(dplyr)
+
+  scale_label = scales::label_comma()
 
   # county tract map
   oak_tracts <-
@@ -105,6 +109,12 @@ make_map <- function(data,
       plot.margin = margin(3,1,3,1, unit = "pt"),
       plot.caption = element_text(size = 8)
     ) +
-    labs
-  return(map)
+    labs(title = title)
+
+  if (save == F) {
+    return(map)
+  } else if (save == T){
+    return(map)
+    ggsave(savename, map)
+  }
 }

@@ -7,10 +7,11 @@
 make_map(
   data,
   var,
+  title = "Title",
   shp_tracts,
-  savename,
-  labs,
-  scale_label = scales::label_comma()
+  coord = F,
+  save = F,
+  savename = "plot.png"
 )
 }
 \arguments{
@@ -18,13 +19,15 @@ make_map(
 
 \item{var}{Name of column containing variable to plot.}
 
+\item{title}{Figure title}
+
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
 
+\item{coord}{T if plotting coordinate values (lat, lon). Default is F.}
+
+\item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
+
 \item{savename}{File name of map for saving.}
-
-\item{labs}{Adjust map title and axes (must be in the form "labs(title = "TITLE HERE")")}
-
-\item{scale_label}{Adjust scales of gradient key (need to fix)}
 }
 \value{
 Map of variable of interest.
