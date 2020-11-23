@@ -71,7 +71,7 @@ make_map <- function(data,
     ggmap(gmap_oak) +
     geom_sf(
       data = data,
-      aes(fill = !! sym(var)),
+      aes(fill = !! sym({{var}})),
       size = 0,
       alpha = 0.5,
       inherit.aes = FALSE
