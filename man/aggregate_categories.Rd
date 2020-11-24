@@ -4,12 +4,14 @@
 \alias{aggregate_categories}
 \title{Aggregation for Oakland variables.}
 \usage{
-aggregate_categories(dat, compute = "mean")
+aggregate_categories(dat, compute = "mean", group_by_vars = NULL)
 }
 \arguments{
 \item{dat}{Data with a column containing census tracts ("tractid10") and variable of interest ("var").}
 
 \item{compute}{"mean", "median", or "sum"}
+
+\item{group_by_vars}{Optional list of variables to group_by before aggregation}
 }
 \value{
 Aggregated data frame.
