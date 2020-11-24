@@ -78,8 +78,7 @@ make_map_panel <- function(
     max(na.rm = T)
 
   min = data %>%
-    select({{var}})
-    st_drop_geometry() %>%
+    select({{var}}) %>%
     min(na.rm = T)
 
   maps_all = list()
