@@ -22,7 +22,7 @@ make_map <- function(data,
                      coord = F,
                      save = F,
                      savename = "plot.png",
-                     caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n") {
+                     caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.") {
 
   library(devtools)
   library(roxygen2)
@@ -105,7 +105,7 @@ make_map <- function(data,
       legend.box.margin = margin(3,0,0,0, unit = "pt"),
       plot.title = element_text(size = 12, hjust = .5, vjust = 3),
       plot.margin = margin(3,1,3,1, unit = "pt"),
-      plot.caption = element_text(size = 8, hjust = .5)
+      plot.caption = element_text(size = 6, hjust = .5)
     ) +
     labs(title = title, caption = caption)
   if (coord == T) {
@@ -117,7 +117,7 @@ make_map <- function(data,
   }
 
   if (save) {
-    ggsave(savename, map)
+    ggsave(savename, map, height = 5, width = 5)
     return(map)
   } else {
     return(map)

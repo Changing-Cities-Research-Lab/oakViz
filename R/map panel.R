@@ -24,7 +24,7 @@ make_map_panel <- function(
   coord = F,
   save = F,
   savename = "plot.png",
-  caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n") {
+  caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.") {
 
   library(tidyverse)
   library(gridExtra)
@@ -181,10 +181,10 @@ make_map_panel <- function(
                  heights = c(5, 5, 1),
                  top=textGrob(title,
                               gp=gpar(fontsize=21,font=2)),
-                 bottom=textGrob(caption, gp=gpar(fontsize=10,font=3)))
+                 bottom=textGrob(caption, gp=gpar(fontsize=7,font=3)))
 
   if (save) {
-    ggsave(savename, map_panel, height = 8, width = 8)
+    ggsave(savename, map_panel, height = 6.5, width = 6)
     return(map_panel)
   } else {
     return(map_panel)
