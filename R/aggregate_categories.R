@@ -25,7 +25,7 @@ aggregate_categories = function(
                           "Fourth Quintile", "Top Quintile")
   
   # merge oakland tracts with data
-  dat = dat %>% right_join(oak_tracts, by = "tractid10")
+  dat <- dat %>% right_join(oak_tracts, by = "tractid10")
 
   # Combine gentcat, racecat, & inccat with data
   data <- rbind(
@@ -39,7 +39,7 @@ aggregate_categories = function(
     mutate(facet = factor(facet, levels = c("All", "Gentrification", "Race/Ethnicity", "Income"))) %>%
     filter(!is.na(facet))
   
-  # modify mean, median, and sum so that if there are only NAs, it outputs NA
+  # modify mean, median, and sum so that if there are only NAs then it outputs NA
   compute_fn <- function(x, compute) {
     if (all(is.na(x))) {
       x[NA_integer_] 
@@ -55,7 +55,7 @@ aggregate_categories = function(
   }
 
   group_vars <- enquo(group_vars)
-  data = data %>%
+  data <- data %>%
     group_by_at(vars(cat, facet, !!group_vars)) %>%
     dplyr::summarise_all(~ compute_fn(., compute))
   return(data)
