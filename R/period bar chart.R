@@ -155,7 +155,7 @@ plot_bar_periods <- function(
             axis.text.x = element_text(angle = 45, hjust = 1),
             legend.position = "none",
             plot.title = element_text(size = 18, hjust = .5),
-            plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
+            plot.caption = element_text(size = 6, hjust = .5, face = "italic")) +
       labs(title = title, y = y_title, x = "", caption = caption)
   }
 
