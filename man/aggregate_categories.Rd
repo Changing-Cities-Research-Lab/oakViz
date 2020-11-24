@@ -4,7 +4,7 @@
 \alias{aggregate_categories}
 \title{Aggregation for Oakland variables.}
 \usage{
-aggregate_categories(dat, compute = "mean", group_by_vars = NULL)
+aggregate_categories(dat, compute = "mean", group_vars = c(NULL))
 }
 \arguments{
 \item{dat}{Data with a column containing census tracts ("tractid10") and variable of interest ("var").}

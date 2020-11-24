@@ -10,7 +10,7 @@
 aggregate_categories = function(
   dat,
   compute = "mean",
-  group_by_vars = NULL) {
+  group_vars = c(NULL)) {
 
   library('tidyverse')
 
@@ -41,24 +41,21 @@ aggregate_categories = function(
     mutate(facet = factor(facet, levels = c("All", "Gentrification", "Race/Ethnicity", "Income"))) %>%
     drop_na()
   
-  group_by_vars <- enquo(group_by_vars)
+  group_vars <- enquo(group_vars)
 
   if (compute == "mean") {
     data = data %>%
-      group_by(cat, facet) %>%
-      group_by_at(vars(!!group_by_vars)) %>%
+      group_by_at(vars(cat, facet, !!group_vars)) %>%
       dplyr::summarise_all(~ mean(., na.rm = T))
     return(data)
   } else if (compute == "median") {
     data = data %>%
-      group_by(cat, facet) %>%
-      group_by_at(group_by_vars) %>%
+      group_by_at(vars(cat, facet, !!group_vars)) %>%
       dplyr::summarise_all(~ median(., na.rm = T))
     return(data)
   } else if (compute == "sum") {
     data = data %>%
-      group_by(cat, facet) %>%
-      group_by_at(group_by_vars) %>%
+      group_by_at(vars(cat, facet, !!group_vars)) %>%
       dplyr::summarise_all(~ sum(., na.rm = T))
     return(data)
   } else {
