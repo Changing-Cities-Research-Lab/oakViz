@@ -105,7 +105,7 @@ make_map <- function(data,
       legend.box.margin = margin(3,0,0,0, unit = "pt"),
       plot.title = element_text(size = 12, hjust = .5, vjust = 3),
       plot.margin = margin(3,1,3,1, unit = "pt"),
-      plot.caption = element_text(size = 8)
+      plot.caption = element_text(size = 8, hjust = .5)
     ) +
     labs(title = title, caption = caption)
   if (coord == T) {
