@@ -1,10 +1,10 @@
 #' Aggregation for Oakland variables.
 #'
-#'Take mean, median, or sum of variables by gentrification, ethnoracial, and income grouping.
+#'Take mean, median, or sum of all variables by gentrification, ethnoracial, and income grouping.
 #'
-#' @param dat Data with a column containing census tracts ("tractid10") and variable of interest ("var").
+#' @param dat Data with a column containing census tracts ("tractid10") and categorical variables to group by or numeric variables to aggregates.
 #' @param compute "mean", "median", or "sum"
-#' @param group_by_vars Optional list of variables to group_by before aggregation
+#' @param group_vars Optional list of variables to group_by before aggregation. Note: All non-numeric variables should either be included here or de-selected.
 #' @return Aggregated data frame.
 #' @export
 aggregate_categories = function(
