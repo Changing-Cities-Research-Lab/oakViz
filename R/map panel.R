@@ -43,7 +43,7 @@ make_map_panel <- function(
   # county tract map
   oak_tracts <-
     shp_tracts %>%
-    filter(GEOID10S %in% oak_ids$trtid10)
+    dplyr::filter(GEOID10S %in% oak_ids$trtid10)
 
   data = oak_tracts %>%
     left_join(data, by = c("GEOID10S" = "tractid10")) %>%
@@ -123,7 +123,7 @@ make_map_panel <- function(
   # Plot maps
   foreach(i = 1:length(period_panels)) %do% {
     data_period = data %>%
-      filter(periods == period_panels[i])
+      dplyr::filter(periods == period_panels[i])
 
     map <-
       ggmap(gmap_oak) +
