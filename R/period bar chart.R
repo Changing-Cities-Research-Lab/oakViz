@@ -20,7 +20,7 @@ plot_bar_periods <- function(
   dat,
   var,
   limits,
-  group = "gent", # gent, ethnoracial, income
+  group = "gent", # gent, ethnoracial, income, ses, period
   compute = "mean",
   title = "Title",
   y_title = "Y-axis title",
@@ -99,7 +99,6 @@ plot_bar_periods <- function(
       mutate(cat = factor(period, levels = period_cat))
     colors = period_cat_colors
     labels = period_cat
-
   } else {
     return("Please select valid group: 'gent', 'ethnoracial', 'income', 'ses', 'period")
   }
@@ -124,7 +123,7 @@ plot_bar_periods <- function(
   if (group == "period") {
     plot <-
       ggplot(dat, aes(x = cat, y = value, fill = cat)) +
-      geom_bar(stat = "identity", position = "stack") +
+      geom_bar(stat = "identity", position = "stack", width = 0.5) +
       facet_grid(~ period, scales = "free", space = "free") +
       scale_fill_manual(values = colors) +
       scale_y_continuous(limits = limits, expand = c(0, 0)) +
@@ -136,7 +135,7 @@ plot_bar_periods <- function(
             axis.text.x = element_blank(),
             legend.position = "none",
             plot.title = element_text(size = 18, hjust = .5),
-            plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
+            plot.caption = element_text(size = 5, hjust = .5, face = "italic")) +
       labs(title = title, y = y_title, x = "", caption = caption)
 
   } else {
@@ -159,8 +158,15 @@ plot_bar_periods <- function(
       labs(title = title, y = y_title, x = "", caption = caption)
   }
 
+  height = 5
+  width = 7
+  if (group == "period") {
+    height = 4
+    width = 4.5
+  }
+
   if (save) {
-    ggsave(savename, plot, height = 5, width = 7)
+    ggsave(savename, plot, height = height, width = width)
     return(plot)
   } else {
     return(plot)
