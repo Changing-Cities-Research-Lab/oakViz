@@ -48,40 +48,16 @@ plot_bar_periods <- function(
   race_short <- c("Predominantly Black", "Black-Other", "White/White-Mixed", "Multiethnic/Other")
 
   inc_cat_colors <-
-    c("#b2badf","#a3d5d1","#76c0ba","#48aba3","#19968c")
+    c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
   inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
 
-  # Relabel names for the graphs
+  ses_cat_colors <-
+    c("#fcbba1", "#fc9272", "#fb6a4a", "#b63b36")
+  ses_cat = c("Low", "Moderate", "Middle", "High")
 
-  relabel_gent_cat <- c("nongentrifiable" = "Nongentrifiable",
-                        "gentrifying" = "Gentrifying",
-                        "intense"  = "Intense",
-                        "moderate" = "Moderate",
-                        "earlygent" = "Early Gentrification",
-                        "weak" = "Weak",
-                        "peoplepricegent" = "People or Price")
-
-  gent_cat_plot_order <- c("Nongentrifiable", "Gentrifying",
-                           "Intense", "Moderate",
-                           "Early Gentrification", "Weak", "People or Price")
-
-  relabel_race_cat <- c("PredWhite" = "Predominantly White",
-                        "PredBlack" = "Predominantly Black",
-                        "PredOther"  = "Predominantly Other",
-                        "WhiteOther" = "White-Other",
-                        "BlackWhite" = "Black-White",
-                        "BlackOther" = "Black-Other",
-                        "Multiethnic" = "Multiethnic",
-                        "Overall" = "Overall",
-                        "WhiteMixed" = "White/White-Mixed",
-                        "MixedOther" = "Multiethnic/Other")
-
-  race_cat_plot_order <- c("Predominantly White", "Predominantly Black",
-                           "Predominantly Other","White-Other","Black-White","Black-Other","Multiethnic",
-                           "White/White-Mixed", "Multiethnic/Other")
-
-  inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
-                          "Fourth Quintile", "Top Quintile")
+  period_cat_colors <-
+    c("#46aac8", "#46aac8", "#46aac8", "#46aac8")
+  period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
 
   # Create period label
   dat = dat %>%
@@ -93,32 +69,42 @@ plot_bar_periods <- function(
 
   dat$tractid10 = as.double(dat$tractid10)
 
-  # Combine with either gentcat, racecat, or inccat
+  # Combine with either gentcat, racecat, inccat, ses, or period
   if (group == "gent") {
     dat = dat %>% left_join(gentcat, by = "tractid10") %>%
-      select(-c(tractid10, year)) %>%
-      mutate(cat = factor(cat, levels = c(gent_cat_plot_order)))
+      mutate(cat = factor(cat, levels = c(gent_cat)))
     colors = gent_cat_colors
     labels = gent_cat
 
   } else if (group == "ethnoracial") {
     dat = dat %>% left_join(racecat, by = "tractid10") %>%
-      select(-c(tractid10, year)) %>%
-      mutate(cat = factor(cat, levels = c(race_cat_plot_order)))
+      mutate(cat = factor(cat, levels = c(race_short)))
     colors = race_short_colors
     labels = race_short
 
   } else if (group == "income") {
     dat = dat %>% left_join(inccat, by = "tractid10") %>%
-      select(-c(tractid10, year)) %>%
-      mutate(cat = factor(cat, levels = c(inc_cat_plot_order)))
+      mutate(cat = factor(cat, levels = c(inc_cat)))
     colors = inc_cat_colors
     labels = inc_cat
 
+  } else if (group == "ses") {
+    dat = dat %>%
+      mutate(cat = factor(ses, levels = ses_cat))
+    colors = ses_cat_colors
+    labels = ses_cat
+
+  } else if (group == "period") {
+    dat = dat %>%
+      mutate(cat = factor(period, levels = period_cat))
+    colors = period_cat_colors
+    labels = period_cat
+
   } else {
-    return("Please select valid group: 'gent', 'ethnoracial', 'income'")
+    return("Please select valid group: 'gent', 'ethnoracial', 'income', 'ses', 'period")
   }
 
+  # Compute mean or median
   if (compute == "mean") {
     dat = dat %>%
       drop_na() %>%
@@ -135,24 +121,43 @@ plot_bar_periods <- function(
     return("Please select valid computation: 'mean', 'median'")
   }
 
-  plot <-
-    ggplot(dat, aes(x = cat, y = value, fill = cat)) +
-    geom_bar(stat = "identity", position = "stack") +
-    facet_grid(~ period) +
-    scale_fill_manual(values = colors,
-                      labels = labels) +
-    scale_y_continuous(limits = limits, expand = c(0, 0)) +
-    theme_bw() +
-    theme(panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          panel.background = element_blank(),
-          axis.line = element_line(colour = "black"),
-          axis.text.x = element_text(angle = 45, hjust = 1),
-          legend.position = "none",
-          plot.title = element_text(size = 18, hjust = .5),
-          plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
-    labs(title = title, y = y_title, x = "", caption = caption)
+  if (group == "period") {
+    plot <-
+      ggplot(dat, aes(x = cat, y = value, fill = cat)) +
+      geom_bar(stat = "identity", position = "stack") +
+      facet_grid(~ period, scales = "free", space = "free") +
+      scale_fill_manual(values = colors) +
+      scale_y_continuous(limits = limits, expand = c(0, 0)) +
+      theme_bw() +
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            axis.line = element_line(colour = "black"),
+            axis.text.x = element_blank(),
+            legend.position = "none",
+            plot.title = element_text(size = 18, hjust = .5),
+            plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
+      labs(title = title, y = y_title, x = "", caption = caption)
 
+  } else {
+    plot <-
+      ggplot(dat, aes(x = cat, y = value, fill = cat)) +
+      geom_bar(stat = "identity", position = "stack") +
+      facet_grid(~ period) +
+      scale_fill_manual(values = colors,
+                        labels = labels) +
+      scale_y_continuous(limits = limits, expand = c(0, 0)) +
+      theme_bw() +
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            axis.line = element_line(colour = "black"),
+            axis.text.x = element_text(angle = 45, hjust = 1),
+            legend.position = "none",
+            plot.title = element_text(size = 18, hjust = .5),
+            plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
+      labs(title = title, y = y_title, x = "", caption = caption)
+  }
 
   if (save) {
     ggsave(savename, plot, height = 5, width = 7)
@@ -160,5 +165,4 @@ plot_bar_periods <- function(
   } else {
     return(plot)
   }
-
 }
