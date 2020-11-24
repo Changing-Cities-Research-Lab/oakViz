@@ -23,13 +23,9 @@ aggregate_categories = function(
                            "White/White-Mixed", "Multiethnic/Other")
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
-
-  print(dat) 
   
   # merge oakland tracts with data
-  dat = dat %>% full_join(oak_tracts, by = "tractid10")
-  
-  return(dat)
+  dat = dat %>% right_join(oak_tracts, by = "tractid10")
 
   # Combine gentcat, racecat, & inccat with data
   data <- rbind(
@@ -41,7 +37,7 @@ aggregate_categories = function(
     select(-tractid10) %>%
     mutate(cat = factor(cat, levels = c("Overall", gent_cat_plot_order, race_cat_plot_order, inc_cat_plot_order))) %>%
     mutate(facet = factor(facet, levels = c("All", "Gentrification", "Race/Ethnicity", "Income"))) %>%
-    drop_na()
+    filter(!is.na(facet))
   
   # modify mean, median, and sum so that if there are only NAs, it outputs NA
   compute_fn <- function(x, compute) {
