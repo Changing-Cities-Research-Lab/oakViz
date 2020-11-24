@@ -26,11 +26,7 @@ plot_bar_periods <- function(
   y_title = "Y-axis title",
   save = F,
   savename = "plot.png",
-  caption = "\nSES Ranges by Equifax Risk Scores:
-  Low = missing or <580, Moderate = 580-649,
-  Middle = 650-749, High = 750+\nHousing Period Ranges:
-  Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014,
-  Post-Recovery = 2015-2017.\n"
+  caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n"
 ) {
   ## Read Data
   library("ggplot2")
