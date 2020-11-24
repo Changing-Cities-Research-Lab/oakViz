@@ -25,7 +25,7 @@ aggregate_categories = function(
                           "Fourth Quintile", "Top Quintile")
 
   # merge oakland tracts with data
-  dat = dat %>% right_join(oak_tracts, by = "tractid10")
+  dat = dat %>% full_join(oak_tracts, by = "tractid10")
 
   # Combine gentcat, racecat, & inccat with data
   data <- rbind(
