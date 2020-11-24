@@ -35,8 +35,7 @@ make_map_panel <- function(
   # county tract map
   oak_tracts <-
     shp_tracts %>%
-    as.data.frame() %>%
-    dplyr::filter(GEOID10S %in% oak_ids$trtid10)
+    filter(GEOID10S %in% oak_ids$trtid10)
 
   data = oak_tracts %>%
     left_join(data, by = c("GEOID10S" = "tractid10")) %>%
