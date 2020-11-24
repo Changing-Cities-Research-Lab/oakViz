@@ -65,12 +65,14 @@ make_map_panel <- function(
 
   # Get max and min values for common gradient scale
   max = data %>%
-    select(var)%>%
+    st_drop_geometry() %>%
+    select({{var}})%>%
     # st_drop_geometry() %>%
     max(na.rm = T)
 
   min = data %>%
-    select(var) %>%
+    st_drop_geometry() %>%
+    select({{var}}) %>%
     min(na.rm = T)
 
   maps_all = list()
@@ -182,7 +184,7 @@ make_map_panel <- function(
                  bottom=textGrob(caption, gp=gpar(fontsize=10,font=3)))
 
   if (save) {
-    ggsave(savename, map_panel)
+    ggsave(savename, map_panel, height = 8, width = 8)
     return(map_panel)
   } else {
     return(map_panel)
