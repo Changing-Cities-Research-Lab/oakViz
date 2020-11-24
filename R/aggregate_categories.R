@@ -15,19 +15,17 @@ aggregate_categories = function(
   library('tidyverse')
 
   # Relabel names for the graphs
-
   gent_cat_plot_order <- c("Nongentrifiable", "Gentrifying",
                            "Intense", "Moderate",
                            "Early Gentrification", "Weak", "People or Price")
-
   race_cat_plot_order <- c("Predominantly White", "Predominantly Black",
                            "Predominantly Other","White-Other","Black-White","Black-Other","Multiethnic",
                            "White/White-Mixed", "Multiethnic/Other")
-
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
 
-  dat = dat %>% inner_join(oak_tracts, by = "tractid10")
+  # merge oakland tracts with data
+  dat = dat %>% right_join(oak_tracts, by = "tractid10")
 
   # Combine gentcat, racecat, & inccat with data
   data <- rbind(
