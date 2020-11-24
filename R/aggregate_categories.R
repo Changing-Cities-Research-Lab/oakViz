@@ -24,8 +24,12 @@ aggregate_categories = function(
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
 
+  print(dat) 
+  
   # merge oakland tracts with data
   dat = dat %>% full_join(oak_tracts, by = "tractid10")
+  
+  return(dat)
 
   # Combine gentcat, racecat, & inccat with data
   data <- rbind(
