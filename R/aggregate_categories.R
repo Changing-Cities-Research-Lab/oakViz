@@ -57,6 +57,7 @@ aggregate_categories = function(
   group_vars <- enquo(group_vars)
   data <- data %>%
     group_by_at(vars(cat, facet, !!group_vars)) %>%
-    dplyr::summarise_all(~ compute_fn(., compute))
+    dplyr::summarise_all(~ compute_fn(., compute)) %>%
+    ungroup()
   return(data)
 }
