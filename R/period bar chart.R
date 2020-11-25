@@ -1,12 +1,12 @@
 #' Produce grouped bar chart across four periods.
 #'
 #' This function takes in data and produces a bar chart grouped by either
-#' gentrification, ethnoracial, or income category across four housing periods.
+#' gentrification, ethnoracial, income, ses, or period category across four housing periods.
 #'
 #' @param dat Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param limits Y-axis limits
-#' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", or "income"
+#' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"
 #' @param compute Method of summarizing values: "mean" (default) or "median"
 #' @param title Figure title
 #' @param y_title Y-axis title
@@ -29,13 +29,6 @@ plot_bar_periods <- function(
   caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n"
 ) {
   ## Read Data
-  library("ggplot2")
-  library("readxl")
-  library("dplyr")
-  library("foreach")
-  library("reshape")
-  library("gridExtra")
-  library("grid")
   library('tidyverse')
 
   ### PARAMETERS ###
@@ -60,30 +53,30 @@ plot_bar_periods <- function(
   period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
 
   # Create period label
-  dat = dat %>%
-    mutate(period = ifelse(year %in% c(2002:2006), "Boom",
-                           ifelse(year %in% c(2007:2009), "Bust",
-                                  ifelse(year %in% c(2010:2014), "Recovery",
-                                         ifelse(year %in% c(2015:2017), "Post-Recovery", NA))))) %>%
-    mutate(period = factor(period, levels = c("Boom", "Bust", "Recovery", "Post-Recovery")))
+  #dat = dat %>%
+  #  mutate(period = ifelse(year %in% c(2002:2006), "Boom",
+  #                         ifelse(year %in% c(2007:2009), "Bust",
+  #                                ifelse(year %in% c(2010:2014), "Recovery",
+  #                                       ifelse(year %in% c(2015:2017), "Post-Recovery", NA))))) %>%
+  #  mutate(period = factor(period, levels = c("Boom", "Bust", "Recovery", "Post-Recovery")))
 
-  dat$tractid10 = as.double(dat$tractid10)
+  #dat$tractid10 = as.double(dat$tractid10)
 
   # Combine with either gentcat, racecat, inccat, ses, or period
   if (group == "gent") {
-    dat = dat %>% left_join(gentcat, by = "tractid10") %>%
+    dat = dat %>% #left_join(gentcat, by = "tractid10") %>%
       mutate(cat = factor(cat, levels = c(gent_cat)))
     colors = gent_cat_colors
     labels = gent_cat
 
   } else if (group == "ethnoracial") {
-    dat = dat %>% left_join(racecat, by = "tractid10") %>%
+    dat = dat %>% #left_join(racecat, by = "tractid10") %>%
       mutate(cat = factor(cat, levels = c(race_short)))
     colors = race_short_colors
     labels = race_short
 
   } else if (group == "income") {
-    dat = dat %>% left_join(inccat, by = "tractid10") %>%
+    dat = dat %>% #left_join(inccat, by = "tractid10") %>%
       mutate(cat = factor(cat, levels = c(inc_cat)))
     colors = inc_cat_colors
     labels = inc_cat
@@ -104,21 +97,21 @@ plot_bar_periods <- function(
   }
 
   # Compute mean or median
-  if (compute == "mean") {
-    dat = dat %>%
-      drop_na() %>%
-      group_by(period, cat) %>%
-      # Provide option of mean or median
-      dplyr::summarise(value = mean({{var}}, na.rm = T))
-  } else if (compute == "median") {
-    dat = dat %>%
-      drop_na() %>%
-      group_by(period, cat) %>%
-      # Provide option of mean or median
-      dplyr::summarise(value = median({{var}}, na.rm = T))
-  } else {
-    return("Please select valid computation: 'mean', 'median'")
-  }
+  #if (compute == "mean") {
+  #  dat = dat %>%
+  #    drop_na() %>%
+  #    group_by(period, cat) %>%
+  #    # Provide option of mean or median
+  #    dplyr::summarise(value = mean({{var}}, na.rm = T))
+  #} else if (compute == "median") {
+  #  dat = dat %>%
+  #    drop_na() %>%
+  #    group_by(period, cat) %>%
+  #    # Provide option of mean or median
+  #    dplyr::summarise(value = median({{var}}, na.rm = T))
+  #} else {
+  #  return("Please select valid computation: 'mean', 'median'")
+  #}
 
   if (group == "period") {
     plot <-
@@ -167,8 +160,6 @@ plot_bar_periods <- function(
 
   if (save) {
     ggsave(savename, plot, height = height, width = width)
-    return(plot)
-  } else {
-    return(plot)
-  }
+  } 
+  return(plot)
 }
