@@ -115,7 +115,7 @@ plot_bar_periods <- function(
 
   if (group == "period") {
     plot <-
-      ggplot(dat, aes(x = cat, y = value, fill = cat)) +
+      ggplot(dat, aes(x = cat, y = {{ var }}, fill = cat)) +
       geom_bar(stat = "identity", position = "stack", width = 0.5) +
       facet_grid(~ period, scales = "free", space = "free") +
       scale_fill_manual(values = colors) +
@@ -133,7 +133,7 @@ plot_bar_periods <- function(
 
   } else {
     plot <-
-      ggplot(dat, aes(x = cat, y = value, fill = cat)) +
+      ggplot(dat, aes(x = cat, y = {{ var }}, fill = cat)) +
       geom_bar(stat = "identity", position = "stack") +
       facet_grid(~ period) +
       scale_fill_manual(values = colors,
