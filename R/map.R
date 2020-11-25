@@ -24,17 +24,13 @@ make_map <- function(data,
                      savename = "plot.png",
                      caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.") {
 
-  library(devtools)
-  library(roxygen2)
   library(tidyverse)
   library(sf)
   library(rgdal)
   library(ggmap)
-  library(foreach)
   library(gridExtra)
   library(grid)
   library(scales)
-  library(dplyr)
 
   scale_label = scales::label_comma()
 
