@@ -28,6 +28,7 @@ make_map_panel <- function(
 
   library(sf)
   library(rgdal)
+  library(foreach)
   library(ggmap)
   library(tidyverse)
   library(gridExtra)
