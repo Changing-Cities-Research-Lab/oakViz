@@ -75,7 +75,9 @@ plot_lollipop <- function(
     scale_color_manual(values = colors,
                        labels = labels) +
     scale_fill_manual(values = colors) +
-    scale_y_continuous(limits = limits, expand = c(0, 0)) +
+    scale_y_continuous(limits = limits,
+                       expand = c(0, 0),
+                       labels = scales::percent) +
     theme_bw() +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),

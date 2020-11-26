@@ -98,12 +98,13 @@ make_map_panel <- function(
     guides(
       fill =
         guide_colorbar(
-          barheight = 0.5,
-          barwidth = 15,
+          barheight = 0.8,
+          barwidth = 21,
           title = NULL
         )
     ) +
     theme(
+      legend.text = element_text(size = 12),
       legend.title = element_blank(),
       legend.position = "bottom",
       legend.box.margin = margin(3,0,0,0, unit = "pt"),
@@ -178,13 +179,13 @@ make_map_panel <- function(
                  legend,
                  nrow = 3, ncol = 2,
                  layout_matrix = layout,
-                 heights = c(5, 5, 1),
+                 heights = c(5, 5, 1.2),
                  top=textGrob(title,
-                              gp=gpar(fontsize=21,font=2)),
-                 bottom=textGrob(caption, gp=gpar(fontsize=7,font=3)))
+                              gp=gpar(fontsize=16)),
+                 bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
 
   if (save) {
-    ggsave(savename, map_panel, height = 6.5, width = 6)
+    ggsave(savename, map_panel, height = 7.8, width = 7)
     return(map_panel)
   } else {
     return(map_panel)
