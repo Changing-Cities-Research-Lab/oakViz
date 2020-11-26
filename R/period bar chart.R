@@ -7,7 +7,6 @@
 #' @param var Name of column containing variable to plot.
 #' @param limits Y-axis limits
 #' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"
-#' @param compute Method of summarizing values: "mean" (default) or "median"
 #' @param title Figure title
 #' @param y_title Y-axis title
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
@@ -21,7 +20,6 @@ plot_bar_periods <- function(
   var,
   limits,
   group = "gent", # gent, ethnoracial, income, ses, period
-  compute = "mean",
   title = "Title",
   y_title = "Y-axis title",
   save = F,
