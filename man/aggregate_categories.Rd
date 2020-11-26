@@ -7,15 +7,15 @@
 aggregate_categories(dat, compute = "mean", group_vars = c(NULL))
 }
 \arguments{
-\item{dat}{Data with a column containing census tracts ("tractid10") and variable of interest ("var").}
+\item{dat}{Data with a column containing census tracts ("tractid10") and categorical variables to group by or numeric variables to aggregates.}
 
 \item{compute}{"mean", "median", or "sum"}
 
-\item{group_by_vars}{Optional list of variables to group_by before aggregation}
+\item{group_vars}{Optional list of variables to group_by before aggregation. Note: All non-numeric variables should either be included here or de-selected.}
 }
 \value{
 Aggregated data frame.
 }
 \description{
-Take mean, median, or sum of variables by gentrification, ethnoracial, and income grouping.
+Take mean, median, or sum of all variables by gentrification, ethnoracial, and income grouping.
 }

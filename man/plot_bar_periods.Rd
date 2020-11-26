@@ -25,7 +25,7 @@ plot_bar_periods(
 
 \item{limits}{Y-axis limits}
 
-\item{group}{Category for x-axis grouping: "gent" (default), "ethnoracial", or "income"}
+\item{group}{Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"}
 
 \item{compute}{Method of summarizing values: "mean" (default) or "median"}
 
@@ -44,5 +44,5 @@ Grouped bar chart across four periods.
 }
 \description{
 This function takes in data and produces a bar chart grouped by either
-gentrification, ethnoracial, or income category across four housing periods.
+gentrification, ethnoracial, income, ses, or period category across four housing periods.
 }
