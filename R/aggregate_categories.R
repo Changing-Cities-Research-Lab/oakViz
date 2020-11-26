@@ -36,7 +36,6 @@ aggregate_categories = function(
   ) %>%
     select(-tractid10) %>%
     mutate(cat = factor(cat, levels = c("Overall", gent_cat_plot_order, race_cat_plot_order, inc_cat_plot_order))) %>%
-<<<<<<< HEAD
     mutate(facet = factor(facet, levels = c("All", "Gentrification", "Ethnoracial", "Income"))) %>%
     drop_na()
 
@@ -46,7 +45,6 @@ aggregate_categories = function(
     filter(!is.na(facet))
   
   # modify mean, median, and sum so that if there are only NAs then it outputs NA
->>>>>>> 7b2339f5c4357be306a65dbd71bb25b9a3b9ec6e
   compute_fn <- function(x, compute) {
     if (all(is.na(x))) {
       x[NA_integer_]
@@ -62,23 +60,9 @@ aggregate_categories = function(
   }
 
   group_vars <- enquo(group_vars)
-<<<<<<< HEAD
-  data = data %>%
-    group_by_at(vars(cat, facet, !!group_vars)) %>%
-    dplyr::summarise_all(~ sum)
-  return(data)
-
-  group_vars <- enquo(group_vars)
-  data = data %>%
-=======
   data <- data %>%
->>>>>>> 7b2339f5c4357be306a65dbd71bb25b9a3b9ec6e
     group_by_at(vars(cat, facet, !!group_vars)) %>%
     dplyr::summarise_all(~ compute_fn(., compute)) %>%
     ungroup()
   return(data)
-<<<<<<< HEAD
-
-=======
->>>>>>> 7b2339f5c4357be306a65dbd71bb25b9a3b9ec6e
 }
