@@ -37,11 +37,6 @@ aggregate_categories = function(
     select(-tractid10) %>%
     mutate(cat = factor(cat, levels = c("Overall", gent_cat_plot_order, race_cat_plot_order, inc_cat_plot_order))) %>%
     mutate(facet = factor(facet, levels = c("All", "Gentrification", "Ethnoracial", "Income"))) %>%
-    drop_na()
-
-  # modify mean, median, and sum so that if there are only NAs, it outputs NA
-=======
-    mutate(facet = factor(facet, levels = c("All", "Gentrification", "Race/Ethnicity", "Income"))) %>%
     filter(!is.na(facet))
   
   # modify mean, median, and sum so that if there are only NAs then it outputs NA
