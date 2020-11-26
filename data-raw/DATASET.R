@@ -37,14 +37,14 @@ gentcat <- read_csv("gentcat_006a_50_oak.csv") %>%
   select(tractid10 = trtid10, cat = gentcat_006a_50)
 gentcat$cat[which(is.na(gentcat$cat))] <- "nongentrifiable"
 gentcat$cat[which(gentcat$cat == "peoplegent" | gentcat$cat == "pricegent" )] <- "peoplepricegent"
-gentcat$cat <- revalue(gentcat$cat, relabel_gent_cat)
+gentcat$cat <- plyr::revalue(gentcat$cat, relabel_gent_cat)
 gentcat$cat <- factor(gentcat$cat, levels = gent_cat_plot_order)
 gentcat$facet = "Gentrification"
 
 # race data
 racecat <- read_csv("racetypology_oak_tracts_00.csv") %>%
   select(tractid10 = trtid10, cat = race.shortcategory00)
-racecat$cat <- revalue(racecat$cat, relabel_race_cat)
+racecat$cat <- plyr::revalue(racecat$cat, relabel_race_cat)
 racecat$cat <- factor(racecat$cat, levels = race_cat_plot_order)
 racecat$facet = "Ethnoracial"
 
