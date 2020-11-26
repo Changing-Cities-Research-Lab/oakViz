@@ -46,7 +46,7 @@ racecat <- read_csv("racetypology_oak_tracts_00.csv") %>%
   select(tractid10 = trtid10, cat = race.shortcategory00)
 racecat$cat <- revalue(racecat$cat, relabel_race_cat)
 racecat$cat <- factor(racecat$cat, levels = race_cat_plot_order)
-racecat$facet = "Race/Ethnicity"
+racecat$facet = "Ethnoracial"
 
 # income data
 inccat <- read_csv("hinc09_categories.csv")

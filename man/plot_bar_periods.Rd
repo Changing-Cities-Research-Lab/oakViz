@@ -9,7 +9,6 @@ plot_bar_periods(
   var,
   limits,
   group = "gent",
-  compute = "mean",
   title = "Title",
   y_title = "Y-axis title",
   save = F,
@@ -26,8 +25,6 @@ plot_bar_periods(
 \item{limits}{Y-axis limits}
 
 \item{group}{Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"}
-
-\item{compute}{Method of summarizing values: "mean" (default) or "median"}
 
 \item{title}{Figure title}
 
