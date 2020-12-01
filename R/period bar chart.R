@@ -34,7 +34,7 @@ plot_bar_periods <- function(
   race_short_colors <-
     c("#481567FF", "#33638DDF", "#FDE725FF", "#20A387FF")
   race_short <- c("Predominantly Black", "Black-Other", "White/White-Mixed", "Multiethnic/Other")
-  names(race_cat_colors) <- race_cat
+  names(race_short_colors) <- race_short
   
   inc_cat_colors <-
     c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
