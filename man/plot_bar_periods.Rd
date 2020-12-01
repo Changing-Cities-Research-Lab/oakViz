@@ -9,8 +9,6 @@ plot_bar_periods(
   var,
   limits,
   group = "gent",
-  title = "Title",
-  y_title = "Y-axis title",
   save = F,
   savename = "plot.png",
  
@@ -25,10 +23,6 @@ plot_bar_periods(
 \item{limits}{Y-axis limits}
 
 \item{group}{Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"}
-
-\item{title}{Figure title}
-
-\item{y_title}{Y-axis title}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 

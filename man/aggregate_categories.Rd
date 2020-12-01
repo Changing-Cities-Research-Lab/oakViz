@@ -7,7 +7,7 @@
 aggregate_categories(dat, compute = "mean", group_vars = c(NULL))
 }
 \arguments{
-\item{dat}{Data with a column containing census tracts ("tractid10") and categorical variables to group by or numeric variables to aggregates.}
+\item{dat}{Data with a column containing census tracts ("tractid10") and categorical variables to group by or numeric variables to aggregate.}
 
 \item{compute}{"mean", "median", or "sum"}
 

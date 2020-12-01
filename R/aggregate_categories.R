@@ -1,8 +1,8 @@
 #' Aggregation for Oakland variables.
 #'
-#'Take mean, median, or sum of all variables by gentrification, ethnoracial, and income grouping.
+#' Take mean, median, or sum of all variables by gentrification, ethnoracial, and income grouping.
 #'
-#' @param dat Data with a column containing census tracts ("tractid10") and categorical variables to group by or numeric variables to aggregates.
+#' @param dat Data with a column containing census tracts ("tractid10") and categorical variables to group by or numeric variables to aggregate.
 #' @param compute "mean", "median", or "sum"
 #' @param group_vars Optional list of variables to group_by before aggregation. Note: All non-numeric variables should either be included here or de-selected.
 #' @return Aggregated data frame.
@@ -23,7 +23,7 @@ aggregate_categories = function(
                            "White/White-Mixed", "Multiethnic/Other")
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
-  
+
   # merge oakland tracts with data
   dat <- dat %>% right_join(oak_tracts, by = "tractid10")
 
@@ -38,7 +38,7 @@ aggregate_categories = function(
     mutate(cat = factor(cat, levels = c("Overall", gent_cat_plot_order, race_cat_plot_order, inc_cat_plot_order))) %>%
     mutate(facet = factor(facet, levels = c("All", "Gentrification", "Ethnoracial", "Income"))) %>%
     filter(!is.na(facet))
-  
+
   # modify mean, median, and sum so that if there are only NAs then it outputs NA
   compute_fn <- function(x, compute) {
     if (all(is.na(x))) {
