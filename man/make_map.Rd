@@ -24,9 +24,9 @@ make_map(
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
 
-\item{breaks}{Gradient scale breaks}
+\item{breaks}{Gradient scale breaks, numeric vector}
 
-\item{labels}{Gradient scale labels}
+\item{labels}{Gradient scale labels, character vector}
 
 \item{coord}{T if plotting coordinate values (lat, lon). Default is F.}
 
