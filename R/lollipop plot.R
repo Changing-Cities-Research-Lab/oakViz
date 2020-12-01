@@ -8,8 +8,6 @@
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits.
-#' @param title Figure title
-#' @param y_title Y-axis title
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Figure caption
@@ -20,8 +18,6 @@ plot_lollipop <- function(
   data,
   var,
   limits,
-  title = "Title",
-  y_title = "Y-axis Title",
   save = F,
   savename = "plot.png",
   caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n"
@@ -79,16 +75,14 @@ plot_lollipop <- function(
     theme(axis.line = element_line(colour = "black"),
           axis.text.x = element_text(angle = 45, hjust = 1)) +
     theme(legend.position = "none") +
-    labs(title = title, y = y_title, x= "", caption = caption) +
-    theme(plot.title = element_text(size = 18, hjust = .5),
-          plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
+    labs(caption = caption) +
+    theme(plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
     coord_flip()
 
   if (save) {
     ggsave(savename, plot, height = 4.5, width = 4.5)
-    return(plot)
-  } else {
-    return(plot)
   }
+  return(plot)
+  
 }
 
