@@ -8,7 +8,6 @@ make_map_panel(
   data,
   var,
   shp_tracts,
-  title = "Title",
   coord = F,
   save = F,
   savename = "plot.png",
@@ -22,8 +21,6 @@ make_map_panel(
 \item{var}{Name of column containing variable to plot.}
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
-
-\item{title}{Title for panel of maps.}
 
 \item{coord}{T if plotting coordinate values (lat, lon). Default is F.}
 

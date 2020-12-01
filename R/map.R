@@ -7,7 +7,6 @@
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
-#' @param title Figure title
 #' @param coord T if plotting coordinate values (lat, lon). Default is F.
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -18,7 +17,6 @@
 make_map <- function(data,
                      var,
                      shp_tracts,
-                     title = "Title",
                      coord = F,
                      save = F,
                      savename = "plot.png",
@@ -99,11 +97,11 @@ make_map <- function(data,
       legend.title = element_blank(),
       legend.position = "bottom",
       legend.box.margin = margin(3,0,0,0, unit = "pt"),
-      plot.title = element_text(size = 12, hjust = .5, vjust = 3),
+      plot.title = element_blank(),
       plot.margin = margin(3,1,3,1, unit = "pt"),
       plot.caption = element_text(size = 6, hjust = .5)
     ) +
-    labs(title = title, caption = caption)
+    labs(caption = caption)
   if (coord == T) {
     + geom_point(
       data = data,
