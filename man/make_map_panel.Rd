@@ -8,6 +8,8 @@ make_map_panel(
   data,
   var,
   shp_tracts,
+  breaks = scales::extended_breaks(n = 6),
+  labels = scales::percent,
   coord = F,
   save = F,
   savename = "plot.png",
@@ -21,6 +23,10 @@ make_map_panel(
 \item{var}{Name of column containing variable to plot.}
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
+
+\item{breaks}{Gradient scale breaks}
+
+\item{labels}{Gradient scale labels}
 
 \item{coord}{T if plotting coordinate values (lat, lon). Default is F.}
 

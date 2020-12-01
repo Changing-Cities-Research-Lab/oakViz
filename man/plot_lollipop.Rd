@@ -8,8 +8,6 @@ plot_lollipop(
   data,
   var,
   limits,
-  title = "Title",
-  y_title = "Y-axis Title",
   save = F,
   savename = "plot.png",
  
@@ -22,10 +20,6 @@ plot_lollipop(
 \item{var}{Column name of variable of interest.}
 
 \item{limits}{Y-axis limits.}
-
-\item{title}{Figure title}
-
-\item{y_title}{Y-axis title}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 

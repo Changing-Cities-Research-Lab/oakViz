@@ -7,6 +7,8 @@
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
+#' @param breaks Gradient scale breaks
+#' @param labels Gradient scale labels
 #' @param coord T if plotting coordinate values (lat, lon). Default is F.
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -17,6 +19,8 @@
 make_map <- function(data,
                      var,
                      shp_tracts,
+                     breaks = scales::extended_breaks(n = 6),
+                     labels = scales::percent,
                      coord = F,
                      save = F,
                      savename = "plot.png",
@@ -29,8 +33,6 @@ make_map <- function(data,
   library(gridExtra)
   library(grid)
   library(scales)
-
-  scale_label = scales::percent
 
   # county tract map
   oak_tracts <-
@@ -79,8 +81,8 @@ make_map <- function(data,
       inherit.aes = FALSE
     ) +
     scale_fill_gradientn(
-      breaks = scales::extended_breaks(n = 6),
-      labels = scale_label,
+      breaks = breaks,
+      labels = labels,
       colors = alpha(MAP_COLORS, .8),
       na.value = "grey60"
     ) +
