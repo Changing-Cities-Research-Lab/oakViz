@@ -39,8 +39,9 @@ plot_bar_periods <- function(
   inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
 
   ses_cat_colors <-
-    c("#9b9b9b","#fcbba1", "#fc9272", "#faab8c","#fb6a4a", "#b63b36")
-  ses_cat = c("All","Low", "Moderate", "LMM" ,"Middle", "High")
+    c("#9b9b9b", "#fcbba1", "#fc9272", "#faab8c","#fb6a4a", "#b63b36")
+  ses_cat = c("All", "Low", "Moderate", "LMM" ,"Middle", "High")
+  names(ses_cat_colors) <- ses_cat
 
   period_cat_colors <-
     c("#46aac8", "#46aac8", "#46aac8", "#46aac8")
