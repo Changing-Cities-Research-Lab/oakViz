@@ -78,7 +78,8 @@ plot_lollipop <- function(
     labs(caption = caption) +
     theme(plot.caption = element_text(size = 8, hjust = .5, face = "italic"),
           axis.title.x = element_blank(),
-          axis.title.y = element_blank()) +
+          axis.title.y = element_blank(),
+          axis.title = element_blank()) +
     coord_flip()
 
   if (save) {
