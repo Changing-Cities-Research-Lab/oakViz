@@ -30,7 +30,7 @@ make_map <- function(data,
   library(grid)
   library(scales)
 
-  scale_label = scales::label_comma()
+  scale_label = scales::percent
 
   # county tract map
   oak_tracts <-
