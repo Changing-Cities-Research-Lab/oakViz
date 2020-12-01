@@ -73,12 +73,12 @@ plot_lollipop <- function(
           panel.background = element_blank()
     ) +
     theme(axis.line = element_line(colour = "black"),
-          axis.text.x = element_text(angle = 45, hjust = 1),
-          axis.title.x = element_blank(),
-          axis.title.y = element_blank()) +
+          axis.text.x = element_text(angle = 45, hjust = 1)) +
     theme(legend.position = "none") +
     labs(caption = caption) +
-    theme(plot.caption = element_text(size = 8, hjust = .5, face = "italic")) +
+    theme(plot.caption = element_text(size = 8, hjust = .5, face = "italic"),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank()) +
     coord_flip()
 
   if (save) {
