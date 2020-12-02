@@ -45,7 +45,7 @@ plot_lollipop <- function(
   if (scale_type == "percent") {
     label_type = scales::percent
   } else if (scale_type == "numeric") {
-    label_type = comma
+    label_type = scales::comma
   } else {
     return("Please select percent or numeric")
   }
