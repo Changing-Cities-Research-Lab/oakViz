@@ -8,6 +8,7 @@
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits.
+#' @param x_title Title to display along x-axis
 #' @param scale_type Y-axis scale type: "numeric" or "percent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -19,6 +20,7 @@ plot_lollipop <- function(
   data,
   var,
   limits,
+  x_title = "",
   scale_type = "numeric",
   save = F,
   savename = "plot.png",
@@ -68,7 +70,7 @@ plot_lollipop <- function(
     geom_segment(aes(x=cat, xend=cat,
                      y=limits[1], yend={{var}}), size=0.25,
                  show.legend = FALSE) +
-    geom_point(aes(color = factor(cat)),size = 3.25,shape = 21,
+    geom_point(aes(color = factor(cat)), size = 3.25, shape = 21,
                colour = "black",show.legend = TRUE) +
     facet_grid(rows = vars(facet), scale = "free", space = "free") +
     scale_color_manual(values = colors,
@@ -85,12 +87,12 @@ plot_lollipop <- function(
     theme(axis.line = element_line(colour = "black"),
           axis.text.x = element_text(angle = 45, hjust = 1)) +
     theme(legend.position = "none") +
-    labs(caption = caption) +
+    labs(y = x_title, caption = caption) +
     theme(plot.caption = element_text(size = 8, hjust = .5, face = "italic"),
-          axis.title.x = element_blank(),
-          axis.title.y = element_blank(),
-          axis.title = element_blank()) +
+          axis.title = element_blank(),
+          axis.title.x = element_text(size = 9)) +
     coord_flip()
+
 
   if (save) {
     ggsave(savename, plot, height = 4.5, width = 4.5)
