@@ -18,6 +18,7 @@ plot_lollipop <- function(
   data,
   var,
   limits,
+  scale_type = "numeric",
   save = F,
   savename = "plot.png",
   caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n"
@@ -39,6 +40,14 @@ plot_lollipop <- function(
 
   labels = c("Overall", gent_cat, race_short, inc_cat)
   colors = c("white", gent_cat_colors, race_short_colors, inc_cat_colors)
+
+  if (scale_type == "percent") {
+    label_type = scales::percent
+  } else if (scale_type == "numeric") {
+    label_type = scales::label_comma
+  } else {
+    return("Please select percent or numeric")
+  }
 
   # Relabel names for the graphs
 
@@ -66,7 +75,7 @@ plot_lollipop <- function(
     scale_fill_manual(values = colors) +
     scale_y_continuous(limits = limits,
                        expand = c(0, 0),
-                       labels = scales::percent) +
+                       labels = label_type) +
     theme_bw() +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
@@ -86,6 +95,6 @@ plot_lollipop <- function(
     ggsave(savename, plot, height = 4.5, width = 4.5)
   }
   return(plot)
-  
+
 }
 

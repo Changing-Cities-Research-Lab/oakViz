@@ -8,6 +8,7 @@ plot_lollipop(
   data,
   var,
   limits,
+  scale_type = "numeric",
   save = F,
   savename = "plot.png",
  
