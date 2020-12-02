@@ -22,6 +22,8 @@ plot_lollipop(
 
 \item{limits}{Y-axis limits.}
 
+\item{scale_type}{Y-axis scale type: "numeric" or "percent"}
+
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
 \item{savename}{File name of map for saving.}

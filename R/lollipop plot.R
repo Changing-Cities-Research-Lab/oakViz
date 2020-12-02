@@ -8,6 +8,7 @@
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits.
+#' @param scale_type Y-axis scale type: "numeric" or "percent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Figure caption
@@ -44,7 +45,7 @@ plot_lollipop <- function(
   if (scale_type == "percent") {
     label_type = scales::percent
   } else if (scale_type == "numeric") {
-    label_type = scales::label_comma
+    label_type = comma
   } else {
     return("Please select percent or numeric")
   }
