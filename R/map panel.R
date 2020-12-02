@@ -10,7 +10,6 @@
 #' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param breaks Gradient scale breaks, numeric vector
 #' @param labels Gradient scale labels, character vector
-#' @param manual_lim TRUE if setting manual limits parameter, default is FALSE
 #' @param limits Gradient scale limits, c(min, max)
 #' @param coord T if plotting coordinate values (lat, lon). Default is F.
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
@@ -25,8 +24,7 @@ make_map_panel <- function(
   shp_tracts,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
-  manual_lim = F,
-  limits = NA,
+  limits = NULL,
   coord = F,
   save = F,
   savename = "plot.png",
@@ -86,7 +84,7 @@ make_map_panel <- function(
 
   range = c(min, max)
 
-  if (manual_lim) {
+  if (!is.null(limits)) {
     range = limits
   }
 
