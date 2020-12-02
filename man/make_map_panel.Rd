@@ -25,9 +25,9 @@ make_map_panel(
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
 
-\item{breaks}{Gradient scale breaks, numeric vector}
+\item{breaks}{Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)}
 
-\item{labels}{Gradient scale labels, character vector}
+\item{labels}{Gradient scale labels, either character vector or scales::percent or scales::comma}
 
 \item{limits}{Gradient scale limits, c(min, max)}
 

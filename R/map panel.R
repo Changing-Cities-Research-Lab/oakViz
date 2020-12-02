@@ -8,8 +8,8 @@
 #' @param data Data with a column containing census tracts, distinct periods, and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
-#' @param breaks Gradient scale breaks, numeric vector
-#' @param labels Gradient scale labels, character vector
+#' @param breaks Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)
+#' @param labels Gradient scale labels, either character vector or scales::percent or scales::comma
 #' @param limits Gradient scale limits, c(min, max)
 #' @param coord T if plotting coordinate values (lat, lon). Default is F.
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
