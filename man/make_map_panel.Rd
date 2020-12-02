@@ -10,6 +10,8 @@ make_map_panel(
   shp_tracts,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
+  manual_lim = F,
+  limits = NA,
   coord = F,
   save = F,
   savename = "plot.png",
@@ -27,6 +29,10 @@ make_map_panel(
 \item{breaks}{Gradient scale breaks, numeric vector}
 
 \item{labels}{Gradient scale labels, character vector}
+
+\item{manual_lim}{TRUE if setting manual limits parameter, default is FALSE}
+
+\item{limits}{Gradient scale limits, c(min, max)}
 
 \item{coord}{T if plotting coordinate values (lat, lon). Default is F.}
 
