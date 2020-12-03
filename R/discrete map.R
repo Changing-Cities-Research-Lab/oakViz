@@ -62,7 +62,7 @@ make_discrete_map <- function(shp_tracts,
     filter(GEOID10S %in% oak_ids$trtid10)
 
   data = oak_tracts %>%
-    inner_join(data, by = c("GEOID10S" = "tractid10")) %>%
+    right_join(data, by = c("GEOID10S" = "tractid10")) %>%
     st_transform(CRS("+proj=longlat +datum=WGS84"))
 
   # Read in list of tracts in the Bay Area above the minimum population for display

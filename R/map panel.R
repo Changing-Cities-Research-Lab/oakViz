@@ -45,7 +45,7 @@ make_map_panel <- function(
     filter(GEOID10S %in% oak_ids$trtid10)
 
   data = oak_tracts %>%
-    inner_join(data, by = c("GEOID10S" = "tractid10")) %>%
+    right_join(data, by = c("GEOID10S" = "tractid10")) %>%
     st_transform(CRS("+proj=longlat +datum=WGS84"))
 
   # If you want to change colors for any reason
