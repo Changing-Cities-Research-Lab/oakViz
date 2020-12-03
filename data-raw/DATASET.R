@@ -1,6 +1,6 @@
 ## code to prepare `DATASET` dataset goes here
 
-oak_ids <- readr::read_csv("trtid10_oak.csv")
+oak_ids <- readr::read_csv("../../oak-data-repo/oakland_geographies/trtid10_oak.csv")
 
 relabel_gent_cat <- c("nongentrifiable" = "Nongentrifiable",
                       "gentrifying" = "Gentrifying",
@@ -33,23 +33,21 @@ inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                         "Fourth Quintile", "Top Quintile")
 
 # gentrification data
-gentcat <- read_csv("gentcat_006a_50_oak.csv") %>%
+gentcat <- read_csv("../../oak-data-repo/gentrification_categories/gentcat_006a_50_oak.csv") %>%
   select(tractid10 = trtid10, cat = gentcat_006a_50)
-gentcat$cat[which(is.na(gentcat$cat))] <- "nongentrifiable"
-gentcat$cat[which(gentcat$cat == "peoplegent" | gentcat$cat == "pricegent" )] <- "peoplepricegent"
 gentcat$cat <- plyr::revalue(gentcat$cat, relabel_gent_cat)
 gentcat$cat <- factor(gentcat$cat, levels = gent_cat_plot_order)
 gentcat$facet = "Gentrification"
 
 # race data
-racecat <- read_csv("racetypology_oak_tracts_00.csv") %>%
+racecat <- read_csv("../../oak-data-repo/ethnoracial_composition/racetypology_oak_tracts_00.csv") %>%
   select(tractid10 = trtid10, cat = race.shortcategory00)
 racecat$cat <- plyr::revalue(racecat$cat, relabel_race_cat)
 racecat$cat <- factor(racecat$cat, levels = race_cat_plot_order)
 racecat$facet = "Ethnoracial"
 
 # income data
-inccat <- read_csv("hinc09_categories.csv")
+inccat <- read_csv("../../oak-data-repo/income_categories/hinc09_categories.csv")
 inccat$cat <- factor(inccat$cat, levels = inc_cat_plot_order)
 inccat$facet = "Income"
 
