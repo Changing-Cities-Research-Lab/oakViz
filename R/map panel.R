@@ -45,7 +45,7 @@ make_map_panel <- function(
     filter(GEOID10S %in% oak_ids$trtid10)
 
   data = oak_tracts %>%
-    left_join(data, by = c("GEOID10S" = "tractid10")) %>%
+    inner_join(data, by = c("GEOID10S" = "tractid10")) %>%
     st_transform(CRS("+proj=longlat +datum=WGS84"))
 
   # If you want to change colors for any reason
@@ -62,13 +62,11 @@ make_map_panel <- function(
 
   # map data
   # Google Street Map for Oakland ----
-  gmap_oak <-
-    get_map(
-      location = c(-122.3547, 37.6920, -122.1048, 37.8607),
-      maptype = "roadmap",
-      source = "google",
-      color = "bw"
-    )
+  gmap_oak <- get_stamenmap(
+    bbox = c(-122.3547, 37.6920, -122.1048, 37.890692),
+    zoom = 12,
+    maptype = "toner-lite",
+    color = "bw")
 
   # Get max and min values for common gradient scale
   max = data %>%
@@ -105,8 +103,7 @@ make_map_panel <- function(
       breaks = breaks,
       labels = labels,
       limits = range,
-      colors = alpha(MAP_COLORS, .8),
-      na.value = "grey60"
+      colors = alpha(MAP_COLORS, .8)
     ) +
     guides(
       fill =
@@ -144,9 +141,10 @@ make_map_panel <- function(
       ) +
       geom_sf(
         data = data_period,
-        size = 0.1,
+        size = 0.3,
         alpha = 0,
-        inherit.aes = FALSE
+        inherit.aes = FALSE,
+        color = "black"
       ) +
       scale_fill_gradientn(
         breaks = breaks,

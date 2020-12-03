@@ -26,20 +26,6 @@ make_discrete_map <- function(shp_tracts,
   library(grid)
   library(scales)
 
-  # Omit 3 tracts****
-
-  gent_cat_colors <-
-    c("snow3","#d94801", "#fa7b00", "#fdcc8a", "#a6d894")
-  gent_cat <- c("Nongentrifiable", "Intense", "Moderate", "Weak", "People or Price")
-
-  race_short_colors <-
-    c("#481567FF", "#33638DDF", "#FDE725FF", "#20A387FF")
-  race_short <- c("Predominantly Black", "Black-Other", "White/White-Mixed", "Multiethnic/Other")
-
-  inc_cat_colors <-
-    c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
-  inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
-
   if (discrete_cat == "gent") {
     data = gentcat
 
@@ -47,7 +33,7 @@ make_discrete_map <- function(shp_tracts,
                "Moderate"="#fb9a99",
                "Weak"="#fdbf6f",
                "People or Price"="#b2df8a",
-               "Nongentrifiable"="#dedede")
+               "Nongentrifiable"="#7a7a7a")
 
   } else if (discrete_cat == "income") {
     data = inccat
@@ -76,7 +62,7 @@ make_discrete_map <- function(shp_tracts,
     filter(GEOID10S %in% oak_ids$trtid10)
 
   data = oak_tracts %>%
-    left_join(data, by = c("GEOID10S" = "tractid10")) %>%
+    inner_join(data, by = c("GEOID10S" = "tractid10")) %>%
     st_transform(CRS("+proj=longlat +datum=WGS84"))
 
   # Read in list of tracts in the Bay Area above the minimum population for display
@@ -90,13 +76,11 @@ make_discrete_map <- function(shp_tracts,
 
   # map data
   # Google Street Map for Oakland ----
-  gmap_oak <-
-    get_map(
-      location = c(-122.3547, 37.6920, -122.1048, 37.8607),
-      maptype = "roadmap",
-      source = "google",
-      color = "bw"
-    )
+  gmap_oak <- get_stamenmap(
+    bbox = c(-122.3547, 37.6920, -122.1048, 37.890692),
+    zoom = 12,
+    maptype = "toner-lite",
+    color = "bw")
 
   map <-
     ggmap(gmap_oak) +
@@ -109,14 +93,13 @@ make_discrete_map <- function(shp_tracts,
     ) +
     geom_sf(
       data = data,
-      size = 0.1,
+      size = 0.3,
       alpha = 0,
-      inherit.aes = FALSE
+      inherit.aes = FALSE,
+      color = "black"
     ) +
     scale_fill_manual(
-      values = values,
-      na.value = "grey60",
-      # guide = "legend"
+      values = values
     ) +
     theme_void() +
     theme(
