@@ -9,7 +9,7 @@
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Figure caption
-#' @return Map of variable of interest.
+#' @return Map of discrete variable: gent, income, or ethnoracial category.
 #' @export
 
 make_discrete_map <- function(shp_tracts,
@@ -43,62 +43,28 @@ make_discrete_map <- function(shp_tracts,
   if (discrete_cat == "gent") {
     data = gentcat
 
-    breaks = c("1. Intense",
-               "2. Moderate",
-               "3. Weak",
-               "4. People or Price",
-               "5. Nongentrifiable")
-
-    values = c("1. Intense"="#e31a1c",
-               "2. Moderate"="#fb9a99",
-               "3. Weak"="#fdbf6f",
-               "4. People or Price"="#b2df8a",
-               "5. Nongentrifiable"="#dedede")
-
-    labels = c("Intense",
-               "Moderate",
-               "Weak",
-               "People or Price",
-               "Nongentrifiable")
+    values = c("Intense"="#e31a1c",
+               "Moderate"="#fb9a99",
+               "Weak"="#fdbf6f",
+               "People or Price"="#b2df8a",
+               "Nongentrifiable"="#dedede")
 
   } else if (discrete_cat == "income") {
     data = inccat
 
-    breaks = c("1. Bottom Quintile",
-               "2. Second Quintile",
-               "3. Middle Quintile",
-               "4. Fourth Quintile",
-               "5. Top Quintile")
-
-    values = c("1. Bottom Quintile" = "#c7cff2",
-               "2. Second Quintile" = "#8897db",
-               "3. Middle Quintile" = "#697fe0",
-               "4. Fourth Quintile" = "#4c66d9",
-               "5. Top Quintile" = "#1437cc")
-
-    labels = c("Bottom Quintile",
-               "Second Quintile",
-               "Middle Quintile",
-               "Fourth Quintile",
-               "Top Quintile")
+    values = c("Bottom Quintile" = "#c7cff2",
+               "Second Quintile" = "#8897db",
+               "Middle Quintile" = "#697fe0",
+               "Fourth Quintile" = "#4c66d9",
+               "Top Quintile" = "#1437cc")
 
   } else if (discrete_cat == "ethnoracial") {
     data = racecat
 
-    breaks = c("1. Predominantly Black",
-               "2. Black-Other",
-               "3. White/White-Mixed",
-               "4. Multiethnic/Other")
-
-    values = c("1. Predominantly Black" = "#481567FF",
-               "2. Black-Other" = "#33638DDF",
-               "3. White/White-Mixed" = "#FDE725FF",
-               "4. Multiethnic/Other" = "#20A387FF")
-
-    labels = c("Predominantly Black",
-               "Black-Other",
-               "White/White-Mixed",
-               "Multiethnic/Other")
+    values = c("Predominantly Black" = "#481567FF",
+               "Black-Other" = "#33638DDF",
+               "White/White-Mixed" = "#FDE725FF",
+               "Multiethnic/Other" = "#20A387FF")
 
   } else {
     return("Please select gent, income, or ethnoracial")
@@ -148,19 +114,17 @@ make_discrete_map <- function(shp_tracts,
       inherit.aes = FALSE
     ) +
     scale_fill_manual(
-      breaks = breaks,
       values = values,
-      labels = labels,
       na.value = "grey60",
-      guide = "legend"
+      # guide = "legend"
     ) +
     theme_void() +
     theme(
       legend.title = element_blank(),
       legend.position = "right",
       plot.title = element_blank(),
-      plot.margin = margin(3,1,3,1, unit = "pt"),
-      plot.caption = element_text(size = 6, hjust = .5)
+      plot.caption = element_text(size = 7, hjust = .5),
+      plot.margin = margin(2,3,2,3, unit = "pt"),
     ) +
     labs(caption = caption)
 
@@ -173,7 +137,7 @@ make_discrete_map <- function(shp_tracts,
   }
 
   if (save) {
-    ggsave(savename, map, height = 5, width = 5)
+    ggsave(savename, map, height = 5, width = 7)
     return(map)
   } else {
     return(map)

@@ -28,7 +28,7 @@ make_discrete_map(
 \item{caption}{Figure caption}
 }
 \value{
-Map of variable of interest.
+Map of discrete variable: gent, income, or ethnoracial category.
 }
 \description{
 This function takes in category (gentrification, income, or ethnoracial) and
