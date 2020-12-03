@@ -52,11 +52,11 @@ make_discrete_map <- function(shp_tracts,
   } else if (discrete_cat == "income") {
     data = inccat
 
-    values = c("Bottom Quintile" = "#c7cff2",
-               "Second Quintile" = "#8897db",
-               "Middle Quintile" = "#697fe0",
+    values = c("Top Quintile" = "#1437cc",
                "Fourth Quintile" = "#4c66d9",
-               "Top Quintile" = "#1437cc")
+               "Middle Quintile" = "#697fe0",
+               "Second Quintile" = "#8897db",
+               "Bottom Quintile" = "#c7cff2")
 
   } else if (discrete_cat == "ethnoracial") {
     data = racecat
