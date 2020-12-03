@@ -64,14 +64,20 @@ plot_lollipop <- function(
 
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
+  # Have line segment start at 0
+  ystart = 0
+  if (limits[1] > 0) {
+    ystart = limits[1]
+  }
 
   plot <-
     ggplot(data, aes(x = cat, y = {{var}}, fill = cat)) +
     geom_segment(aes(x=cat, xend=cat,
-                     y=limits[1], yend={{var}}), size=0.25,
+                     y=ystart, yend={{var}}), size=0.25,
                  show.legend = FALSE) +
     geom_point(aes(color = factor(cat)), size = 3.25, shape = 21,
                colour = "black",show.legend = TRUE) +
+    geom_hline(yintercept=0, linetype="dashed") +
     facet_grid(rows = vars(facet), scale = "free", space = "free") +
     scale_color_manual(values = colors,
                        labels = labels) +
