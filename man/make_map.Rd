@@ -8,8 +8,10 @@ make_map(
   data,
   var,
   shp_tracts,
+  palette = "sequential",
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
+  limits = NULL,
   coord = F,
   save = F,
   savename = "plot.png",
@@ -24,9 +26,13 @@ make_map(
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
 
+\item{palette}{Color palette: "sequential" (default) or "diverging"}
+
 \item{breaks}{Gradient scale breaks, numeric vector}
 
 \item{labels}{Gradient scale labels, character vector}
+
+\item{limits}{Manual limits for color scale, numeic vector: c(min, max)}
 
 \item{coord}{T if plotting coordinate values (lat, lon). Default is F.}
 

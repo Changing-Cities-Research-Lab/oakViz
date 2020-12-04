@@ -8,6 +8,7 @@ make_map_panel(
   data,
   var,
   shp_tracts,
+  palette = "sequential",
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
   limits = NULL,
@@ -24,6 +25,8 @@ make_map_panel(
 \item{var}{Name of column containing variable to plot.}
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
+
+\item{palette}{Color palette: "sequential" (default) or "diverging"}
 
 \item{breaks}{Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)}
 

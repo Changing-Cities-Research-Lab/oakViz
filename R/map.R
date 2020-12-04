@@ -7,8 +7,10 @@
 #' @param data Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
+#' @param palette Color palette: "sequential" (default) or "diverging"
 #' @param breaks Gradient scale breaks, numeric vector
 #' @param labels Gradient scale labels, character vector
+#' @param limits Manual limits for color scale, numeic vector: c(min, max)
 #' @param coord T if plotting coordinate values (lat, lon). Default is F.
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -19,8 +21,10 @@
 make_map <- function(data,
                      var,
                      shp_tracts,
+                     palette = "sequential",
                      breaks = scales::extended_breaks(n = 6),
                      labels = scales::percent,
+                     limits = NULL,
                      coord = F,
                      save = F,
                      savename = "plot.png",
@@ -34,17 +38,43 @@ make_map <- function(data,
   library(grid)
   library(scales)
 
+  # Adjust color palette
+  if (palette == "sequential") {
+    lim = NULL
+
+    # Sequential palette
+    MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
+
+  } else if (palette == "diverging") {
+
+    # Get limits to center diverging palette around 0
+    lim <- data %>%
+      select({{var}}) %>%
+      abs() %>%
+      max(na.rm = T) * c(-1, 1)
+
+    # Diverging palette
+    MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "Spectral"))
+
+  } else {
+    return("Please select sequential or diverging color palette.")
+  }
+
+  # Overrides lim value if user inputs limits
+  if (!is.null(limits)) {
+    lim = limits
+  }
+
   # county tract map
   oak_tracts <-
     shp_tracts %>%
     filter(GEOID10S %in% oak_ids$trtid10)
 
+  data$tractid10 = as.numeric(data$tractid10)
+
   data = oak_tracts %>%
     right_join(data, by = c("GEOID10S" = "tractid10")) %>%
     st_transform(CRS("+proj=longlat +datum=WGS84"))
-
-  # If you want to change colors for any reason
-  MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
 
   # Read in list of tracts in the Bay Area above the minimum population for display
   tracts_use <-
@@ -82,7 +112,8 @@ make_map <- function(data,
     scale_fill_gradientn(
       breaks = breaks,
       labels = labels,
-      colors = alpha(MAP_COLORS, .8)
+      colors = alpha(MAP_COLORS, .8),
+      limits = lim
     ) +
     guides(
       fill =

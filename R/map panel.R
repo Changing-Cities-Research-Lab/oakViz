@@ -8,6 +8,7 @@
 #' @param data Data with a column containing census tracts, distinct periods, and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
+#' @param palette Color palette: "sequential" (default) or "diverging"
 #' @param breaks Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)
 #' @param labels Gradient scale labels, either character vector or scales::percent or scales::comma
 #' @param limits Gradient scale limits, c(min, max)
@@ -22,6 +23,7 @@ make_map_panel <- function(
   data,
   var,
   shp_tracts,
+  palette = "sequential",
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
   limits = NULL,
@@ -38,6 +40,45 @@ make_map_panel <- function(
   library(gridExtra)
   library(grid)
 
+  # Adjust color palette
+  if (palette == "sequential") {
+
+    # Get max and min values for common gradient scale
+    max = data %>%
+      st_drop_geometry() %>%
+      select({{var}})%>%
+      # st_drop_geometry() %>%
+      max(na.rm = T)
+
+    min = data %>%
+      st_drop_geometry() %>%
+      select({{var}}) %>%
+      min(na.rm = T)
+
+    range = c(min, max)
+
+    # Sequential palette
+    MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
+
+  } else if (palette == "diverging") {
+
+    # Get limits to center diverging palette around 0
+    range <- data %>%
+      select({{var}}) %>%
+      abs() %>%
+      max(na.rm = T) * c(-1, 1)
+
+    # Diverging palette
+    MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "Spectral"))
+
+  } else {
+    return("Please select sequential or diverging color palette.")
+  }
+
+  # Overrides lim value if user inputs limits
+  if (!is.null(limits)) {
+    range = limits
+  }
 
   # county tract map
   oak_tracts <-
@@ -47,9 +88,6 @@ make_map_panel <- function(
   data = oak_tracts %>%
     right_join(data, by = c("GEOID10S" = "tractid10")) %>%
     st_transform(CRS("+proj=longlat +datum=WGS84"))
-
-  # If you want to change colors for any reason
-  MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
 
   # Read in list of tracts in the Bay Area above the minimum population for display
   tracts_use <-
@@ -67,24 +105,6 @@ make_map_panel <- function(
     zoom = 12,
     maptype = "toner-lite",
     color = "bw")
-
-  # Get max and min values for common gradient scale
-  max = data %>%
-    st_drop_geometry() %>%
-    select({{var}})%>%
-    # st_drop_geometry() %>%
-    max(na.rm = T)
-
-  min = data %>%
-    st_drop_geometry() %>%
-    select({{var}}) %>%
-    min(na.rm = T)
-
-  range = c(min, max)
-
-  if (!is.null(limits)) {
-    range = limits
-  }
 
   maps_all = list()
   period_panels = unique(data$periods)
