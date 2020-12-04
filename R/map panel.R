@@ -9,6 +9,7 @@
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param palette Color palette: "sequential" (default) or "diverging"
+#' @param jenksbreaks Uses Jenks Breaks when T, default is F.
 #' @param breaks Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)
 #' @param labels Gradient scale labels, either character vector or scales::percent or scales::comma
 #' @param limits Gradient scale limits, c(min, max)
@@ -24,6 +25,7 @@ make_map_panel <- function(
   var,
   shp_tracts,
   palette = "sequential",
+  jenksbreaks = F,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
   limits = NULL,
@@ -78,6 +80,13 @@ make_map_panel <- function(
   # Overrides lim value if user inputs limits
   if (!is.null(limits)) {
     range = limits
+  }
+
+  # Sets Jenks breaks if T
+  if (jenksbreaks) {
+    breaks = data %>%
+      dplyr::pull({{var}}) %>%
+      getJenksBreaks(k = 6)
   }
 
   # county tract map

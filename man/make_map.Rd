@@ -9,6 +9,7 @@ make_map(
   var,
   shp_tracts,
   palette = "sequential",
+  jenksbreaks = F,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
   limits = NULL,
@@ -28,9 +29,11 @@ make_map(
 
 \item{palette}{Color palette: "sequential" (default) or "diverging"}
 
-\item{breaks}{Gradient scale breaks, numeric vector}
+\item{jenksbreaks}{Uses Jenks Breaks when T, default is F.}
 
-\item{labels}{Gradient scale labels, character vector}
+\item{breaks}{Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)}
+
+\item{labels}{Gradient scale labels, either character vector or scales::percent or scales::comma}
 
 \item{limits}{Manual limits for color scale, numeic vector: c(min, max)}
 
