@@ -51,18 +51,6 @@ plot_bar_periods <- function(
   period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
   names(period_cat_colors) <- period_cat
 
-  # Create period column for facet panel
-  dat = dat %>%
-    filter(year %in% c("boom", "bust", "recovery", "post_recovery")) %>%
-    mutate(period = year)
-
-  dat$period = plyr::revalue(dat$year, c("boom" = "Boom",
-                                   "bust" = "Bust",
-                                   "recovery" = "Recovery",
-                                   "post_recovery" = "Post-Recovery"))
-
-  dat$period = factor(dat$period, levels = c(period_cat))
-
   # Combine with either gentcat, racecat, inccat, ses, or period
   if (group == "gent") {
     dat = dat %>% #left_join(gentcat, by = "tractid10") %>%
