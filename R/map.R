@@ -57,7 +57,7 @@ make_map <- function(data,
       max(na.rm = T) * c(-1, 1)
 
     # Diverging palette
-    MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "Spectral"))
+    MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "RdBu"))
 
   } else {
     return("Please select sequential or diverging color palette.")

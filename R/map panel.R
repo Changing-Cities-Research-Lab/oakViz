@@ -47,13 +47,10 @@ make_map_panel <- function(
 
     # Get max and min values for common gradient scale
     max = data %>%
-      st_drop_geometry() %>%
       select({{var}})%>%
-      # st_drop_geometry() %>%
       max(na.rm = T)
 
     min = data %>%
-      st_drop_geometry() %>%
       select({{var}}) %>%
       min(na.rm = T)
 
@@ -71,7 +68,7 @@ make_map_panel <- function(
       max(na.rm = T) * c(-1, 1)
 
     # Diverging palette
-    MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "Spectral"))
+    MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "RdBu"))
 
   } else {
     return("Please select sequential or diverging color palette.")
