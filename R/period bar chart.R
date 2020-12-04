@@ -30,12 +30,12 @@ plot_bar_periods <- function(
     c("snow3","#d94801", "#fa7b00", "#fdcc8a", "#a6d894")
   gent_cat <- c("Nongentrifiable", "Intense", "Moderate", "Weak", "People or Price")
   names(gent_cat_colors) <- gent_cat
-  
+
   race_short_colors <-
     c("#481567FF", "#33638DDF", "#FDE725FF", "#20A387FF")
   race_short <- c("Predominantly Black", "Black-Other", "White/White-Mixed", "Multiethnic/Other")
   names(race_short_colors) <- race_short
-  
+
   inc_cat_colors <-
     c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
   inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
@@ -50,6 +50,18 @@ plot_bar_periods <- function(
     c("#46aac8", "#46aac8", "#46aac8", "#46aac8")
   period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
   names(period_cat_colors) <- period_cat
+
+  # Create period column for facet panel
+  dat = dat %>%
+    filter(year %in% c("boom", "bust", "recovery", "post_recovery")) %>%
+    mutate(period = year)
+
+  dat$period = plyr::revalue(dat$year, c("boom" = "Boom",
+                                   "bust" = "Bust",
+                                   "recovery" = "Recovery",
+                                   "post_recovery" = "Post-Recovery"))
+
+  dat$period = factor(dat$period, levels = c(period_cat))
 
   # Combine with either gentcat, racecat, inccat, ses, or period
   if (group == "gent") {
@@ -104,6 +116,7 @@ plot_bar_periods <- function(
       scale_y_continuous(limits = limits,
                          expand = c(0, 0),
                          labels = scales::percent) +
+      geom_hline(yintercept=0, linetype="dashed") +
       theme_bw() +
       theme(panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
@@ -127,6 +140,7 @@ plot_bar_periods <- function(
       scale_y_continuous(limits = limits,
                          expand = c(0, 0),
                          labels = scales::percent) +
+      geom_hline(yintercept=0, linetype="dashed") +
       theme_bw() +
       theme(panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),

@@ -24,6 +24,8 @@ aggregate_categories = function(
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
 
+  dat$tractid10 = as.numeric(dat$tractid10)
+
   # merge oakland tracts with data
   dat <- dat %>% right_join(oak_tracts, by = "tractid10")
 
