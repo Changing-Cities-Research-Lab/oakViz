@@ -9,7 +9,7 @@ make_map_panel(
   var,
   shp_tracts,
   palette = "sequential",
-  jenksbreaks = F,
+  jenksbreaks = T,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
   limits = NULL,
@@ -29,7 +29,7 @@ make_map_panel(
 
 \item{palette}{Color palette: "sequential" (default) or "diverging"}
 
-\item{jenksbreaks}{Uses Jenks Breaks when T, default is F.}
+\item{jenksbreaks}{Uses Jenks Breaks when T, otherwise uses continuous color scale}
 
 \item{breaks}{Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)}
 

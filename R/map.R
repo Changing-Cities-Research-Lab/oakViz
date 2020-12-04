@@ -8,7 +8,7 @@
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param palette Color palette: "sequential" (default) or "diverging"
-#' @param jenksbreaks Uses Jenks Breaks when T, default is F.
+#' @param jenksbreaks Uses Jenks Breaks when T, otherwise uses continuous color scale
 #' @param breaks Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)
 #' @param labels Gradient scale labels, either character vector or scales::percent or scales::comma
 #' @param limits Manual limits for color scale, numeic vector: c(min, max)
@@ -23,7 +23,7 @@ make_map <- function(data,
                      var,
                      shp_tracts,
                      palette = "sequential",
-                     jenksbreaks = F,
+                     jenksbreaks = T,
                      breaks = scales::extended_breaks(n = 6),
                      labels = scales::percent,
                      limits = NULL,
@@ -44,9 +44,10 @@ make_map <- function(data,
   # Adjust color palette
   if (palette == "sequential") {
     lim = NULL
-
-    # Sequential palette
+    type = "seq"
     MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
+    palette = "YlOrRd"
+    direction = 1
 
   } else if (palette == "diverging") {
 
@@ -55,9 +56,10 @@ make_map <- function(data,
       select({{var}}) %>%
       abs() %>%
       max(na.rm = T) * c(-1, 1)
-
-    # Diverging palette
+    type = "div"
     MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "RdBu"))
+    palette = "RdBu"
+    direction = -1
 
   } else {
     return("Please select sequential or diverging color palette.")
@@ -119,12 +121,6 @@ make_map <- function(data,
       inherit.aes = FALSE,
       color = "black"
     ) +
-    scale_fill_gradientn(
-      breaks = breaks,
-      labels = labels,
-      colors = alpha(MAP_COLORS, .8),
-      limits = lim
-    ) +
     guides(
       fill =
         guide_colorbar(
@@ -143,8 +139,23 @@ make_map <- function(data,
       plot.caption = element_text(size = 6, hjust = .5)
     ) +
     labs(caption = caption)
+
+  if (jenksbreaks) {
+    map = map + scale_fill_fermenter(breaks = breaks,
+                           type = type,
+                           palette = palette,
+                           direction = direction)
+  } else {
+    map = map + scale_fill_gradientn(
+      breaks = breaks,
+      labels = labels,
+      colors = alpha(MAP_COLORS, .8),
+      limits = lim)
+  }
+
+
   if (coord == T) {
-    + geom_point(
+    map = map + geom_point(
       data = data,
       aes(x = lon, y = lat),
       color = "navy", size = 2

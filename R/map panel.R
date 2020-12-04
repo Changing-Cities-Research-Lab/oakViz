@@ -9,7 +9,7 @@
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param palette Color palette: "sequential" (default) or "diverging"
-#' @param jenksbreaks Uses Jenks Breaks when T, default is F.
+#' @param jenksbreaks Uses Jenks Breaks when T, otherwise uses continuous color scale
 #' @param breaks Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)
 #' @param labels Gradient scale labels, either character vector or scales::percent or scales::comma
 #' @param limits Gradient scale limits, c(min, max)
@@ -25,7 +25,7 @@ make_map_panel <- function(
   var,
   shp_tracts,
   palette = "sequential",
-  jenksbreaks = F,
+  jenksbreaks = T,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
   limits = NULL,
@@ -56,8 +56,11 @@ make_map_panel <- function(
 
     range = c(min, max)
 
-    # Sequential palette
     MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
+    lim = NULL
+    type = "seq"
+    palette = "YlOrRd"
+    direction = 1
 
   } else if (palette == "diverging") {
 
