@@ -128,12 +128,6 @@ make_map_panel <- function(
       alpha = 0.5,
       inherit.aes = FALSE
     ) +
-    scale_fill_gradientn(
-      breaks = breaks,
-      labels = labels,
-      limits = range,
-      colors = alpha(MAP_COLORS, .8)
-    ) +
     guides(
       fill =
         guide_colorbar(
@@ -148,6 +142,21 @@ make_map_panel <- function(
       legend.position = "bottom",
       legend.box.margin = margin(3,0,0,0, unit = "pt"),
     )
+
+  if (jenksbreaks) {
+    legend_map = legend_map +
+      scale_fill_fermenter(breaks = breaks,
+                           type = type,
+                           palette = palette,
+                           direction = direction)
+  } else {
+    legend_map = legend_map +
+      scale_fill_gradientn(
+        breaks = breaks,
+        labels = labels,
+        colors = alpha(MAP_COLORS, .8),
+        limits = range)
+  }
 
   # Save legend object
   tmp <- ggplot_gtable(ggplot_build(legend_map))
@@ -175,13 +184,6 @@ make_map_panel <- function(
         inherit.aes = FALSE,
         color = "black"
       ) +
-      scale_fill_gradientn(
-        breaks = breaks,
-        labels = labels,
-        limits = range,
-        colors = alpha(MAP_COLORS, .8),
-        na.value = "grey60"
-      ) +
       guides(
         fill =
           guide_colorbar(
@@ -199,6 +201,23 @@ make_map_panel <- function(
         plot.caption = element_text(size = 8)
       ) +
       labs(title = period_panels[i])
+
+    if (jenksbreaks) {
+      map = map +
+        scale_fill_fermenter(breaks = breaks,
+                             type = type,
+                             palette = palette,
+                             direction = direction)
+    } else {
+      map = map +
+        scale_fill_gradientn(
+          breaks = breaks,
+          labels = labels,
+          colors = alpha(MAP_COLORS, .8),
+          limits = range,
+          na.value = "grey60")
+    }
+
     if (coord == T) {
       + geom_point(
         data = data,
