@@ -8,6 +8,7 @@ plot_lollipop(
   data,
   var,
   limits,
+  reverse = F,
   x_title = "",
   scale_type = "numeric",
   save = F,
@@ -22,6 +23,8 @@ plot_lollipop(
 \item{var}{Column name of variable of interest.}
 
 \item{limits}{Y-axis limits.}
+
+\item{reverse}{Reverses direction of x-axis when T, default is F.}
 
 \item{x_title}{Title to display along x-axis}
 

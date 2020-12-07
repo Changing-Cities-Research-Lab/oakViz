@@ -8,6 +8,7 @@
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits.
+#' @param reverse Reverses direction of x-axis when T, default is F.
 #' @param x_title Title to display along x-axis
 #' @param scale_type Y-axis scale type: "numeric" or "percent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
@@ -20,6 +21,7 @@ plot_lollipop <- function(
   data,
   var,
   limits,
+  reverse = F,
   x_title = "",
   scale_type = "numeric",
   save = F,
@@ -79,12 +81,12 @@ plot_lollipop <- function(
                colour = "black",show.legend = TRUE) +
     geom_hline(yintercept=0, linetype="dashed") +
     facet_grid(rows = vars(facet), scale = "free", space = "free") +
-    scale_color_manual(values = colors,
-                       labels = labels) +
-    scale_fill_manual(values = colors) +
     scale_y_continuous(limits = limits,
                        expand = c(0, 0),
                        labels = label_type) +
+    scale_color_manual(values = colors,
+                       labels = labels) +
+    scale_fill_manual(values = colors) +
     theme_bw() +
     theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
@@ -99,6 +101,12 @@ plot_lollipop <- function(
           axis.title.x = element_text(size = 9)) +
     coord_flip()
 
+  if (reverse) {
+    plot = plot +
+      scale_y_reverse(limits = rev(limits),
+                      expand = c(0, 0),
+                      labels = label_type)
+  }
 
   if (save) {
     ggsave(savename, plot, height = 4.5, width = 4.5)
