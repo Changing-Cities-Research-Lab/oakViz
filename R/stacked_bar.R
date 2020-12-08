@@ -129,7 +129,8 @@ stacked_bar <- function(
     grid.arrange(plots_all[[1]], plots_all[[2]], plots_all[[3]],
                  nrow = 3, ncol = 1,
                  layout_matrix = layout,
-                 heights = c(5, 5, 5))
+                 heights = c(5, 5, 5),
+                 bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
 
   if (save) {
     ggsave(savename, panel, height = 10, width = 6)
