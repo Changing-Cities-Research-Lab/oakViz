@@ -7,7 +7,7 @@
 stacked_bar(
   dat,
   fill = "ses",
-  facet = "ethnoracial",
+  facet = c("ethnoracial", "gent", "income"),
   group = "period",
   save = F,
   savename = "plot.png",
@@ -31,7 +31,7 @@ stacked_bar(
 \item{caption}{Caption for figure}
 }
 \value{
-Grouped bar chart across four periods.
+Panel of stacked bar charts of different groupings
 }
 \description{
 This function takes in data and produces a panel of stacked bar charts,

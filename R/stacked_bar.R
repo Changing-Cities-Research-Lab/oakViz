@@ -10,7 +10,7 @@
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
-#' @return Grouped bar chart across four periods.
+#' @return Panel of stacked bar charts of different groupings
 #' @export
 
 stacked_bar <- function(
