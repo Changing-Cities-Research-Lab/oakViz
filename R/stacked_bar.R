@@ -63,7 +63,8 @@ stacked_bar <- function(
   foreach(i = 1:2) %do% {
     if (facet[i] == "ethnoracial") {
       dat = data_full %>%
-        filter(facet == "Ethnoracial")
+        filter(facet %in% c("All", "Ethnoracial"))
+      dat$facet <- plyr::revalue(dat$facet, c("All"="Ethnoracial"))
     } else if (facet[i] == "gent") {
       dat = data_full %>%
         filter(facet == "Gentrification")
@@ -108,7 +109,8 @@ stacked_bar <- function(
                       x = x_group,
                       fill = fill)) +
       geom_bar(stat="identity", position = "stack") +
-      facet_grid(cols = vars(cat)) +
+      facet_grid(cols = vars(cat),
+                 rows = vars(facet)) +
       scale_fill_manual(values = values,
                         labels = fill_labels) +
       scale_x_discrete(
@@ -126,7 +128,8 @@ stacked_bar <- function(
   # Plot bottom bar chart
   if (facet[3] == "ethnoracial") {
     dat = data_full %>%
-      filter(facet == "Ethnoracial")
+      filter(facet %in% c("All", "Ethnoracial"))
+    dat$facet <- plyr::revalue(dat$facet, c("All"="Ethnoracial"))
   } else if (facet[3] == "gent") {
     dat = data_full %>%
       filter(facet == "Gentrification")
@@ -171,7 +174,8 @@ stacked_bar <- function(
                     x = x_group,
                     fill = fill)) +
     geom_bar(stat="identity", position = "stack") +
-    facet_grid(cols = vars(cat)) +
+    facet_grid(cols = vars(cat),
+               rows = vars(facet)) +
     scale_fill_manual(values = values,
                       labels = fill_labels) +
     scale_x_discrete(
@@ -196,7 +200,7 @@ stacked_bar <- function(
                  bottom=textGrob(caption, gp=gpar(fontsize=7)))
 
   if (save) {
-    ggsave(savename, panel, height = 9, width = 6)
+    ggsave(savename, panel, height = 9, width = 7)
   }
   return(panel)
 }

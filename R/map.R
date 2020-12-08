@@ -126,7 +126,8 @@ make_map <- function(data,
         guide_colorbar(
           barheight = 0.5,
           barwidth = 15,
-          title = NULL
+          title = NULL,
+          frame.colour = "black"
         )
     ) +
     theme_void() +
@@ -136,7 +137,8 @@ make_map <- function(data,
       legend.box.margin = margin(3,0,0,0, unit = "pt"),
       plot.title = element_blank(),
       plot.margin = margin(3,1,3,1, unit = "pt"),
-      plot.caption = element_text(size = 6, hjust = .5)
+      plot.caption = element_text(size = 6, hjust = .5),
+      panel.border = element_rect(colour = "black", fill=NA)
     ) +
     labs(caption = caption)
 

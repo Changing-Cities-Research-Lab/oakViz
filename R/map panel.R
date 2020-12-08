@@ -137,7 +137,8 @@ make_map_panel <- function(
         guide_colorbar(
           barheight = 0.8,
           barwidth = 27,
-          title = NULL
+          title = NULL,
+          frame.colour = "black"
         )
     ) +
     theme(
@@ -145,6 +146,7 @@ make_map_panel <- function(
       legend.title = element_blank(),
       legend.position = "bottom",
       legend.box.margin = margin(3,0,0,0, unit = "pt"),
+      panel.border = element_rect(colour = "black", fill=NA)
     )
 
   if (jenksbreaks) {
