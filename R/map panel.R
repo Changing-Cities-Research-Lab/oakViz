@@ -136,12 +136,12 @@ make_map_panel <- function(
       fill =
         guide_colorbar(
           barheight = 0.8,
-          barwidth = 21,
+          barwidth = 27,
           title = NULL
         )
     ) +
     theme(
-      legend.text = element_text(size = 12),
+      legend.text = element_text(size = 10),
       legend.title = element_blank(),
       legend.position = "bottom",
       legend.box.margin = margin(3,0,0,0, unit = "pt"),

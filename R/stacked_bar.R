@@ -16,7 +16,7 @@
 stacked_bar <- function(
   dat,
   fill = "ses",
-  facet = "ethnoracial", # "ethnoracial", "gent", "income"
+  facet = c("ethnoracial", "gent", "income"), # "ethnoracial", "gent", "income"
   group = "period", # gent, ethnoracial, income, ses, period
   save = F,
   savename = "plot.png",
@@ -56,7 +56,9 @@ stacked_bar <- function(
   dat = dat %>%
     filter(year %in% c("boom","bust", "recovery", "post_recovery"))
 
-  if (facet == "ethnoracial") {
+  # First bar chart
+
+  if (facet[1] == "ethnoracial") {
     dat = dat %>%
       filter(facet == "Ethnoracial")
   } else if (facet == "gent") {
@@ -98,7 +100,127 @@ stacked_bar <- function(
     mutate(denom = sum(pop)) %>%
     mutate(pop_pct_compute = pop/denom)
 
-  plot <-
+  plot1 <-
+    ggplot(dat, aes(y = pop_pct_compute,
+                    x = x_group,
+                    fill = fill)) +
+    geom_bar(stat="identity", position = "stack") +
+    facet_grid(cols = vars(cat)) +
+    scale_fill_manual(values = values,
+                      labels = fill_labels) +
+    scale_x_discrete(
+      labels = x_labels) +
+    scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
+    labs(x = "", y = "") +
+    theme +
+    theme(legend.position = "bottom") +
+    guides(fill = guide_legend(nrow = 1, reverse = T))
+
+  # Second bar chart
+
+  if (facet[2] == "ethnoracial") {
+    dat = dat %>%
+      filter(facet == "Ethnoracial")
+  } else if (facet == "gent") {
+    dat = dat %>%
+      filter(facet == "Gentrification")
+  } else if (facet == "income") {
+    dat = dat %>%
+      filter(facet == "Income")
+  } else {
+    return("Please select valid facet: ethnoracial, gent, or income")
+  }
+
+  # Order x-axis grouping
+  if (group == "period") {
+    dat$year <- factor(dat$year,
+                       levels = c("boom", "bust", "recovery", "post_recovery"))
+    dat$x_group = dat$year
+    x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
+  }
+  # Add additional x-axis groupings to code
+
+  # Order fill grouping
+  if (fill == "ses") {
+    dat$ses <- factor(dat$ses,
+                      levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+    dat$fill = dat$ses
+    values = c("All" = "#9b9b9b",
+               "Low" = "#fcbba1",
+               "LMM" = "#faab8c",
+               "Moderate" = "#fc9272",
+               "Middle" = "#fb6a4a",
+               "High" = "#b63b36")
+    fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
+  }
+  # Add additional fill groupings to code
+
+  dat = dat %>%
+    group_by(cat, x_group) %>%
+    mutate(denom = sum(pop)) %>%
+    mutate(pop_pct_compute = pop/denom)
+
+  plot2 <-
+    ggplot(dat, aes(y = pop_pct_compute,
+                    x = x_group,
+                    fill = fill)) +
+    geom_bar(stat="identity", position = "stack") +
+    facet_grid(cols = vars(cat)) +
+    scale_fill_manual(values = values,
+                      labels = fill_labels) +
+    scale_x_discrete(
+      labels = x_labels) +
+    scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
+    labs(x = "", y = "") +
+    theme +
+    theme(legend.position = "bottom") +
+    guides(fill = guide_legend(nrow = 1, reverse = T))
+
+  # Third bar chart
+
+  if (facet[3] == "ethnoracial") {
+    dat = dat %>%
+      filter(facet == "Ethnoracial")
+  } else if (facet == "gent") {
+    dat = dat %>%
+      filter(facet == "Gentrification")
+  } else if (facet == "income") {
+    dat = dat %>%
+      filter(facet == "Income")
+  } else {
+    return("Please select valid facet: ethnoracial, gent, or income")
+  }
+
+  # Order x-axis grouping
+  if (group == "period") {
+    dat$year <- factor(dat$year,
+                       levels = c("boom", "bust", "recovery", "post_recovery"))
+    dat$x_group = dat$year
+    x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
+  }
+  # Add additional x-axis groupings to code
+
+  # Order fill grouping
+  if (fill == "ses") {
+    dat$ses <- factor(dat$ses,
+                      levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+    dat$fill = dat$ses
+    values = c("All" = "#9b9b9b",
+               "Low" = "#fcbba1",
+               "LMM" = "#faab8c",
+               "Moderate" = "#fc9272",
+               "Middle" = "#fb6a4a",
+               "High" = "#b63b36")
+    fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
+  }
+  # Add additional fill groupings to code
+
+  dat = dat %>%
+    group_by(cat, x_group) %>%
+    mutate(denom = sum(pop)) %>%
+    mutate(pop_pct_compute = pop/denom)
+
+  plot3 <-
     ggplot(dat, aes(y = pop_pct_compute,
                     x = x_group,
                     fill = fill)) +
