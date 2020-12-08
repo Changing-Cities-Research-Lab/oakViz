@@ -148,7 +148,8 @@ make_map_panel <- function(
       scale_fill_fermenter(breaks = breaks,
                            type = type,
                            palette = palette,
-                           direction = direction)
+                           direction = direction,
+                           labels = labels)
   } else {
     legend_map = legend_map +
       scale_fill_gradientn(
