@@ -72,6 +72,10 @@ make_map_panel <- function(
 
     # Diverging palette
     MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "RdBu"))
+    lim = NULL
+    type = "div"
+    palette = "RdBu"
+    direction = -1
 
   } else {
     return("Please select sequential or diverging color palette.")

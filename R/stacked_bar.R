@@ -73,39 +73,46 @@ stacked_bar <- function(
   if (group == "period") {
     dat$year <- factor(dat$year,
                        levels = c("boom", "bust", "recovery", "post_recovery"))
+    dat$x_group = dat$year
+    x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
   }
+  # Add additional x-axis groupings to code
 
-
-  dat$ses <- factor(dat$ses,
-                    levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+  # Order fill grouping
+  if (fill == "ses") {
+    dat$ses <- factor(dat$ses,
+                      levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+    dat$fill = dat$ses
+    values = c("All" = "#9b9b9b",
+               "Low" = "#fcbba1",
+               "LMM" = "#faab8c",
+               "Moderate" = "#fc9272",
+               "Middle" = "#fb6a4a",
+               "High" = "#b63b36")
+    fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
+  }
+  # Add additional fill groupings to code
 
   dat = dat %>%
-    group_by(cat, year) %>%
+    group_by(cat, x_group) %>%
     mutate(denom = sum(pop)) %>%
     mutate(pop_pct_compute = pop/denom)
 
   plot <-
     ggplot(dat, aes(y = pop_pct_compute,
-                    x = year,
-                    fill = ses)) +
+                    x = x_group,
+                    fill = fill)) +
     geom_bar(stat="identity", position = "stack") +
     facet_grid(cols = vars(cat)) +
-    scale_fill_manual(values =
-                        c("All" = "#9b9b9b",
-                          "Low" = "#fcbba1",
-                          "LMM" = "#faab8c",
-                          "Moderate" = "#fc9272",
-                          "Middle" = "#fb6a4a",
-                          "High" = "#b63b36"),
-                      labels = c("All", "Low", "LMM","Moderate","Middle", "High")) +
+    scale_fill_manual(values = values,
+                      labels = fill_labels) +
     scale_x_discrete(
-      labels = c("Boom","Bust", "Recovery", "Post-Recovery")) +
+      labels = x_labels) +
     scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
     labs(x = "", y = "") +
     theme +
     theme(legend.position = "bottom") +
     guides(fill = guide_legend(nrow = 1, reverse = T))
-  stacked_bar
 
   if (save) {
     ggsave(savename, plot, height = 5, width = 7)
