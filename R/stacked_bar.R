@@ -53,191 +53,86 @@ stacked_bar <- function(
       axis.line = element_line(colour = "black"),
       panel.border = element_blank())
 
-  dat = dat %>%
+  data_full = dat %>%
     filter(year %in% c("boom","bust", "recovery", "post_recovery"))
 
-  # First bar chart
+  # Plot bar charts
+  plots_all = list()
 
-  if (facet[1] == "ethnoracial") {
+  foreach(i = 1:3) %do% {
+    if (facet[i] == "ethnoracial") {
+      dat = data_full %>%
+        filter(facet == "Ethnoracial")
+    } else if (facet[i] == "gent") {
+      dat = data_full %>%
+        filter(facet == "Gentrification")
+    } else if (facet[i] == "income") {
+      dat = data_full %>%
+        filter(facet == "Income")
+    } else {
+      return("Please select valid facet: ethnoracial, gent, or income")
+    }
+
+    # Order x-axis grouping
+    if (group == "period") {
+      dat$year <- factor(dat$year,
+                         levels = c("boom", "bust", "recovery", "post_recovery"))
+      dat$x_group = dat$year
+      x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
+    }
+    # Add additional x-axis groupings to code
+
+    # Order fill grouping
+    if (fill == "ses") {
+      dat$ses <- factor(dat$ses,
+                        levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+      dat$fill = dat$ses
+      values = c("All" = "#9b9b9b",
+                 "Low" = "#fcbba1",
+                 "LMM" = "#faab8c",
+                 "Moderate" = "#fc9272",
+                 "Middle" = "#fb6a4a",
+                 "High" = "#b63b36")
+      fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
+    }
+    # Add additional fill groupings to code
+
     dat = dat %>%
-      filter(facet == "Ethnoracial")
-  } else if (facet == "gent") {
-    dat = dat %>%
-      filter(facet == "Gentrification")
-  } else if (facet == "income") {
-    dat = dat %>%
-      filter(facet == "Income")
-  } else {
-    return("Please select valid facet: ethnoracial, gent, or income")
+      group_by(cat, x_group) %>%
+      mutate(denom = sum(pop)) %>%
+      mutate(pop_pct_compute = pop/denom)
+
+    plot <-
+      ggplot(dat, aes(y = pop_pct_compute,
+                      x = x_group,
+                      fill = fill)) +
+      geom_bar(stat="identity", position = "stack") +
+      facet_grid(cols = vars(cat)) +
+      scale_fill_manual(values = values,
+                        labels = fill_labels) +
+      scale_x_discrete(
+        labels = x_labels) +
+      scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
+      labs(x = "", y = "") +
+      theme +
+      theme(legend.position = "bottom") +
+      guides(fill = guide_legend(nrow = 1, reverse = T))
+
+    # add map to list of grobs
+    plots_all = c(plots_all, list(plot))
   }
 
-  # Order x-axis grouping
-  if (group == "period") {
-    dat$year <- factor(dat$year,
-                       levels = c("boom", "bust", "recovery", "post_recovery"))
-    dat$x_group = dat$year
-    x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
-  }
-  # Add additional x-axis groupings to code
 
-  # Order fill grouping
-  if (fill == "ses") {
-    dat$ses <- factor(dat$ses,
-                      levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
-    dat$fill = dat$ses
-    values = c("All" = "#9b9b9b",
-               "Low" = "#fcbba1",
-               "LMM" = "#faab8c",
-               "Moderate" = "#fc9272",
-               "Middle" = "#fb6a4a",
-               "High" = "#b63b36")
-    fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
-  }
-  # Add additional fill groupings to code
-
-  dat = dat %>%
-    group_by(cat, x_group) %>%
-    mutate(denom = sum(pop)) %>%
-    mutate(pop_pct_compute = pop/denom)
-
-  plot1 <-
-    ggplot(dat, aes(y = pop_pct_compute,
-                    x = x_group,
-                    fill = fill)) +
-    geom_bar(stat="identity", position = "stack") +
-    facet_grid(cols = vars(cat)) +
-    scale_fill_manual(values = values,
-                      labels = fill_labels) +
-    scale_x_discrete(
-      labels = x_labels) +
-    scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
-    labs(x = "", y = "") +
-    theme +
-    theme(legend.position = "bottom") +
-    guides(fill = guide_legend(nrow = 1, reverse = T))
-
-  # Second bar chart
-
-  if (facet[2] == "ethnoracial") {
-    dat = dat %>%
-      filter(facet == "Ethnoracial")
-  } else if (facet == "gent") {
-    dat = dat %>%
-      filter(facet == "Gentrification")
-  } else if (facet == "income") {
-    dat = dat %>%
-      filter(facet == "Income")
-  } else {
-    return("Please select valid facet: ethnoracial, gent, or income")
-  }
-
-  # Order x-axis grouping
-  if (group == "period") {
-    dat$year <- factor(dat$year,
-                       levels = c("boom", "bust", "recovery", "post_recovery"))
-    dat$x_group = dat$year
-    x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
-  }
-  # Add additional x-axis groupings to code
-
-  # Order fill grouping
-  if (fill == "ses") {
-    dat$ses <- factor(dat$ses,
-                      levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
-    dat$fill = dat$ses
-    values = c("All" = "#9b9b9b",
-               "Low" = "#fcbba1",
-               "LMM" = "#faab8c",
-               "Moderate" = "#fc9272",
-               "Middle" = "#fb6a4a",
-               "High" = "#b63b36")
-    fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
-  }
-  # Add additional fill groupings to code
-
-  dat = dat %>%
-    group_by(cat, x_group) %>%
-    mutate(denom = sum(pop)) %>%
-    mutate(pop_pct_compute = pop/denom)
-
-  plot2 <-
-    ggplot(dat, aes(y = pop_pct_compute,
-                    x = x_group,
-                    fill = fill)) +
-    geom_bar(stat="identity", position = "stack") +
-    facet_grid(cols = vars(cat)) +
-    scale_fill_manual(values = values,
-                      labels = fill_labels) +
-    scale_x_discrete(
-      labels = x_labels) +
-    scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
-    labs(x = "", y = "") +
-    theme +
-    theme(legend.position = "bottom") +
-    guides(fill = guide_legend(nrow = 1, reverse = T))
-
-  # Third bar chart
-
-  if (facet[3] == "ethnoracial") {
-    dat = dat %>%
-      filter(facet == "Ethnoracial")
-  } else if (facet == "gent") {
-    dat = dat %>%
-      filter(facet == "Gentrification")
-  } else if (facet == "income") {
-    dat = dat %>%
-      filter(facet == "Income")
-  } else {
-    return("Please select valid facet: ethnoracial, gent, or income")
-  }
-
-  # Order x-axis grouping
-  if (group == "period") {
-    dat$year <- factor(dat$year,
-                       levels = c("boom", "bust", "recovery", "post_recovery"))
-    dat$x_group = dat$year
-    x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
-  }
-  # Add additional x-axis groupings to code
-
-  # Order fill grouping
-  if (fill == "ses") {
-    dat$ses <- factor(dat$ses,
-                      levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
-    dat$fill = dat$ses
-    values = c("All" = "#9b9b9b",
-               "Low" = "#fcbba1",
-               "LMM" = "#faab8c",
-               "Moderate" = "#fc9272",
-               "Middle" = "#fb6a4a",
-               "High" = "#b63b36")
-    fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
-  }
-  # Add additional fill groupings to code
-
-  dat = dat %>%
-    group_by(cat, x_group) %>%
-    mutate(denom = sum(pop)) %>%
-    mutate(pop_pct_compute = pop/denom)
-
-  plot3 <-
-    ggplot(dat, aes(y = pop_pct_compute,
-                    x = x_group,
-                    fill = fill)) +
-    geom_bar(stat="identity", position = "stack") +
-    facet_grid(cols = vars(cat)) +
-    scale_fill_manual(values = values,
-                      labels = fill_labels) +
-    scale_x_discrete(
-      labels = x_labels) +
-    scale_y_continuous(expand = c(0, 0), labels = scales::percent) +
-    labs(x = "", y = "") +
-    theme +
-    theme(legend.position = "bottom") +
-    guides(fill = guide_legend(nrow = 1, reverse = T))
+  # arrange period maps into 4 panels
+  layout <- rbind(c(1),c(2),c(3))
+  panel =
+    grid.arrange(plots_all[[1]], plots_all[[2]], plots_all[[3]],
+                 nrow = 3, ncol = 1,
+                 layout_matrix = layout,
+                 heights = c(5, 5, 5))
 
   if (save) {
-    ggsave(savename, plot, height = 5, width = 7)
+    ggsave(savename, panel, height = 10, width = 6)
   }
-  return(plot)
+  return(panel)
 }
