@@ -49,7 +49,7 @@ stacked_bar_move <- function(
       axis.line = element_line(colour = "black"),
       panel.border = element_blank(),
       # Margins
-      plot.margin=unit(c(0,0.5,0,0.5), "cm"))
+      plot.margin=unit(c(0.5,0.5,0,0.5), "cm"))
 
   # X-axis grouping
   if (group == "ethnoracial") {

@@ -205,7 +205,8 @@ make_map_panel <- function(
         legend.position = "none",
         plot.title = element_text(size = 12, hjust = .5, vjust = 3),
         plot.margin = margin(3,-.5,3,-.5, unit = "pt"),
-        plot.caption = element_text(size = 8)
+        plot.caption = element_text(size = 8),
+        panel.border = element_rect(colour = "black", fill=NA)
       ) +
       labs(title = period_panels[i])
 
