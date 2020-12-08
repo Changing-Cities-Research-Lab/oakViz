@@ -74,7 +74,7 @@ make_map <- function(data,
   if (jenksbreaks) {
     breaks = data %>%
       dplyr::pull({{var}}) %>%
-      getJenksBreaks(k = 5)
+      getJenksBreaks(k = 6)
   }
 
   # county tract map

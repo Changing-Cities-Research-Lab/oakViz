@@ -86,7 +86,7 @@ make_map_panel <- function(
   if (jenksbreaks) {
     breaks = data %>%
       dplyr::pull({{var}}) %>%
-      getJenksBreaks(k = 5)
+      getJenksBreaks(k = 6)
   }
 
   # county tract map
