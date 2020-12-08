@@ -200,7 +200,7 @@ stacked_bar <- function(
                  bottom=textGrob(caption, gp=gpar(fontsize=7)))
 
   if (save) {
-    ggsave(savename, panel, height = 9, width = 7)
+    ggsave(savename, panel, height = 9, width = 7.5)
   }
   return(panel)
 }
