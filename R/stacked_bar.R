@@ -35,13 +35,12 @@ stacked_bar <- function(
       legend.title = element_blank(),
       # Legend
       legend.text = element_text(size = 10),
-      legend.position = "bottom",
+      legend.position = "none",
       legend.direction = "horizontal",
       # Caption
       plot.caption = element_text(size = 10, hjust = .5, face = "italic"),
       # X-axis
-      axis.ticks.x=element_blank(),
-      axis.text.x = element_text(angle = 45, hjust = 1),
+      axis.ticks.x = element_blank(),
       # Y-axis
       axis.ticks.y=element_blank(),
       axis.title.y=element_blank(),
@@ -51,7 +50,9 @@ stacked_bar <- function(
       panel.grid.minor = element_blank(),
       panel.background = element_blank(),
       axis.line = element_line(colour = "black"),
-      panel.border = element_blank())
+      panel.border = element_blank(),
+      # Margins
+      plot.margin=unit(c(0,0.5,0,0.5), "cm"))
 
   data_full = dat %>%
     filter(year %in% c("boom","bust", "recovery", "post_recovery"))
@@ -59,7 +60,7 @@ stacked_bar <- function(
   # Plot bar charts
   plots_all = list()
 
-  foreach(i = 1:3) %do% {
+  foreach(i = 1:2) %do% {
     if (facet[i] == "ethnoracial") {
       dat = data_full %>%
         filter(facet == "Ethnoracial")
@@ -113,15 +114,77 @@ stacked_bar <- function(
       scale_x_discrete(
         labels = x_labels) +
       scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
-      labs(x = "", y = "") +
+      labs(x = NULL, y = NULL) +
       theme +
-      theme(legend.position = "bottom") +
+      theme(axis.text.x = element_blank()) +
       guides(fill = guide_legend(nrow = 1, reverse = T))
 
     # add map to list of grobs
     plots_all = c(plots_all, list(plot))
   }
 
+  # Plot bottom bar chart
+  if (facet[3] == "ethnoracial") {
+    dat = data_full %>%
+      filter(facet == "Ethnoracial")
+  } else if (facet[3] == "gent") {
+    dat = data_full %>%
+      filter(facet == "Gentrification")
+  } else if (facet[3] == "income") {
+    dat = data_full %>%
+      filter(facet == "Income")
+  } else {
+    return("Please select valid facet: ethnoracial, gent, or income")
+  }
+
+  # Order x-axis grouping
+  if (group == "period") {
+    dat$year <- factor(dat$year,
+                       levels = c("boom", "bust", "recovery", "post_recovery"))
+    dat$x_group = dat$year
+    x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
+  }
+  # Add additional x-axis groupings to code
+
+  # Order fill grouping
+  if (fill == "ses") {
+    dat$ses <- factor(dat$ses,
+                      levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+    dat$fill = dat$ses
+    values = c("All" = "#9b9b9b",
+               "Low" = "#fcbba1",
+               "LMM" = "#faab8c",
+               "Moderate" = "#fc9272",
+               "Middle" = "#fb6a4a",
+               "High" = "#b63b36")
+    fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
+  }
+  # Add additional fill groupings to code
+
+  dat = dat %>%
+    group_by(cat, x_group) %>%
+    mutate(denom = sum(pop)) %>%
+    mutate(pop_pct_compute = pop/denom)
+
+  plot <-
+    ggplot(dat, aes(y = pop_pct_compute,
+                    x = x_group,
+                    fill = fill)) +
+    geom_bar(stat="identity", position = "stack") +
+    facet_grid(cols = vars(cat)) +
+    scale_fill_manual(values = values,
+                      labels = fill_labels) +
+    scale_x_discrete(
+      labels = x_labels) +
+    scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
+    labs(x = NULL, y = NULL) +
+    theme +
+    theme(legend.position = "bottom",
+          axis.text.x = element_text(angle = 45, hjust = 1)) +
+    guides(fill = guide_legend(nrow = 1, reverse = T))
+
+  # add map to list of grobs
+  plots_all = c(plots_all, list(plot))
 
   # arrange period maps into 4 panels
   layout <- rbind(c(1),c(2),c(3))
@@ -129,11 +192,11 @@ stacked_bar <- function(
     grid.arrange(plots_all[[1]], plots_all[[2]], plots_all[[3]],
                  nrow = 3, ncol = 1,
                  layout_matrix = layout,
-                 heights = c(5, 5, 5),
-                 bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
+                 heights = c(4, 4, 5.9),
+                 bottom=textGrob(caption, gp=gpar(fontsize=7)))
 
   if (save) {
-    ggsave(savename, panel, height = 10, width = 6)
+    ggsave(savename, panel, height = 9, width = 6)
   }
   return(panel)
 }
