@@ -144,7 +144,8 @@ make_map <- function(data,
     map = map + scale_fill_fermenter(breaks = breaks,
                            type = type,
                            palette = palette,
-                           direction = direction)
+                           direction = direction,
+                           labels = labels)
   } else {
     map = map + scale_fill_gradientn(
       breaks = breaks,
