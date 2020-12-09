@@ -51,6 +51,9 @@ inccat <- read_csv("../../oak-data-repo/income_categories/hinc09_categories.csv"
 inccat$cat <- factor(inccat$cat, levels = inc_cat_plot_order)
 inccat$facet = "Income"
 
+# City shapefiles
+cities <- read_csv("../../oak-data-repo/oakland_geographies/census_2010b_tracts_places_ca.csv")
+
 # Oakland tracts data
 oak_tracts <- oak_ids %>%
   select(tractid10 = trtid10)
@@ -59,5 +62,6 @@ usethis::use_data(oak_ids,
                   gentcat,
                   racecat,
                   inccat,
+                  cities,
                   oak_tracts,
                   overwrite = TRUE, internal = TRUE)

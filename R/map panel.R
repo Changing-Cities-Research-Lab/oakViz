@@ -196,7 +196,8 @@ make_map_panel <- function(
           guide_colorbar(
             barheight = 0.5,
             barwidth = 15,
-            title = NULL
+            title = NULL,
+            frame.colour = "black"
           )
       ) +
       theme_void() +
