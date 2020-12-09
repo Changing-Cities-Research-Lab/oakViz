@@ -2,12 +2,11 @@
 % Please edit documentation in R/make_map_dest_panel.R
 \name{make_dest_map_panel}
 \alias{make_dest_map_panel}
-\title{Produce Oakland map panel of continuous variable with gradient color scale}
+\title{Produce destination map panel of continuous variable with gradient color scale}
 \usage{
 make_dest_map_panel(
   data,
   shp_tracts,
-  jenksbreaks = T,
   save = F,
   savename = "plot.png",
  
@@ -15,11 +14,9 @@ make_dest_map_panel(
 )
 }
 \arguments{
-\item{data}{Data with a column containing census tracts, distinct periods, and variable of interest.}
+\item{data}{Data aggregated with aggregate_categories().}
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
-
-\item{jenksbreaks}{Uses Jenks Breaks when T, otherwise uses continuous color scale}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
@@ -28,11 +25,10 @@ make_dest_map_panel(
 \item{caption}{Figure caption}
 }
 \value{
-Map panel of variable of interest across four periods.
+Destination map panel across four periods.
 }
 \description{
-This function takes in data and produces a panel of census tract maps of
-Oakland representing the variable using a gradient color scale, across
-four distinct periods. Should have "tractid10" column for census tracts
-and "periods" column for distinct time periods.
+This function takes in data and produces a panel of destination maps of
+Oakland movers using a gradient color scale, across four distinct periods.
+Intended to be used with oakViz::aggregate_categories().
 }
