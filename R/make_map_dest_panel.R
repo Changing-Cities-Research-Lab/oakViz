@@ -2,6 +2,7 @@
 #'
 #' This function takes in data and produces a panel of destination maps of
 #' Oakland movers using a gradient color scale, across four distinct periods.
+#' Filters SES category to Low, Moderate, and Middle.
 #' Intended to be used with oakViz::aggregate_categories().
 #'
 #' @param data Data aggregated with aggregate_categories().
@@ -68,7 +69,8 @@ make_dest_map_panel <- function(
            outmigration_contracosta,
            outmigration_sanfran) %>%
     filter(year %in% c("boom", "bust", "recovery", "post_recovery")) %>%
-    filter (cat == "Overall") %>%
+    filter(cat == "Overall") %>%
+    filter(ses %in% c("Low", "Moderate", "Middle")) %>%
     select(-cat) %>%
     group_by(year) %>%
     summarise_all(sum) %>%

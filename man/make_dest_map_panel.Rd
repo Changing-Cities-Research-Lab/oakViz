@@ -30,5 +30,6 @@ Destination map panel across four periods.
 \description{
 This function takes in data and produces a panel of destination maps of
 Oakland movers using a gradient color scale, across four distinct periods.
+Filters SES category to Low, Moderate, and Middle.
 Intended to be used with oakViz::aggregate_categories().
 }
