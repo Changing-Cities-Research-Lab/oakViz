@@ -7,7 +7,6 @@
 stacked_bar(
   dat,
   fill = "ses",
-  facet = c("ethnoracial", "gent", "income"),
   group = "period",
   save = F,
   savename = "plot.png",
@@ -18,11 +17,9 @@ stacked_bar(
 \arguments{
 \item{dat}{Data with a column containing variables of interest and grouping variables.}
 
-\item{fill}{Name of column containing fill variable, default is ses.}
+\item{fill}{Name of column containing fill variable: "ses (default), "move", "dest.}
 
-\item{facet}{Name of category to use as facet grouping variable: "Ethnoracial", "Gentrification", "Income"}
-
-\item{group}{Category for x-axis grouping, can be any column of labels, period (default)}
+\item{group}{Category for x-axis grouping: "period" (default), "ses"}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 

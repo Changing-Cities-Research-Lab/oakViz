@@ -4,9 +4,8 @@
 #' based on different groupings. Intended to be used with oakViz::aggregate_categories()
 #'
 #' @param dat Data with a column containing variables of interest and grouping variables.
-#' @param fill Name of column containing fill variable, default is ses.
-#' @param facet Name of category to use as facet grouping variable: "Ethnoracial", "Gentrification", "Income"
-#' @param group Category for x-axis grouping, can be any column of labels, period (default)
+#' @param fill Name of column containing fill variable: "ses (default), "move", "dest.
+#' @param group Category for x-axis grouping: "period" (default), "ses"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
@@ -15,9 +14,8 @@
 
 stacked_bar <- function(
   dat,
-  fill = "ses",
-  facet = c("ethnoracial", "gent", "income"), # "ethnoracial", "gent", "income"
-  group = "period", # gent, ethnoracial, income, ses, period
+  fill = "ses", # "move", "dest"
+  group = "period", # ses
   save = F,
   savename = "plot.png",
   caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n"
@@ -27,6 +25,7 @@ stacked_bar <- function(
   library(tidyverse)
   library(gridExtra)
   library(grid)
+  library(reshape2)
 
   theme =
     theme_bw() +
@@ -34,7 +33,7 @@ stacked_bar <- function(
       # Title
       legend.title = element_blank(),
       # Legend
-      legend.text = element_text(size = 10),
+      legend.text = element_text(size = 9),
       legend.position = "none",
       legend.direction = "horizontal",
       # Caption
@@ -54,141 +53,234 @@ stacked_bar <- function(
       # Margins
       plot.margin=unit(c(0,0.5,0,0.5), "cm"))
 
-  data_full = dat %>%
-    filter(year %in% c("boom","bust", "recovery", "post_recovery"))
+  data_full = dat
+
+  data_full$facet <- plyr::revalue(data_full$facet, c("All"="Ethnoracial"))
 
   # Plot bar charts
   plots_all = list()
 
-  foreach(i = 1:2) %do% {
-    if (facet[i] == "ethnoracial") {
-      dat = data_full %>%
-        filter(facet %in% c("All", "Ethnoracial"))
-      dat$facet <- plyr::revalue(dat$facet, c("All"="Ethnoracial"))
-    } else if (facet[i] == "gent") {
-      dat = data_full %>%
-        filter(facet == "Gentrification")
-    } else if (facet[i] == "income") {
-      dat = data_full %>%
-        filter(facet == "Income")
-    } else {
-      return("Please select valid facet: ethnoracial, gent, or income")
-    }
+  foreach(i = 1:3) %do% {
+    facetorder = c("Ethnoracial", "Gentrification", "Income")
+    dat = data_full %>%
+      filter(facet %in% facetorder[i])
 
-    # Order x-axis grouping
+    # X-axis grouping: period or SES
     if (group == "period") {
+      dat = dat %>%
+        filter(year %in% c("boom","bust", "recovery", "post_recovery"))
+
       dat$year <- factor(dat$year,
                          levels = c("boom", "bust", "recovery", "post_recovery"))
       dat$x_group = dat$year
       x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
-    }
-    # Add additional x-axis groupings to code
 
-    # Order fill grouping
-    if (fill == "ses") {
+    } else if (group == "ses") {
       dat$ses <- factor(dat$ses,
                         levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+      dat$x_group = dat$ses
+      x_labels = c("All", "Low", "LMM" ,"Moderate","Middle", "High")
+    }
+    # Double check NA's
+
+    # Fill grouping: ses, move, or dest
+    if (fill == "ses") {
+      # Compute share of population by SES
+      dat = dat %>%
+        group_by(cat, year) %>%
+        mutate(denom = sum(pop)) %>%
+        mutate(value = pop/denom)
+
+      dat$ses <- factor(dat$ses,
+                        levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+
       dat$fill = dat$ses
+
       values = c("All" = "#9b9b9b",
                  "Low" = "#fcbba1",
                  "LMM" = "#faab8c",
                  "Moderate" = "#fc9272",
                  "Middle" = "#fb6a4a",
                  "High" = "#b63b36")
+
       fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
+
+    } else if (fill == "move") {
+      # Compute share of total moves by move type
+      dat = dat %>%
+        select(x_group,
+               cat,
+               facet,
+               outmigration_outba,
+               outmigration_outoak,
+               withinoakmigration) %>%
+        group_by(x_group,
+                 cat,
+                 facet) %>%
+        summarise_all(sum) %>%
+        mutate(denom = outmigration_outba +
+                 (outmigration_outoak - outmigration_outba) +
+                 withinoakmigration) %>%
+        mutate(moved_outba_pct = outmigration_outba/denom) %>%
+        mutate(diff_city_ba_pct = (outmigration_outoak - outmigration_outba)/denom) %>%
+        mutate(moved_within_oak_pct = withinoakmigration/denom) %>%
+        select(x_group,
+               cat,
+               facet,
+               moved_outba_pct,
+               diff_city_ba_pct,
+               moved_within_oak_pct)
+
+      # Melt data for plotting
+      dat = dat %>%
+        melt(id = c("cat", "x_group", "facet"))
+
+      # Rename/order/select colors/label move categories
+      dat$variable <- plyr::revalue(dat$variable,
+                                    c("moved_outba_pct"="Moved out of Bay Area",
+                                      "diff_city_ba_pct" = "Different City within Bay Area",
+                                      "moved_within_oak_pct" = "Moved within Oakland"))
+
+      dat$variable <- factor(dat$variable,
+                             levels = c("Moved out of Bay Area",
+                                        "Different City within Bay Area",
+                                        "Moved within Oakland"))
+      dat$fill = dat$variable
+
+      values = c("Moved out of Bay Area" = "#8baf3e",
+                 "Different City within Bay Area" = "#fdbd3b",
+                 "Moved within Oakland" = "#2e5e8b")
+
+      fill_labels = c("Moved out of Bay Area",
+                      "Different City within Bay Area",
+                      "Moved within Oakland")
+
+    } else if (fill == "dest") {
+      # Compute share of moves by destination
+      dat = dat %>%
+        select(x_group,
+               cat,
+               facet,
+               outmigration_outba,
+               withinoakmigration,
+               outmigration_alameda,
+               outmigration_contracosta,
+               outmigration_northbay,
+               outmigration_sanfran,
+               outmigration_southbay) %>%
+        group_by(x_group,
+                 cat,
+                 facet) %>%
+        summarise_all(sum) %>%
+        mutate(denom =
+                 outmigration_outba +
+                 withinoakmigration +
+                 outmigration_alameda +
+                 outmigration_contracosta +
+                 outmigration_northbay +
+                 outmigration_sanfran +
+                 outmigration_southbay) %>%
+        mutate(outmigration_outba_pct = outmigration_outba/denom) %>%
+        mutate(withinoakmigration_pct = withinoakmigration/denom) %>%
+        mutate(outmigration_alameda_pct = outmigration_alameda/denom) %>%
+        mutate(outmigration_contracosta_pct = outmigration_contracosta/denom) %>%
+        mutate(outmigration_northbay_pct = outmigration_northbay/denom) %>%
+        mutate(outmigration_sanfran_pct = outmigration_sanfran/denom) %>%
+        mutate(outmigration_southbay_pct = outmigration_southbay/denom) %>%
+        select(x_group,
+               cat,
+               facet,
+               outmigration_outba_pct,
+               withinoakmigration_pct,
+               outmigration_alameda_pct,
+               outmigration_contracosta_pct,
+               outmigration_northbay_pct,
+               outmigration_sanfran_pct,
+               outmigration_southbay_pct)
+
+      # Melt data for plotting
+      dat = dat %>%
+        melt(id = c("cat", "x_group", "facet"))
+
+      # Rename/order/select colors/label move categories
+      dat$variable <- plyr::revalue(dat$variable,
+                                    c("outmigration_outba_pct" = "Outside Bay Area",
+                                      "withinoakmigration_pct" = "Within Oakland",
+                                      "outmigration_alameda_pct" = "Alameda",
+                                      "outmigration_contracosta_pct" = "Contra Costa",
+                                      "outmigration_northbay_pct" = "North Bay",
+                                      "outmigration_sanfran_pct" = "San Francisco",
+                                      "outmigration_southbay_pct" = "Southbay"))
+
+      dat$variable <- factor(dat$variable,
+                             levels = c("Outside Bay Area",
+                                        "Southbay",
+                                        "San Francisco",
+                                        "North Bay",
+                                        "Contra Costa",
+                                        "Alameda",
+                                        "Within Oakland"))
+
+      dat$fill = dat$variable
+
+      values = c("Outside Bay Area" = "#d53e4f",
+                 "Southbay" = "#fc8d59",
+                 "San Francisco" = "#fee08b",
+                 "North Bay" = "#ffffbf",
+                 "Contra Costa" = "#e6f598",
+                 "Alameda" = "#99d594",
+                 "Within Oakland" = "#3288bd")
+
+      fill_labels = c("Outside Bay Area",
+                      "Southbay",
+                      "San Francisco",
+                      "North Bay",
+                      "Contra Costa",
+                      "Alameda",
+                      "Within Oakland")
+
+    } else {
+      return("Please select 'ses', 'move', or 'dest'")
     }
-    # Add additional fill groupings to code
 
-    dat = dat %>%
-      group_by(cat, x_group) %>%
-      mutate(denom = sum(pop)) %>%
-      mutate(pop_pct_compute = pop/denom)
-
-    plot <-
-      ggplot(dat, aes(y = pop_pct_compute,
-                      x = x_group,
-                      fill = fill)) +
-      geom_bar(stat="identity", position = "stack") +
-      facet_grid(cols = vars(cat),
-                 rows = vars(facet)) +
-      scale_fill_manual(values = values,
-                        labels = fill_labels) +
-      scale_x_discrete(
-        labels = x_labels) +
-      scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
-      labs(x = NULL, y = NULL) +
-      theme +
-      theme(axis.text.x = element_blank()) +
-      guides(fill = guide_legend(nrow = 1, reverse = T))
-
+    if (i == 3) {
+      plot <-
+        ggplot(dat, aes(y = value,
+                        x = x_group,
+                        fill = fill)) +
+        geom_bar(stat="identity", position = "stack") +
+        facet_grid(cols = vars(cat),
+                   rows = vars(facet)) +
+        scale_fill_manual(values = values,
+                          labels = fill_labels) +
+        scale_x_discrete(
+          labels = x_labels) +
+        scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
+        labs(x = NULL, y = NULL) +
+        theme +
+        theme(legend.position = "bottom",
+              axis.text.x = element_text(angle = 45, hjust = 1)) +
+        guides(fill = guide_legend(nrow = 1, reverse = T))
+    } else {
+      plot <-
+        ggplot(dat, aes(y = value,
+                        x = x_group,
+                        fill = fill)) +
+        geom_bar(stat="identity", position = "stack") +
+        facet_grid(cols = vars(cat),
+                   rows = vars(facet)) +
+        scale_fill_manual(values = values,
+                          labels = fill_labels) +
+        scale_x_discrete(
+          labels = x_labels) +
+        scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
+        labs(x = NULL, y = NULL) +
+        theme +
+        theme(axis.text.x = element_blank())
+    }
     # add map to list of grobs
     plots_all = c(plots_all, list(plot))
   }
-
-  # Plot bottom bar chart
-  if (facet[3] == "ethnoracial") {
-    dat = data_full %>%
-      filter(facet %in% c("All", "Ethnoracial"))
-    dat$facet <- plyr::revalue(dat$facet, c("All"="Ethnoracial"))
-  } else if (facet[3] == "gent") {
-    dat = data_full %>%
-      filter(facet == "Gentrification")
-  } else if (facet[3] == "income") {
-    dat = data_full %>%
-      filter(facet == "Income")
-  } else {
-    return("Please select valid facet: ethnoracial, gent, or income")
-  }
-
-  # Order x-axis grouping
-  if (group == "period") {
-    dat$year <- factor(dat$year,
-                       levels = c("boom", "bust", "recovery", "post_recovery"))
-    dat$x_group = dat$year
-    x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
-  }
-  # Add additional x-axis groupings to code
-
-  # Order fill grouping
-  if (fill == "ses") {
-    dat$ses <- factor(dat$ses,
-                      levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
-    dat$fill = dat$ses
-    values = c("All" = "#9b9b9b",
-               "Low" = "#fcbba1",
-               "LMM" = "#faab8c",
-               "Moderate" = "#fc9272",
-               "Middle" = "#fb6a4a",
-               "High" = "#b63b36")
-    fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
-  }
-  # Add additional fill groupings to code
-
-  dat = dat %>%
-    group_by(cat, x_group) %>%
-    mutate(denom = sum(pop)) %>%
-    mutate(pop_pct_compute = pop/denom)
-
-  plot <-
-    ggplot(dat, aes(y = pop_pct_compute,
-                    x = x_group,
-                    fill = fill)) +
-    geom_bar(stat="identity", position = "stack") +
-    facet_grid(cols = vars(cat),
-               rows = vars(facet)) +
-    scale_fill_manual(values = values,
-                      labels = fill_labels) +
-    scale_x_discrete(
-      labels = x_labels) +
-    scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
-    labs(x = NULL, y = NULL) +
-    theme +
-    theme(legend.position = "bottom",
-          axis.text.x = element_text(angle = 45, hjust = 1)) +
-    guides(fill = guide_legend(nrow = 1, reverse = T))
-
-  # add map to list of grobs
-  plots_all = c(plots_all, list(plot))
 
   # arrange period maps into 4 panels
   layout <- rbind(c(1),c(2),c(3))
@@ -200,7 +292,8 @@ stacked_bar <- function(
                  bottom=textGrob(caption, gp=gpar(fontsize=7)))
 
   if (save) {
-    ggsave(savename, panel, height = 9, width = 7.5)
+    ggsave(savename, panel, height = 9, width = 8)
   }
   return(panel)
 }
+
