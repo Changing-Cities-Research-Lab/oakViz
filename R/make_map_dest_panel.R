@@ -50,8 +50,6 @@ make_dest_map_panel <- function(
     group_by(city) %>%
     summarize(geometry = st_union(geometry))
 
-  # Only need to use Google API code once
-  # register_google("AIzaSyCO-hk4AjUgTdMKDuv18f66py8NIdrf4qU")
   gmap_bay <-
     get_stamenmap(
       bbox = c(-122.533820, 37.636921, -122.081959, 37.9148),
