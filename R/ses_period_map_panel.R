@@ -16,7 +16,6 @@
 #' @param caption Figure caption
 #' @return 4x4 panel maps of inmigration count, by SES and period.
 #' @export
-
 ses_period_map_panel <- function(
   data,
   var,
@@ -38,7 +37,26 @@ ses_period_map_panel <- function(
   library(grid)
   library(BAMMtools)
 
+  # Get max and min values for common gradient scale
+  max = data %>%
+    select({{var}}) %>%
+    max(na.rm = T)
+
+  min = data %>%
+    select({{var}}) %>%
+    min(na.rm = T)
+
+  range = c(min, max)
+
+  # Set colors
   MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
+
+  # Clean data
+  data$year <- plyr::revalue(data$year,
+                                c("boom"="Boom",
+                                  "bust" = "Bust",
+                                  "recovery" = "Recovery",
+                                  "post_recovery" = "Post-Recovery"))
 
   data = data %>%
     filter(year %in% c("Boom", "Bust", "Recovery", "Post-Recovery")) %>%
@@ -60,17 +78,6 @@ ses_period_map_panel <- function(
                                 "Moderate",
                                 "Middle",
                                 "High"))
-
-  # Get max and min values for common gradient scale
-  max = data %>%
-    select({{var}}) %>%
-    max(na.rm = T)
-
-  min = data %>%
-    select({{var}}) %>%
-    min(na.rm = T)
-
-  range = c(min, max)
 
   # Sets Jenks breaks if T
   if (jenksbreaks) {
@@ -173,4 +180,5 @@ ses_period_map_panel <- function(
   } else {
     return(map)
   }
+  return(data)
 }
