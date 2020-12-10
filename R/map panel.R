@@ -58,7 +58,6 @@ make_map_panel <- function(
     range = c(min, max)
 
     MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
-    lim = NULL
     type = "seq"
     palette = "YlOrRd"
     direction = 1
@@ -73,7 +72,6 @@ make_map_panel <- function(
 
     # Diverging palette
     MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "RdBu"))
-    lim = NULL
     type = "div"
     palette = "RdBu"
     direction = -1

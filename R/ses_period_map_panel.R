@@ -7,6 +7,7 @@
 #' @param data Data with a column containing tractid10, year, ses, and inmigration.
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
+#' @param palette Color palette: "sequential" (default) or "diverging"
 #' @param jenksbreaks Uses Jenks Breaks when T, otherwise uses continuous color scale
 #' @param breaks Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)
 #' @param labels Gradient scale labels, either character vector or scales::percent or scales::comma
@@ -20,6 +21,7 @@ ses_period_map_panel <- function(
   data,
   var,
   shp_tracts,
+  palette = "sequential",
   jenksbreaks = T,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::comma,
@@ -37,19 +39,43 @@ ses_period_map_panel <- function(
   library(grid)
   library(BAMMtools)
 
-  # Get max and min values for common gradient scale
-  max = data %>%
-    select({{var}}) %>%
-    max(na.rm = T)
 
-  min = data %>%
-    select({{var}}) %>%
-    min(na.rm = T)
+  # Adjust color palette
+  if (palette == "sequential") {
 
-  range = c(min, max)
+    # Get max and min values for common gradient scale
+    max = data %>%
+      select({{var}})%>%
+      max(na.rm = T)
 
-  # Set colors
-  MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
+    min = data %>%
+      select({{var}}) %>%
+      min(na.rm = T)
+
+    range = c(min, max)
+
+    MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
+    type = "seq"
+    palette = "YlOrRd"
+    direction = 1
+
+  } else if (palette == "diverging") {
+
+    # Get limits to center diverging palette around 0
+    range <- data %>%
+      select({{var}}) %>%
+      abs() %>%
+      max(na.rm = T) * c(-1, 1)
+
+    # Diverging palette
+    MAP_COLORS <- rev(RColorBrewer::brewer.pal(n = 9, name = "RdBu"))
+    type = "div"
+    palette = "RdBu"
+    direction = -1
+
+  } else {
+    return("Please select sequential or diverging color palette.")
+  }
 
   # Clean data
   data$year <- plyr::revalue(data$year,
@@ -161,9 +187,9 @@ ses_period_map_panel <- function(
   if (jenksbreaks) {
     map = map +
       scale_fill_fermenter(breaks = breaks,
-                           type = "seq",
-                           palette = "YlOrRd",
-                           direction = 1)
+                           type = type,
+                           palette = palette,
+                           direction = direction)
   } else {
     map = map +
       scale_fill_gradientn(

@@ -9,6 +9,7 @@ ses_period_map_panel(
   data,
   var,
   shp_tracts,
+  palette = "sequential",
   jenksbreaks = T,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::comma,
@@ -23,6 +24,7 @@ ses_period_map_panel(
   data,
   var,
   shp_tracts,
+  palette = "sequential",
   jenksbreaks = T,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::comma,
@@ -39,6 +41,8 @@ ses_period_map_panel(
 \item{var}{Name of column containing variable to plot.}
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
+
+\item{palette}{Color palette: "sequential" (default) or "diverging"}
 
 \item{jenksbreaks}{Uses Jenks Breaks when T, otherwise uses continuous color scale}
 
