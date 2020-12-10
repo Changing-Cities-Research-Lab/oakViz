@@ -68,18 +68,18 @@ stacked_bar <- function(
     # X-axis grouping: period or SES
     if (group == "period") {
       dat = dat %>%
-        filter(year %in% c("Boom","Bust", "Recovery", "Post-Recovery"))
+        filter(year %in% c("Boom", "Bust", "Recovery", "Post-Recovery"))
 
       dat$year <- factor(dat$year,
-                         levels = c("Boom","Bust", "Recovery", "Post-Recovery"))
+                         levels = c("Boom", "Bust", "Recovery", "Post-Recovery"))
       dat$x_group = dat$year
       x_labels = c("Boom", "Bust", "Recovery", "Post-Recovery")
 
     } else if (group == "ses") {
       dat$ses <- factor(dat$ses,
-                        levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+                        levels = c("Low", "Moderate","Middle", "High"))
       dat$x_group = dat$ses
-      x_labels = c("All", "Low", "LMM" ,"Moderate","Middle", "High")
+      x_labels = c("Low", "Moderate","Middle", "High")
     }
     # Double check NA's
 
@@ -92,18 +92,17 @@ stacked_bar <- function(
         mutate(value = pop/denom)
 
       dat$ses <- factor(dat$ses,
-                        levels = c("All", "Low", "LMM" ,"Moderate","Middle", "High"))
+                        levels = c("Low", "Moderate","Middle", "High"))
 
       dat$fill = dat$ses
 
-      values = c("All" = "#9b9b9b",
+      values = c(
                  "Low" = "#fcbba1",
-                 "LMM" = "#faab8c",
                  "Moderate" = "#fc9272",
                  "Middle" = "#fb6a4a",
                  "High" = "#b63b36")
 
-      fill_labels = c("All", "Low", "LMM","Moderate","Middle", "High")
+      fill_labels = c("Low", "Moderate","Middle", "High")
 
     } else if (fill == "move") {
       # Compute share of total moves by move type
