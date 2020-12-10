@@ -7,6 +7,7 @@
 inmigration_map_panel(
   data,
   shp_tracts,
+  jenksbreaks = T,
   breaks = scales::extended_breaks(n = 6),
   limits = NULL,
   save = F,
@@ -19,6 +20,8 @@ inmigration_map_panel(
 \item{data}{Data with a column containing tractid10, year, ses, and inmigration.}
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
+
+\item{jenksbreaks}{Uses Jenks Breaks when T, otherwise uses continuous color scale}
 
 \item{breaks}{Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)}
 

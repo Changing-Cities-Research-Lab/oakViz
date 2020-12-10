@@ -6,6 +6,7 @@
 #'
 #' @param data Data with a column containing tractid10, year, ses, and inmigration.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
+#' @param jenksbreaks Uses Jenks Breaks when T, otherwise uses continuous color scale
 #' @param breaks Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)
 #' @param limits Gradient scale limits, c(min, max)
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
@@ -17,6 +18,7 @@
 inmigration_map_panel <- function(
   data,
   shp_tracts,
+  jenksbreaks = T,
   breaks = scales::extended_breaks(n = 6),
   limits = NULL,
   save = F,
@@ -30,6 +32,7 @@ inmigration_map_panel <- function(
   library(tidyverse)
   library(gridExtra)
   library(grid)
+  library(BAMMtools)
 
   MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
 
@@ -66,6 +69,13 @@ inmigration_map_panel <- function(
   min = min(data$inmigration, na.rm = T)
 
   range = c(min, max)
+
+  # Sets Jenks breaks if T
+  if (jenksbreaks) {
+    breaks = data %>%
+      dplyr::pull(inmigration) %>%
+      getJenksBreaks(k = 6)
+  }
 
   # Overrides lim value if user inputs limits
   if (!is.null(limits)) {
@@ -137,13 +147,23 @@ inmigration_map_panel <- function(
       plot.caption = element_text(size = 8),
       panel.border = element_rect(colour = "black", fill=NA),
       strip.text.y.left = element_text(angle = 0)
-    ) +
-    scale_fill_gradientn(
-      breaks = breaks,
-      labels = scales::comma,
-      colors = alpha(MAP_COLORS, .8),
-      limits = range,
-      na.value = "grey60")
+    )
+
+  if (jenksbreaks) {
+    map = map +
+      scale_fill_fermenter(breaks = breaks,
+                           type = "seq",
+                           palette = "YlOrRd",
+                           direction = 1)
+  } else {
+    map = map +
+      scale_fill_gradientn(
+        breaks = breaks,
+        labels = scales::comma,
+        colors = alpha(MAP_COLORS, .8),
+        limits = range,
+        na.value = "grey60")
+  }
 
   if (save) {
     ggsave(savename, map, height = 4.97, width = 6.33)

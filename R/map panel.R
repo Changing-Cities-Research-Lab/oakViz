@@ -41,6 +41,7 @@ make_map_panel <- function(
   library(tidyverse)
   library(gridExtra)
   library(grid)
+  library(BAMMtools)
 
   # Adjust color palette
   if (palette == "sequential") {
