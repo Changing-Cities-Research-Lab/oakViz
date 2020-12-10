@@ -63,7 +63,7 @@ ses_period_map_panel <- function(
 
   # Get max and min values for common gradient scale
   max = data %>%
-    select({{var}})%>%
+    select({{var}}) %>%
     max(na.rm = T)
 
   min = data %>%
