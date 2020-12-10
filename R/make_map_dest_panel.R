@@ -63,7 +63,6 @@ make_dest_map_panel <- function(
   ## Read and Clean Data
 
   data = data %>%
-    filter(ses %in% c("Low", "Moderate", "Middle")) %>%
     select(year,
            cat,
            outmigration_alameda,
