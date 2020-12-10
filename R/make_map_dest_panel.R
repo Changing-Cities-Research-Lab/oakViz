@@ -24,6 +24,7 @@ make_dest_map_panel <- function(
   library(sf)
   library(rgdal)
   library(ggmap)
+  library(reshape2)
 
   county_names <-
     c("Alameda County",
@@ -62,23 +63,21 @@ make_dest_map_panel <- function(
   ## Read and Clean Data
 
   data = data %>%
+    filter(ses %in% c("Low", "Moderate", "Middle")) %>%
     select(year,
            cat,
-           withinoakmigration,
            outmigration_alameda,
            outmigration_contracosta,
            outmigration_sanfran) %>%
     filter(year %in% c("boom", "bust", "recovery", "post_recovery")) %>%
     filter(cat == "Overall") %>%
-    filter(ses %in% c("Low", "Moderate", "Middle")) %>%
     select(-cat) %>%
     group_by(year) %>%
     summarise_all(sum) %>%
     melt(id = c("year"))
 
   data$variable <- plyr::revalue(data$variable,
-                                 c("withinoakmigration"="Oakland city",
-                                   "outmigration_alameda" = "Alameda city",
+                                 c("outmigration_alameda" = "Alameda city",
                                    "outmigration_contracosta" = "Contra Costa city",
                                    "outmigration_sanfran" = "San Francisco city"))
 
