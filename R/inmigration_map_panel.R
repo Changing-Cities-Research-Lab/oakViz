@@ -37,16 +37,10 @@ inmigration_map_panel <- function(
   MAP_COLORS <- RColorBrewer::brewer.pal(n = 9, name = "YlOrRd")
 
   data = data %>%
-    filter(year %in% c("boom", "bust", "recovery", "post_recovery")) %>%
+    filter(year %in% c("Boom", "Bust", "Recovery", "Post-Recovery")) %>%
     select(tractid10, year, ses, inmigration) %>%
     group_by(tractid10, year, ses) %>%
     summarise_all(sum)
-
-  data$year = plyr::revalue(data$year,
-                            c("boom"="Boom",
-                              "bust"="Bust",
-                              "recovery"="Recovery",
-                              "post_recovery"="Post-Recovery"))
 
   data = data %>%
     filter(ses %in% c("Low", "Moderate", "Middle", "High"))

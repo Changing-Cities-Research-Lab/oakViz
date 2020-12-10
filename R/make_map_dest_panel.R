@@ -63,13 +63,12 @@ make_dest_map_panel <- function(
   ## Read and Clean Data
 
   data = data %>%
-    filter(ses %in% c("Low", "Moderate", "Middle")) %>%
     select(year,
            cat,
            outmigration_alameda,
            outmigration_contracosta,
            outmigration_sanfran) %>%
-    filter(year %in% c("boom", "bust", "recovery", "post_recovery")) %>%
+    filter(year %in% c("Boom", "Bust", "Recovery", "Post-Recovery")) %>%
     filter(cat == "Overall") %>%
     select(-cat) %>%
     group_by(year) %>%
@@ -81,11 +80,6 @@ make_dest_map_panel <- function(
                                    "outmigration_contracosta" = "Contra Costa city",
                                    "outmigration_sanfran" = "San Francisco city"))
 
-  data$year = plyr::revalue(data$year,
-                            c("boom"="Boom",
-                              "bust"="Bust",
-                              "recovery"="Recovery",
-                              "post_recovery"="Post-Recovery"))
   data = data %>%
     mutate(city = variable)
 
