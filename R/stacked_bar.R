@@ -68,12 +68,12 @@ stacked_bar <- function(
     # X-axis grouping: period or SES
     if (group == "period") {
       dat = dat %>%
-        filter(year %in% c("boom","bust", "recovery", "post_recovery"))
+        filter(year %in% c("Boom","Bust", "Recovery", "Post-Recovery"))
 
       dat$year <- factor(dat$year,
-                         levels = c("boom", "bust", "recovery", "post_recovery"))
+                         levels = c("Boom","Bust", "Recovery", "Post-Recovery"))
       dat$x_group = dat$year
-      x_labels = c("Boom","Bust", "Recovery", "Post-Recovery")
+      x_labels = c("Boom", "Bust", "Recovery", "Post-Recovery")
 
     } else if (group == "ses") {
       dat$ses <- factor(dat$ses,
