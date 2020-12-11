@@ -8,7 +8,7 @@ plot_lollipop(
   data,
   var,
   limits,
-  reverse = F,
+  ses = T,
   x_title = "",
   scale_type = "numeric",
   save = F,
@@ -24,7 +24,7 @@ plot_lollipop(
 
 \item{limits}{Y-axis limits.}
 
-\item{reverse}{Reverses direction of x-axis when T, default is F.}
+\item{ses}{Displays SES facet columns when T (default).}
 
 \item{x_title}{Title to display along x-axis}
 
@@ -35,6 +35,8 @@ plot_lollipop(
 \item{savename}{File name of map for saving.}
 
 \item{caption}{Figure caption}
+
+\item{reverse}{Reverses direction of x-axis when T, default is F.}
 }
 \value{
 Lollipop plot of variable by gentrification, ethnoracial, and income category.
