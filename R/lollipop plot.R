@@ -46,9 +46,15 @@ plot_lollipop <- function(
     c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
   inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
   names(inc_cat_colors) <- inc_cat
+  
+  ses_cat_colors <-
+    c("#fcbba1", "#fc9272", "#fb6a4a", "#b63b36")
+  ses_cat = c("Low", "Moderate", "Middle", "High")
+  names(ses_cat_colors) <- ses_cat
 
-  labels = c("Overall", gent_cat, race_short, inc_cat)
-  colors = c("white", gent_cat_colors, race_short_colors, inc_cat_colors)
+  labels = c("Overall", gent_cat, race_short, inc_cat, ses_cat)
+  colors = c("white", gent_cat_colors, race_short_colors, inc_cat_colors, ses_cat_colors)
+  names(colors) = labels
 
   data$ses <- factor(data$ses,
                      levels = c("Low",
@@ -76,6 +82,8 @@ plot_lollipop <- function(
 
   inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                           "Fourth Quintile", "Top Quintile")
+  
+  ses_cat_plot_order <- c("High", "Middle", "Moderate", "Low")
   # Have line segment start at 0
   ystart = 0
   if (limits[1] > 0) {
