@@ -8,7 +8,7 @@ plot_lollipop(
   data,
   var,
   limits,
-  ses = T,
+  ses = F,
   x_title = "",
   scale_type = "numeric",
   save = F,
@@ -24,7 +24,7 @@ plot_lollipop(
 
 \item{limits}{Y-axis limits.}
 
-\item{ses}{Displays SES facet columns when T (default).}
+\item{ses}{Displays SES facet columns when T, default is F.}
 
 \item{x_title}{Title to display along x-axis}
 
