@@ -8,7 +8,7 @@
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits.
-#' @param ses Displays SES facet columns when T (default).
+#' @param ses Displays SES facet columns when T, default is F.
 #' @param reverse Reverses direction of x-axis when T, default is F.
 #' @param x_title Title to display along x-axis
 #' @param scale_type Y-axis scale type: "numeric" or "percent"
@@ -22,7 +22,7 @@ plot_lollipop <- function(
   data,
   var,
   limits,
-  ses = T,
+  ses = F,
   x_title = "",
   scale_type = "numeric",
   save = F,
@@ -75,15 +75,15 @@ plot_lollipop <- function(
   # Relabel names for the graphs
 
   #gent_cat_plot_order <- c("Nongentrifiable", "Gentrifying",
-                           "Intense", "Moderate",
-                           "Early Gentrification", "Weak", "People or Price")
+  #                        "Intense", "Moderate",
+  #                         "Early Gentrification", "Weak", "People or Price")
 
   #race_cat_plot_order <- c("Predominantly White", "Predominantly Black",
-                           "Predominantly Other","White-Other","Black-White","Black-Other","Multiethnic",
-                           "White/White-Mixed", "Multiethnic/Other")
+  #                         "Predominantly Other","White-Other","Black-White","Black-Other","Multiethnic",
+  #                         "White/White-Mixed", "Multiethnic/Other")
 
   #inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
-                          "Fourth Quintile", "Top Quintile")
+  #                        "Fourth Quintile", "Top Quintile")
   
   #ses_cat_plot_order <- c("High", "Middle", "Moderate", "Low")
   
