@@ -1,10 +1,10 @@
-#' Produce 4x4 map panel of inmigration count in Oakland
+#' Produce 4x4 map panel of variable of interest in Oakland
 #'
 #' This function takes in data and produces a 4x4 panel of inmigration
 #' counts using a gradient color scale, across SES and periods.
 #' Not intended to be used with aggregated CCP data.
 #'
-#' @param data Data with a column containing tractid10, year, ses, and inmigration.
+#' @param data Data with a column containing tractid10, year, ses, and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param palette Color palette: "sequential" (default) or "diverging"
@@ -15,7 +15,7 @@
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Figure caption
-#' @return 4x4 panel maps of inmigration count, by SES and period.
+#' @return 4x4 panel maps of variable of interest, by SES and period.
 #' @export
 ses_period_map_panel <- function(
   data,
@@ -28,7 +28,8 @@ ses_period_map_panel <- function(
   limits = NULL,
   save = F,
   savename = "plot.png",
-  caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.") {
+  caption = paste0(frb_caption, ses_caption, period_caption)
+  ) {
 
   library(sf)
   library(rgdal)

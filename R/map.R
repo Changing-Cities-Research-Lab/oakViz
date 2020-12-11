@@ -30,7 +30,8 @@ make_map <- function(data,
                      coord = F,
                      save = F,
                      savename = "plot.png",
-                     caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.") {
+                     caption = paste0(frb_caption, ses_caption, period_caption)
+) {
 
   library(tidyverse)
   library(sf)
@@ -144,10 +145,10 @@ make_map <- function(data,
 
   if (jenksbreaks) {
     map = map + scale_fill_fermenter(breaks = breaks,
-                           type = type,
-                           palette = palette,
-                           direction = direction,
-                           labels = labels)
+                                     type = type,
+                                     palette = palette,
+                                     direction = direction,
+                                     labels = labels)
   } else {
     map = map + scale_fill_gradientn(
       breaks = breaks,

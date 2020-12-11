@@ -27,8 +27,8 @@ plot_lollipop <- function(
   scale_type = "numeric",
   save = F,
   savename = "plot.png",
-  caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017.\n"
-) {
+  caption = paste0(frb_caption, ses_caption, period_caption)
+  ) {
   library('tidyverse')
 
   ### PARAMETERS ###
@@ -46,7 +46,7 @@ plot_lollipop <- function(
     c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
   inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
   names(inc_cat_colors) <- inc_cat
-  
+
   ses_cat_colors <-
     c("#fcbba1", "#fc9272", "#fb6a4a", "#b63b36")
   ses_cat <- c("Low", "Moderate", "Middle", "High")

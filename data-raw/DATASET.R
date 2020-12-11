@@ -58,10 +58,18 @@ cities <- read_csv("../../oak-data-repo/oakland_geographies/census_2010b_tracts_
 oak_tracts <- oak_ids %>%
   select(tractid10 = trtid10)
 
+# Captions
+ses_caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+."
+period_caption = "\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017."
+frb_caption = "\nSource: Federal Reserve Bank of New York Consumer Credit Panel/Equifax Data."
+
 usethis::use_data(oak_ids,
                   gentcat,
                   racecat,
                   inccat,
                   cities,
                   oak_tracts,
+                  ses_caption,
+                  period_caption,
+                  frb_caption,
                   overwrite = TRUE, internal = TRUE)
