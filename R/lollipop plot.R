@@ -49,7 +49,7 @@ plot_lollipop <- function(
   
   ses_cat_colors <-
     c("#fcbba1", "#fc9272", "#fb6a4a", "#b63b36")
-  ses_cat = c("Low", "Moderate", "Middle", "High")
+  ses_cat <- c("Low", "Moderate", "Middle", "High")
   names(ses_cat_colors) <- ses_cat
 
   labels = c("Overall", gent_cat, race_short, inc_cat, ses_cat)
