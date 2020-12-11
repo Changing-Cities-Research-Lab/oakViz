@@ -95,6 +95,7 @@ plot_bar_periods <- function(
     return("Please select valid group: 'gent', 'ethnoracial', 'income', 'ses', 'period")
   }
 
+  # Plotting
   if (group == "period") {
     plot <-
       ggplot(dat, aes(x = cat, y = {{ var }}, fill = cat)) +
