@@ -124,8 +124,8 @@ plot_lollipop <- function(
       facet_grid(rows = vars(facet),
                  scale = "free",
                  space = "free")
-    width = 5.5
-    height = 4.7
+    width = 4.5
+    height = 4.5
   }
 
   if (save) {
