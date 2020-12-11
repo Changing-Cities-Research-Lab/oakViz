@@ -72,21 +72,6 @@ plot_lollipop <- function(
     return("Please select percent or numeric")
   }
 
-  # Relabel names for the graphs
-
-  #gent_cat_plot_order <- c("Nongentrifiable", "Gentrifying",
-  #                        "Intense", "Moderate",
-  #                         "Early Gentrification", "Weak", "People or Price")
-
-  #race_cat_plot_order <- c("Predominantly White", "Predominantly Black",
-  #                         "Predominantly Other","White-Other","Black-White","Black-Other","Multiethnic",
-  #                         "White/White-Mixed", "Multiethnic/Other")
-
-  #inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
-  #                        "Fourth Quintile", "Top Quintile")
-  
-  #ses_cat_plot_order <- c("High", "Middle", "Moderate", "Low")
-  
   # Have line segment start at 0
   ystart = 0
   if (limits[1] > 0) {
