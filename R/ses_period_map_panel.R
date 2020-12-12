@@ -79,12 +79,6 @@ ses_period_map_panel <- function(
   }
 
   # Clean data
-  data$year <- plyr::revalue(data$year,
-                                c("boom"="Boom",
-                                  "bust" = "Bust",
-                                  "recovery" = "Recovery",
-                                  "post_recovery" = "Post-Recovery"))
-
   data = data %>%
     filter(year %in% c("Boom", "Bust", "Recovery", "Post-Recovery")) %>%
     select(tractid10, year, ses, {{var}}) %>%
