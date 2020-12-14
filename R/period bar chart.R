@@ -138,7 +138,7 @@ plot_bar_periods <- function(
                         labels = labels) +
       scale_y_continuous(limits = limits,
                          expand = c(0, 0),
-                         labels = scales::percent) +
+                         labels = label_type) +
       geom_hline(yintercept=0, linetype="dashed") +
       theme_bw() +
       theme(panel.grid.major = element_blank(),
