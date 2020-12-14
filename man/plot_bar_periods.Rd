@@ -9,6 +9,7 @@ plot_bar_periods(
   var,
   limits,
   group = "gent",
+  scale_type = "percent",
   save = F,
   savename = "plot.png",
   caption = paste0(frb_caption, ses_caption, period_caption)
@@ -22,6 +23,8 @@ plot_bar_periods(
 \item{limits}{Y-axis limits}
 
 \item{group}{Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"}
+
+\item{scale_type}{Y-axis scale type: "numeric" or "percent"}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 

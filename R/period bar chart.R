@@ -7,6 +7,7 @@
 #' @param var Name of column containing variable to plot.
 #' @param limits Y-axis limits
 #' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"
+#' @param scale_type Y-axis scale type: "numeric" or "percent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
@@ -18,6 +19,7 @@ plot_bar_periods <- function(
   var,
   limits,
   group = "gent", # gent, ethnoracial, income, ses, period
+  scale_type = "percent",
   save = F,
   savename = "plot.png",
   caption = paste0(frb_caption, ses_caption, period_caption)
@@ -50,6 +52,14 @@ plot_bar_periods <- function(
     c("#46aac8", "#46aac8", "#46aac8", "#46aac8")
   period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
   names(period_cat_colors) <- period_cat
+  
+  if (scale_type == "percent") {
+    label_type = scales::percent
+  } else if (scale_type == "numeric") {
+    label_type = scales::comma
+  } else {
+    return("Please select percent or numeric")
+  }
 
   # Combine with either gentcat, racecat, inccat, ses, or period
   if (group == "gent") {
@@ -104,7 +114,7 @@ plot_bar_periods <- function(
       scale_fill_manual(values = colors) +
       scale_y_continuous(limits = limits,
                          expand = c(0, 0),
-                         labels = scales::percent) +
+                         labels = label_type) +
       geom_hline(yintercept=0, linetype="dashed") +
       theme_bw() +
       theme(panel.grid.major = element_blank(),
