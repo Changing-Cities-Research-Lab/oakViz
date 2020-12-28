@@ -4,7 +4,7 @@
 #' based on different groupings. Intended to be used with oakViz::aggregate_categories()
 #'
 #' @param dat Data with a column containing variables of interest and grouping variables.
-#' @param fill Name of column containing fill variable: "ses (default), "move", "dest.
+#' @param fill Name of column containing fill variable: "ses" (default), "move", "dest".
 #' @param group Category for x-axis grouping: "period" (default), "ses"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -61,7 +61,7 @@ stacked_bar <- function(
   plots_all = list()
 
   foreach(i = 1:3) %do% {
-    facetorder = c("Ethnoracial", "Gentrification", "Income")
+    facetorder = c("Ethnoracial", "Income", "Gentrification")
     dat = data_full %>%
       filter(facet %in% facetorder[i])
 
@@ -209,11 +209,11 @@ stacked_bar <- function(
                                       "outmigration_contracosta_pct" = "Contra Costa",
                                       "outmigration_northbay_pct" = "North Bay",
                                       "outmigration_sanfran_pct" = "San Francisco",
-                                      "outmigration_southbay_pct" = "Southbay"))
+                                      "outmigration_southbay_pct" = "South Bay"))
 
       dat$variable <- factor(dat$variable,
                              levels = c("Outside Bay Area",
-                                        "Southbay",
+                                        "South Bay",
                                         "San Francisco",
                                         "North Bay",
                                         "Contra Costa",
@@ -223,7 +223,7 @@ stacked_bar <- function(
       dat$fill = dat$variable
 
       values = c("Outside Bay Area" = "#d53e4f",
-                 "Southbay" = "#fc8d59",
+                 "South Bay" = "#fc8d59",
                  "San Francisco" = "#fee08b",
                  "North Bay" = "#ffffbf",
                  "Contra Costa" = "#e6f598",
@@ -231,7 +231,7 @@ stacked_bar <- function(
                  "Within Oakland" = "#3288bd")
 
       fill_labels = c("Outside Bay Area",
-                      "Southbay",
+                      "South Bay",
                       "San Francisco",
                       "North Bay",
                       "Contra Costa",

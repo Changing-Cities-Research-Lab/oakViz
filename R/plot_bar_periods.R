@@ -1,7 +1,7 @@
 #' Produce grouped bar chart across four periods.
 #'
 #' This function takes in data and produces a bar chart grouped by either
-#' gentrification, ethnoracial, income, ses, or period category across four housing periods.
+#' gentrification, ethnoracial, income, SES, or period category across four housing periods.
 #'
 #' @param dat Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
@@ -52,7 +52,7 @@ plot_bar_periods <- function(
     c("#46aac8", "#46aac8", "#46aac8", "#46aac8")
   period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
   names(period_cat_colors) <- period_cat
-  
+
   if (scale_type == "percent") {
     label_type = scales::percent
   } else if (scale_type == "numeric") {
