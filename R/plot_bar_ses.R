@@ -172,11 +172,11 @@ plot_bar_ses <- function(
                                     "outmigration_contracosta_pct" = "Contra Costa",
                                     "outmigration_northbay_pct" = "North Bay",
                                     "outmigration_sanfran_pct" = "San Francisco",
-                                    "outmigration_southbay_pct" = "Southbay"))
+                                    "outmigration_southbay_pct" = "South Bay"))
 
     dat$variable <- factor(dat$variable,
                            levels = c("Outside Bay Area",
-                                      "Southbay",
+                                      "South Bay",
                                       "San Francisco",
                                       "North Bay",
                                       "Contra Costa",
@@ -186,7 +186,7 @@ plot_bar_ses <- function(
     dat$fill = dat$variable
 
     values = c("Outside Bay Area" = "#d53e4f",
-               "Southbay" = "#fc8d59",
+               "South Bay" = "#fc8d59",
                "San Francisco" = "#fee08b",
                "North Bay" = "#ffffbf",
                "Contra Costa" = "#e6f598",
@@ -194,7 +194,7 @@ plot_bar_ses <- function(
                "Within Oakland" = "#3288bd")
 
     fill_labels = c("Outside Bay Area",
-                    "Southbay",
+                    "South Bay",
                     "San Francisco",
                     "North Bay",
                     "Contra Costa",
