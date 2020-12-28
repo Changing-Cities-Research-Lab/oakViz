@@ -15,7 +15,7 @@ plot_bar_ses(
 \arguments{
 \item{dat}{Data with a column containing variables of interest and grouping variables.}
 
-\item{fill}{Name of column containing fill variable:"move", "dest" (default).}
+\item{fill}{Name of column containing fill variable: "move", "dest" (default).}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 

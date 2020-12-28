@@ -4,7 +4,7 @@
 #' based on different groupings. Intended to be used with oakViz::aggregate_categories()
 #'
 #' @param dat Data with a column containing variables of interest and grouping variables.
-#' @param fill Name of column containing fill variable:"move", "dest" (default).
+#' @param fill Name of column containing fill variable: "move", "dest" (default).
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure

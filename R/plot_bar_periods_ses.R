@@ -18,7 +18,7 @@ plot_bar_periods_ses_grid <- function(
   dat,
   var,
   limits,
-  group = "gent", # gent, ethnoracial, income, ses, period
+  group = "gent",
   save = F,
   savename = "plot.png",
   caption = paste0(frb_caption, ses_caption, period_caption)
