@@ -1,6 +1,6 @@
 #' Aggregation for Oakland variables.
 #'
-#' Take mean, median, or sum of all variables by gentrification, ethnoracial, and income grouping.
+#' Take mean, median, or sum of all variables by ethnoracial, income, and gentrification grouping.
 #'
 #' @param dat Data with a column containing census tracts ("tractid10") and categorical variables to group by or numeric variables to aggregate.
 #' @param compute "mean", "median", or "sum"
@@ -38,8 +38,8 @@ aggregate_categories = function(
     dat %>% left_join(inccat, by = "tractid10")
   ) %>%
     select(-tractid10) %>%
-    mutate(cat = factor(cat, levels = c("Overall", gent_cat_plot_order, race_cat_plot_order, inc_cat_plot_order, ses_cat_plot_order))) %>%
-    mutate(facet = factor(facet, levels = c("All", "Gentrification", "Ethnoracial", "Income", "SES"))) %>%
+    mutate(cat = factor(cat, levels = c("Overall", race_cat_plot_order, inc_cat_plot_order, gent_cat_plot_order, ses_cat_plot_order))) %>%
+    mutate(facet = factor(facet, levels = c("All", "Ethnoracial", "Income", "Gentrification", "SES"))) %>%
     filter(!is.na(facet))
 
   # modify mean, median, and sum so that if there are only NAs then it outputs NA

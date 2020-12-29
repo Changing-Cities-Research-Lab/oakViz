@@ -17,5 +17,5 @@ aggregate_categories(dat, compute = "mean", group_vars = c(NULL))
 Aggregated data frame.
 }
 \description{
-Take mean, median, or sum of all variables by gentrification, ethnoracial, and income grouping.
+Take mean, median, or sum of all variables by ethnoracial, income, and gentrification grouping.
 }
