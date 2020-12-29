@@ -1,8 +1,7 @@
 ## code to prepare `DATASET` dataset goes here
 
-# category labels/colors (used in plot_lollipop(), plot_bar_periods(),
-# and plot_bar_periods_ses(), aggregate_categories())
-
+# COLORS/LABELS
+# (used in plot_lollipop(), plot_bar_periods(), and plot_bar_periods_ses(), aggregate_categories())
 gent_cat_colors <-
   c("snow3","#d94801", "#fa7b00", "#fdcc8a", "#a6d894")
 gent_cat <- c("Nongentrifiable", "Intense", "Moderate", "Weak", "People or Price")
@@ -29,7 +28,20 @@ period_cat_colors <-
 period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
 names(period_cat_colors) <- period_cat
 
-# long category labels/ordering
+move_cat_colors = c("Moved out of Bay Area" = "#8baf3e",
+           "Different City within Bay Area" = "#fdbd3b",
+           "Moved within Oakland" = "#2e5e8b")
+
+dest_colors = c("Outside Bay Area" = "#d53e4f",
+                "South Bay" = "#fc8d59",
+                "San Francisco" = "#fee08b",
+                "North Bay" = "#ffffbf",
+                "Contra Costa" = "#e6f598",
+                "Alameda" = "#99d594",
+                "Within Oakland" = "#3288bd")
+
+# LABELS/ORDERING
+# used in plot_bar_ses() and stacked_bar()
 relabel_gent_cat <- c("nongentrifiable" = "Nongentrifiable",
                       "gentrifying" = "Gentrifying",
                       "intense"  = "Intense",
@@ -53,12 +65,36 @@ relabel_race_cat <- c("PredWhite" = "Predominantly White",
                       "WhiteMixed" = "White/White-Mixed",
                       "MixedOther" = "Multiethnic/Other")
 
+relabel_move_cat <- c("moved_outba_pct"="Moved out of Bay Area",
+                      "diff_city_ba_pct" = "Different City within Bay Area",
+                      "moved_within_oak_pct" = "Moved within Oakland")
+
+relabel_dest_cat <- c("outmigration_outba_pct" = "Outside Bay Area",
+                      "withinoakmigration_pct" = "Within Oakland",
+                      "outmigration_alameda_pct" = "Alameda",
+                      "outmigration_contracosta_pct" = "Contra Costa",
+                      "outmigration_northbay_pct" = "North Bay",
+                      "outmigration_sanfran_pct" = "San Francisco",
+                      "outmigration_southbay_pct" = "South Bay")
+
 race_cat_plot_order <- c("Predominantly White", "Predominantly Black",
                          "Predominantly Other","White-Other","Black-White","Black-Other","Multiethnic",
                          "White/White-Mixed", "Multiethnic/Other")
 
 inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                         "Fourth Quintile", "Top Quintile")
+
+move_order <- c("Moved out of Bay Area",
+                "Different City within Bay Area",
+                "Moved within Oakland")
+
+dest_order <- c("Outside Bay Area",
+                "South Bay",
+                "San Francisco",
+                "North Bay",
+                "Contra Costa",
+                "Alameda",
+                "Within Oakland")
 
 # Oakland tractids
 oak_ids <- readr::read_csv("../../oak-data-repo/oakland_geographies/trtid10_oak.csv")
@@ -105,11 +141,17 @@ usethis::use_data(gent_cat_colors,
                   ses_short,
                   period_cat_colors,
                   period_cat,
+                  move_cat_colors,
+                  dest_colors,
                   relabel_gent_cat,
                   gent_cat_plot_order,
                   relabel_race_cat,
+                  relabel_move_cat,
+                  relabel_dest_cat,
                   race_cat_plot_order,
                   inc_cat_plot_order,
+                  move_order,
+                  dest_order,
                   oak_ids,
                   gentcat,
                   racecat,

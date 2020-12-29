@@ -96,23 +96,15 @@ plot_bar_ses <- function(
 
     # Rename/order/select colors/label move categories
     dat$variable <- plyr::revalue(dat$variable,
-                                  c("moved_outba_pct"="Moved out of Bay Area",
-                                    "diff_city_ba_pct" = "Different City within Bay Area",
-                                    "moved_within_oak_pct" = "Moved within Oakland"))
+                                  relabel_move_cat)
 
     dat$variable <- factor(dat$variable,
-                           levels = c("Moved out of Bay Area",
-                                      "Different City within Bay Area",
-                                      "Moved within Oakland"))
+                           levels = move_order)
     dat$fill = dat$variable
 
-    values = c("Moved out of Bay Area" = "#8baf3e",
-               "Different City within Bay Area" = "#fdbd3b",
-               "Moved within Oakland" = "#2e5e8b")
+    values = move_cat_colors
 
-    fill_labels = c("Moved out of Bay Area",
-                    "Different City within Bay Area",
-                    "Moved within Oakland")
+    fill_labels = move_order
 
   } else if (fill == "dest") {
     # Compute share of moves by destination
@@ -166,40 +158,16 @@ plot_bar_ses <- function(
 
     # Rename/order/select colors/label move categories
     dat$variable <- plyr::revalue(dat$variable,
-                                  c("outmigration_outba_pct" = "Outside Bay Area",
-                                    "withinoakmigration_pct" = "Within Oakland",
-                                    "outmigration_alameda_pct" = "Alameda",
-                                    "outmigration_contracosta_pct" = "Contra Costa",
-                                    "outmigration_northbay_pct" = "North Bay",
-                                    "outmigration_sanfran_pct" = "San Francisco",
-                                    "outmigration_southbay_pct" = "South Bay"))
+                                  relabel_dest_cat)
 
     dat$variable <- factor(dat$variable,
-                           levels = c("Outside Bay Area",
-                                      "South Bay",
-                                      "San Francisco",
-                                      "North Bay",
-                                      "Contra Costa",
-                                      "Alameda",
-                                      "Within Oakland"))
+                           levels = dest_order)
 
     dat$fill = dat$variable
 
-    values = c("Outside Bay Area" = "#d53e4f",
-               "South Bay" = "#fc8d59",
-               "San Francisco" = "#fee08b",
-               "North Bay" = "#ffffbf",
-               "Contra Costa" = "#e6f598",
-               "Alameda" = "#99d594",
-               "Within Oakland" = "#3288bd")
+    values = dest_colors
 
-    fill_labels = c("Outside Bay Area",
-                    "South Bay",
-                    "San Francisco",
-                    "North Bay",
-                    "Contra Costa",
-                    "Alameda",
-                    "Within Oakland")
+    fill_labels = dest_order
 
   } else {
     return("Please select 'move', or 'dest'")
