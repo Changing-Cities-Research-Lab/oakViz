@@ -1,9 +1,10 @@
-#' Produce lollipop plot by gentrification, ethnoracial, and income category.
+#' Produce lollipop plot by ethnoracial, income, and gentrification category.
 #'
 #' This function takes in data and produces a horizontal lollipop plot by
-#' ethnoracial, income, and gentrification category. Input data needs columns for
-#' variable of interest (titled "var") and tract number (titled "tractid10").
-#' Intended to be used after oakViz::aggregate_categories().
+#' ethnoracial, income, and gentrification category. The order of these categories
+#' can be adjusted by changing the factor levels of the facet variable. Input data
+#' needs columns for variable of interest (titled "var") and tract number (titled
+#' "tractid10"). Intended to be used after oakViz::aggregate_categories().
 #'
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.

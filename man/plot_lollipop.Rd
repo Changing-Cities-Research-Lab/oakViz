@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_lollipop.R
 \name{plot_lollipop}
 \alias{plot_lollipop}
-\title{Produce lollipop plot by gentrification, ethnoracial, and income category.}
+\title{Produce lollipop plot by ethnoracial, income, and gentrification category.}
 \usage{
 plot_lollipop(
   data,
@@ -38,11 +38,12 @@ plot_lollipop(
 \item{reverse}{Reverses direction of x-axis when T, default is F.}
 }
 \value{
-Lollipop plot of variable by gentrification, ethnoracial, and income category.
+Lollipop plot of variable by ethnoracial, income, and gentrification category, with optional columns by SES.
 }
 \description{
 This function takes in data and produces a horizontal lollipop plot by
-ethnoracial, income, and gentrification category. Input data needs columns for
-variable of interest (titled "var") and tract number (titled "tractid10").
-Intended to be used after oakViz::aggregate_categories().
+ethnoracial, income, and gentrification category. The order of these categories
+can be adjusted by changing the factor levels of the facet variable. Input data
+needs columns for variable of interest (titled "var") and tract number (titled
+"tractid10"). Intended to be used after oakViz::aggregate_categories().
 }
