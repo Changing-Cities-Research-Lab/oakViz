@@ -1,6 +1,8 @@
 ## code to prepare `DATASET` dataset goes here
 
-# category labels/colors (used in plot_lollipop() and plot_bar_periods_ses())
+# category labels/colors (used in plot_lollipop(), plot_bar_periods(),
+# and plot_bar_periods_ses(), aggregate_categories())
+
 gent_cat_colors <-
   c("snow3","#d94801", "#fa7b00", "#fdcc8a", "#a6d894")
 gent_cat <- c("Nongentrifiable", "Intense", "Moderate", "Weak", "People or Price")

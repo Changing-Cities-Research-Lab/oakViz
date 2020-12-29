@@ -14,17 +14,6 @@ aggregate_categories = function(
 
   library('tidyverse')
 
-  # Relabel names for the graphs
-  gent_cat_plot_order <- c("Nongentrifiable", "Gentrifying",
-                           "Intense", "Moderate",
-                           "Early Gentrification", "Weak", "People or Price")
-  race_cat_plot_order <- c("Predominantly White", "Predominantly Black",
-                           "Predominantly Other","White-Other","Black-White","Black-Other","Multiethnic",
-                           "White/White-Mixed", "Multiethnic/Other")
-  inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
-                          "Fourth Quintile", "Top Quintile")
-  ses_cat_plot_order <- c("Low", "Moderate ", "Middle", "High")
-
   dat$tractid10 = as.numeric(dat$tractid10)
 
   # merge Oakland tracts with data
@@ -38,7 +27,7 @@ aggregate_categories = function(
     dat %>% left_join(inccat, by = "tractid10")
   ) %>%
     select(-tractid10) %>%
-    mutate(cat = factor(cat, levels = c("Overall", race_cat_plot_order, inc_cat_plot_order, gent_cat_plot_order, ses_cat_plot_order))) %>%
+    mutate(cat = factor(cat, levels = c("Overall", race_cat_plot_order, inc_cat, gent_cat_plot_order, ses_short))) %>%
     mutate(facet = factor(facet, levels = c("All", "Ethnoracial", "Income", "Gentrification", "SES"))) %>%
     filter(!is.na(facet))
 

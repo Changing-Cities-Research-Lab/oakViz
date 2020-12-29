@@ -55,7 +55,7 @@ stacked_bar <- function(
 
   data_full = dat
 
-  data_full$facet <- plyr::revalue(data_full$facet, c("All"="Ethnoracial"))
+  data_full$facet <- plyr::revalue(data_full$facet, c("All" = "Ethnoracial"))
 
   # Plot bar charts
   plots_all = list()
