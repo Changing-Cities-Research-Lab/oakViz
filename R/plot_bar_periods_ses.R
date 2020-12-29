@@ -23,35 +23,8 @@ plot_bar_periods_ses_grid <- function(
   savename = "plot.png",
   caption = paste0(frb_caption, ses_caption, period_caption)
 ) {
-  ## Read Data
+
   library('tidyverse')
-
-  ### PARAMETERS ###
-  gent_cat_colors <-
-    c("snow3","#d94801", "#fa7b00", "#fdcc8a", "#a6d894")
-  gent_cat <- c("Nongentrifiable", "Intense", "Moderate", "Weak", "People or Price")
-  names(gent_cat_colors) <- gent_cat
-
-  race_short_colors <-
-    c("#481567FF", "#33638DDF", "#FDE725FF", "#20A387FF")
-  race_short <- c("Predominantly Black", "Black-Other", "White/White-Mixed", "Multiethnic/Other")
-  names(race_short_colors) <- race_short
-
-  inc_cat_colors <-
-    c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
-  inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
-  names(inc_cat_colors) <- inc_cat
-
-  ses_cat_colors <-
-    c("#9b9b9b", "#fcbba1", "#fc9272", "#faab8c","#fb6a4a", "#b63b36")
-  ses_cat = c("All", "Low", "Moderate", "LMM" ,"Middle", "High")
-  ses_short = c("Low", "Moderate","Middle", "High")
-  names(ses_cat_colors) <- ses_cat
-
-  period_cat_colors <-
-    c("#46aac8", "#46aac8", "#46aac8", "#46aac8")
-  period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
-  names(period_cat_colors) <- period_cat
 
   # Combine with either gentcat, racecat, inccat, ses, or period
   if (group == "gent") {

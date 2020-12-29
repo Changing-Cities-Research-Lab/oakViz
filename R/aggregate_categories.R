@@ -27,7 +27,7 @@ aggregate_categories = function(
 
   dat$tractid10 = as.numeric(dat$tractid10)
 
-  # merge oakland tracts with data
+  # merge Oakland tracts with data
   dat <- dat %>% right_join(oak_tracts, by = "tractid10")
 
   # Combine gentcat, racecat, & inccat with data

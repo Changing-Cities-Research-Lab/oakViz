@@ -1,7 +1,33 @@
 ## code to prepare `DATASET` dataset goes here
 
-oak_ids <- readr::read_csv("../../oak-data-repo/oakland_geographies/trtid10_oak.csv")
+# category labels/colors (used in plot_lollipop() and plot_bar_periods_ses())
+gent_cat_colors <-
+  c("snow3","#d94801", "#fa7b00", "#fdcc8a", "#a6d894")
+gent_cat <- c("Nongentrifiable", "Intense", "Moderate", "Weak", "People or Price")
+names(gent_cat_colors) <- gent_cat
 
+race_short_colors <-
+  c("#481567FF", "#33638DDF", "#FDE725FF", "#20A387FF")
+race_short <- c("Predominantly Black", "Black-Other", "White/White-Mixed", "Multiethnic/Other")
+names(race_short_colors) <- race_short
+
+inc_cat_colors <-
+  c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
+inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
+names(inc_cat_colors) <- inc_cat
+
+ses_cat_colors <-
+  c("#9b9b9b", "#fcbba1", "#fc9272", "#faab8c","#fb6a4a", "#b63b36")
+ses_cat = c("All", "Low", "Moderate", "LMM" ,"Middle", "High")
+ses_short = c("Low", "Moderate","Middle", "High")
+names(ses_cat_colors) <- ses_cat
+
+period_cat_colors <-
+  c("#46aac8", "#46aac8", "#46aac8", "#46aac8")
+period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
+names(period_cat_colors) <- period_cat
+
+# long category labels/ordering
 relabel_gent_cat <- c("nongentrifiable" = "Nongentrifiable",
                       "gentrifying" = "Gentrifying",
                       "intense"  = "Intense",
@@ -32,6 +58,9 @@ race_cat_plot_order <- c("Predominantly White", "Predominantly Black",
 inc_cat_plot_order <- c("Bottom Quintile", "Second Quintile", "Middle Quintile",
                         "Fourth Quintile", "Top Quintile")
 
+# Oakland tractids
+oak_ids <- readr::read_csv("../../oak-data-repo/oakland_geographies/trtid10_oak.csv")
+
 # gentrification data
 gentcat <- read_csv("../../oak-data-repo/gentrification_categories/gentcat_006a_50_oak.csv") %>%
   select(tractid10 = trtid10, cat = gentcat_006a_50)
@@ -51,19 +80,35 @@ inccat <- read_csv("../../oak-data-repo/income_categories/hinc09_categories.csv"
 inccat$cat <- factor(inccat$cat, levels = inc_cat_plot_order)
 inccat$facet = "Income"
 
-# City shapefiles
+# city shapefiles
 cities <- read_csv("../../oak-data-repo/oakland_geographies/census_2010b_tracts_places_ca.csv")
 
 # Oakland tracts data
 oak_tracts <- oak_ids %>%
   select(tractid10 = trtid10)
 
-# Captions
+# captions
 ses_caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+."
 period_caption = "\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017."
 frb_caption = "\nSource: Federal Reserve Bank of New York Consumer Credit Panel/Equifax Data."
 
-usethis::use_data(oak_ids,
+usethis::use_data(gent_cat_colors,
+                  gent_cat,
+                  race_short_colors,
+                  race_short,
+                  inc_cat_colors,
+                  inc_cat,
+                  ses_cat_colors,
+                  ses_cat,
+                  ses_short,
+                  period_cat_colors,
+                  period_cat,
+                  relabel_gent_cat,
+                  gent_cat_plot_order,
+                  relabel_race_cat,
+                  race_cat_plot_order,
+                  inc_cat_plot_order,
+                  oak_ids,
                   gentcat,
                   racecat,
                   inccat,

@@ -32,31 +32,6 @@ plot_lollipop <- function(
   ) {
   library('tidyverse')
 
-  ### PARAMETERS ###
-  gent_cat_colors <-
-    c("snow3","#d94801", "#fa7b00", "#fdcc8a", "#a6d894")
-  gent_cat <- c("Nongentrifiable", "Intense", "Moderate", "Weak", "People or Price")
-  names(gent_cat_colors) <- gent_cat
-
-  race_short_colors <-
-    c("#481567FF", "#33638DDF", "#FDE725FF", "#20A387FF")
-  race_short <- c("Predominantly Black", "Black-Other", "White/White-Mixed", "Multiethnic/Other")
-  names(race_short_colors) <- race_short
-
-  inc_cat_colors <-
-    c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
-  inc_cat <- c("Bottom Quintile", "Second Quintile", "Middle Quintile", "Fourth Quintile", "Top Quintile")
-  names(inc_cat_colors) <- inc_cat
-
-  ses_cat_colors <-
-    c("#fcbba1", "#fc9272", "#fb6a4a", "#b63b36")
-  ses_cat <- c("Low", "Moderate", "Middle", "High")
-  names(ses_cat_colors) <- ses_cat
-
-  labels = c("Overall", gent_cat, race_short, inc_cat, ses_cat)
-  colors = c("white", gent_cat_colors, race_short_colors, inc_cat_colors, ses_cat_colors)
-  names(colors) = labels
-
   if(ses) {
     data$ses <- factor(data$ses,
                        levels = c("Low",
