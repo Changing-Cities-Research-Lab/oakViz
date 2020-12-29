@@ -1,7 +1,7 @@
 #' Produce lollipop plot by gentrification, ethnoracial, and income category.
 #'
 #' This function takes in data and produces a horizontal lollipop plot by
-#' gentrification, ethnoracial, and income category. Input data needs columns for
+#' ethnoracial, income, and gentrification category. Input data needs columns for
 #' variable of interest (titled "var") and tract number (titled "tractid10").
 #' Intended to be used after oakViz::aggregate_categories().
 #'
@@ -15,7 +15,7 @@
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Figure caption
-#' @return Lollipop plot of variable by gentrification, ethnoracial, and income category.
+#' @return Lollipop plot of variable by ethnoracial, income, and gentrification category, with optional columns by SES.
 #' @export
 # Lollipop Plot
 plot_lollipop <- function(
@@ -84,7 +84,7 @@ plot_lollipop <- function(
                      y=ystart, yend={{var}}), size=0.25,
                  show.legend = FALSE) +
     geom_point(aes(color = factor(cat)), size = 3.25, shape = 21,
-               colour = "black",show.legend = TRUE) +
+               colour = "black", show.legend = TRUE) +
     geom_hline(yintercept=0, linetype="dashed") +
     scale_y_continuous(limits = limits,
                        expand = c(0, 0),
@@ -110,6 +110,7 @@ plot_lollipop <- function(
       plot.caption = element_text(size = 6, hjust = .5, face = "italic")) +
     labs(y = x_title, caption = caption) +
     coord_flip()
+
   if (ses) {
     plot = plot +
       facet_grid(rows = vars(facet),

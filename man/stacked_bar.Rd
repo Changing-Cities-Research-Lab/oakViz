@@ -16,7 +16,7 @@ stacked_bar(
 \arguments{
 \item{dat}{Data with a column containing variables of interest and grouping variables.}
 
-\item{fill}{Name of column containing fill variable: "ses (default), "move", "dest.}
+\item{fill}{Name of column containing fill variable: "ses" (default), "move", "dest".}
 
 \item{group}{Category for x-axis grouping: "period" (default), "ses"}
 
