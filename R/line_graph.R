@@ -49,7 +49,7 @@ line_graph <- function(
   # data = dat_long %>%
   #   filter(variable == var)
 
-  plot = ggplot(data, aes(x = month, y = value, group = cat)) +
+  plot = ggplot(dat, aes(x = month, y = value, group = cat)) +
     geom_line(aes(color = cat), size = 0.8) +
     scale_x_discrete(labels=c("1" = "Jan",
                               "2" = "Feb",
