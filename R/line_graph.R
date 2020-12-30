@@ -4,7 +4,7 @@
 #' grouped by neighborhood category or race.
 #'
 #' @param dat Data with a column containing variable of interest, fips column, and grouping variable.
-#' @param var Name of variable to plot.
+#' @param var Name of variable to plot, as a string.
 #' @param group Category for color grouping: "race" (default) or "neighborhood"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -36,20 +36,32 @@ line_graph <- function(
   dat_long = dat_long %>%
     mutate(month = stringr::str_sub(variable, start = -2))
 
+  # Removes leading zeros
   dat_long$month = as.double(dat_long$month)
+
+  # Factor for x-axis labels
+  dat_long$month = as.factor(dat_long$month)
 
   dat_long$variable = dat_long$variable %>%
     str_sub(end = -4)
 
   # Filter for variable to plot here
   data = dat_long %>%
-    filter(variable == {{var}})
+    filter(variable == var)
 
   plot = ggplot(data, aes(x = month, y = value, group = cat)) +
     geom_line(aes(color = cat), size = 0.8) +
-    scale_x_discrete(breaks=c("1","2","3","4","5","6","7","8","9","10"),
-                     labels=c("Jan", "Feb", "Mar", "Apr", "May",
-                              "Jun", "Jul", "Aug", "Sept", "Oct")) +
+    scale_x_discrete(labels=c("1" = "Jan",
+                              "2" = "Feb",
+                              "3" = "Mar",
+                              "4" = "Apr",
+                              "5" = "May",
+                              "6" = "Jun",
+                              "7" = "Jul",
+                              "8" = "Aug",
+                              "9" = "Sept",
+                              "10" = "Oct"),
+                     expand = c(0.03, 0.03)) +
     theme_bw() + theme(
       # Title
       legend.title = element_blank(),
@@ -59,7 +71,9 @@ line_graph <- function(
       # Caption
       plot.caption = element_text(size = 9, hjust = .5,face = "italic"),
       # X-axis
-      axis.ticks.x=element_blank(),
+      axis.ticks.x = element_blank(),
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(size = 9),
       # Y-axis
       axis.ticks.y=element_blank(),
       # Background
@@ -67,10 +81,11 @@ line_graph <- function(
       panel.grid.minor = element_blank(),
       panel.background = element_blank(),
       axis.line = element_line(colour = "black"),
-      panel.border = element_blank())
+      panel.border = element_blank()) +
+    guides(color = guide_legend(nrow = 1))
 
   if (save) {
-    ggsave(savename, plot, height = 6, width = 6)
+    ggsave(savename, plot, height = 5, width = 6)
   }
   return(plot)
 }

@@ -16,7 +16,7 @@ line_graph(
 \arguments{
 \item{dat}{Data with a column containing variable of interest, fips column, and grouping variable.}
 
-\item{var}{Name of variable to plot.}
+\item{var}{Name of variable to plot, as a string.}
 
 \item{group}{Category for color grouping: "race" (default) or "neighborhood"}
 
