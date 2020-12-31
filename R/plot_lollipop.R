@@ -82,10 +82,6 @@ plot_lollipop <- function(
     labs(caption = caption) +
     coord_flip()
   
-  if(!is.null(x_title)) {
-    plot <- plot + labs(y = x_title)
-  }
-  
   plot = plot +
     facet_grid(rows = vars(facet),
                scale = "free",
