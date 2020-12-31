@@ -24,7 +24,7 @@ plot_lollipop <- function(
   var,
   limits,
   ses = F,
-  x_title = "",
+  x_title = NULL,
   scale_type = "numeric",
   save = F,
   savename = "plot.png",
@@ -90,6 +90,10 @@ plot_lollipop <- function(
       plot.caption = element_text(size = 6, hjust = .5, face = "italic")) +
     labs(y = x_title, caption = caption) +
     coord_flip()
+
+  if (!is.null(x_title)) {
+    plot = plot + labs(y = x_title)
+  }
 
   if (ses) {
     plot = plot +
