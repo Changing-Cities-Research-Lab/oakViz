@@ -20,34 +20,6 @@ line_graph <- function(
   savename = "plot.png",
   caption = paste0(frb_caption, ses_caption, period_caption)
 ) {
-  # dat$fips = as.factor(dat$fips)
-  #
-  # agg = dat %>%
-  #   group_by(cat) %>%
-  #   dplyr::summarise_all(mean) %>%
-  #   select(-fips)
-  #
-  # agg = as.data.frame(agg)
-  #
-  # dat_long = reshape::melt(agg, id.vars = c("cat"))
-  #
-  # dat_long$variable = as.character(dat_long$variable)
-  #
-  # dat_long = dat_long %>%
-  #   mutate(month = stringr::str_sub(variable, start = -2))
-  #
-  # # Removes leading zeros
-  # dat_long$month = as.double(dat_long$month)
-  #
-  # # Factor for x-axis labels
-  # dat_long$month = as.factor(dat_long$month)
-  #
-  # dat_long$variable = dat_long$variable %>%
-  #   str_sub(end = -4)
-  #
-  # # Filter for variable to plot here
-  # data = dat_long %>%
-  #   filter(variable == var)
 
   plot = ggplot(dat, aes(x = month, y = value, group = cat)) +
     geom_line(aes(color = cat), size = 0.8) +
