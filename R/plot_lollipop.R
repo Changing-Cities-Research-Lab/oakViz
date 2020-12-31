@@ -96,7 +96,7 @@ plot_lollipop <- function(
   if (save) {
     ggsave(savename, plot, height = height, width = width)
   }
+  
   return(plot)
-
 }
 
