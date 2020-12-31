@@ -92,7 +92,7 @@ make_discrete_map <- function(shp_tracts,
       data = data,
       aes(fill = cat),
       size = 0,
-      alpha = 0.5,
+      alpha = 0.7,
       inherit.aes = FALSE
     ) +
     geom_sf(
