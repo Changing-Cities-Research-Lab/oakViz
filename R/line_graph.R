@@ -18,7 +18,7 @@ line_graph <- function(
   group = "race",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_acs_caption, ses_caption, period_caption)
+  caption = paste0(acs_caption, ses_caption, period_caption)
 ) {
 
   if (group == "race") {
@@ -27,10 +27,10 @@ line_graph <- function(
     colors = race_short_colors
   } else if (group == "income") {
     colors = inc_cat_colors
-  } else if (group == "gent") {
+  } else if (group == "gentrification") {
     colors = gent_cat_colors
   } else {
-    return("Please select 'race', 'ethnoracial', 'income', or 'gent'")
+    return("Please select 'race', 'ethnoracial', 'income', or 'gentrification'")
   }
 
   plot = ggplot(dat, aes(x = month, y = {{var}}, group = cat)) +
@@ -70,6 +70,8 @@ line_graph <- function(
       axis.line = element_line(colour = "black"),
       panel.border = element_blank()) +
     guides(color = guide_legend(nrow = 1))
+  
+  plot <- plot + labs(caption)
 
   if (save) {
     ggsave(savename, plot, height = 5, width = 6.8)
