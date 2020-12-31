@@ -112,7 +112,7 @@ make_map <- function(data,
       data = data,
       aes(fill = {{var}}),
       size = 0,
-      alpha = 0.5,
+      alpha = 0.7,
       inherit.aes = FALSE
     ) +
     geom_sf(

@@ -147,7 +147,7 @@ ses_period_map_panel <- function(
       data = data,
       aes(fill = {{var}}),
       size = 0,
-      alpha = 0.5,
+      alpha = 0.7,
       inherit.aes = FALSE
     ) +
     geom_sf(
