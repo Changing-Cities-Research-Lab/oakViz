@@ -30,6 +30,13 @@ ses_cat = c("All", "Low", "Moderate", "LMM" ,"Middle", "High")
 ses_short = c("Low", "Moderate", "Middle", "High")
 names(ses_cat_colors) <- ses_cat
 
+# " Moderate" includes a space to differentiate from "Moderate" gentrification
+# Used when ordering cat levels for lollipop plots
+ses_lollipop_colors <-
+  c("#9b9b9b", "#fcbba1", "#fc9272", "#faab8c","#fb6a4a", "#b63b36")
+ses_lollipop = c("Low", " Moderate", "Middle", "High")
+names(ses_lollipop_colors) <- ses_lollipop
+
 period_cat_colors <-
   c("#46aac8", "#46aac8", "#46aac8", "#46aac8")
 period_cat = c("Boom", "Bust", "Recovery", "Post-Recovery")
@@ -149,6 +156,8 @@ usethis::use_data(gent_cat_colors,
                   ses_cat_colors,
                   ses_cat,
                   ses_short,
+                  ses_lollipop_colors,
+                  ses_lollipop,
                   period_cat_colors,
                   period_cat,
                   move_cat_colors,
