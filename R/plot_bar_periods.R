@@ -37,7 +37,7 @@ plot_bar_periods <- function(
 
   # Combine with either gentcat, racecat, inccat, ses, or period
   if (group == "gent") {
-    dat = dat %>% #left_join(gentcat, by = "tractid10") %>%
+    dat = dat %>% 
       mutate(cat = factor(cat, levels = c(gent_cat))) %>%
       filter(!is.na(cat))
 
@@ -45,7 +45,7 @@ plot_bar_periods <- function(
     labels = gent_cat
 
   } else if (group == "ethnoracial") {
-    dat = dat %>% #left_join(racecat, by = "tractid10") %>%
+    dat = dat %>% 
       mutate(cat = factor(cat, levels = c(race_short))) %>%
       filter(!is.na(cat))
 
@@ -53,7 +53,7 @@ plot_bar_periods <- function(
     labels = race_short
 
   } else if (group == "income") {
-    dat = dat %>% #left_join(inccat, by = "tractid10") %>%
+    dat = dat %>% 
       mutate(cat = factor(cat, levels = c(inc_cat))) %>%
       filter(!is.na(cat))
 
