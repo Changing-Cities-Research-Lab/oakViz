@@ -78,14 +78,7 @@ plot_lollipop <- function(
       # Legend
       legend.position = "none",
       # Caption
-      plot.caption = element_text(size = 6, hjust = .5, face = "italic"))
-  
-  if(!is.null(x_title)) {
-    plot <- plot + labs(y = x_title)
-  }
-  
-  plot <-
-    plot + 
+      plot.caption = element_text(size = 6, hjust = .5, face = "italic")) +
     labs(caption = caption) +
     coord_flip()
   
