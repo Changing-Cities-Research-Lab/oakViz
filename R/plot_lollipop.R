@@ -31,9 +31,9 @@ plot_lollipop <- function(
   caption = paste0(frb_caption, ses_caption, period_caption)
   ) {
   library('tidyverse')
-  
-  labels = c("Overall", gent_cat, race_short, inc_cat, ses_cat)
-  colors = c("white", gent_cat_colors, race_short_colors, inc_cat_colors, ses_cat_colors)
+
+  labels = c("Overall", gent_cat, race_short, inc_cat, ses_lollipop_cat)
+  colors = c("white", gent_cat_colors, race_short_colors, inc_cat_colors, ses_lollipop_colors)
   names(colors) = labels
 
   if(ses) {
