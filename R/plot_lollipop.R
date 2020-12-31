@@ -92,8 +92,6 @@ plot_lollipop <- function(
                space = "free")
   width = 4.5
   height = 4.5
-  
-  }
 
   if (save) {
     ggsave(savename, plot, height = height, width = width)
