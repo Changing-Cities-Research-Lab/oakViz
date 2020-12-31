@@ -145,6 +145,7 @@ oak_tracts <- oak_ids %>%
 ses_caption = "\nSES Ranges by Equifax Risk Scores: Low = missing or <580, Moderate = 580-649, Middle = 650-749, High = 750+."
 period_caption = "\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, Recovery = 2010-2014, Post-Recovery = 2015-2017."
 frb_caption = "\nSource: Federal Reserve Bank of New York Consumer Credit Panel/Equifax Data."
+frb_acs_caption = "\nSource: Federal Reserve Bank of New York Consumer Credit Panel/Equifax Data and 2000 US Census, 2005-2009 ACS, and 2012-2016 ACS."
 
 usethis::use_data(gent_cat_colors,
                   gent_cat,
@@ -182,4 +183,5 @@ usethis::use_data(gent_cat_colors,
                   ses_caption,
                   period_caption,
                   frb_caption,
+                  frb_acs_caption,
                   overwrite = TRUE, internal = TRUE)
