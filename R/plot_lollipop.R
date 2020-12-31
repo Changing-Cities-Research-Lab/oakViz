@@ -79,7 +79,7 @@ plot_lollipop <- function(
       # Legend
       legend.position = "none",
       # Caption
-      plot.caption = element_text(size = 6, hjust = .5, face = "italic")) +
+      plot.caption = element_text(size = 4.5, hjust = .5, face = "italic")) +
     labs(y = x_title, caption = caption) +
     coord_flip()
 
