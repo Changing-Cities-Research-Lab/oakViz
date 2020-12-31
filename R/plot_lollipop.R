@@ -83,10 +83,6 @@ plot_lollipop <- function(
     labs(y = x_title, caption = caption) +
     coord_flip()
 
-  if (!is.null(x_title)) {
-    plot = plot + labs(y = x_title)
-  }
-
   if (save) {
     ggsave(savename, plot, height = 4.5, width = 4.5)
   }
