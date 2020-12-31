@@ -3,13 +3,13 @@
 #' This function takes in data and produces a line graph of variables by month,
 #' grouped by neighborhood category or race.
 #'
-#' @param dat Data with a column containing variable of interest, fips column, and grouping variable.
-#' @param var Name of variable to plot, as a string.
-#' @param group Category for color grouping: "race" (default) or "neighborhood"
+#' @param dat Data with a columns containing variable of interest, numeric month variable ("month"), and grouping variable ("cat").
+#' @param var Name of variable to plot.
+#' @param group Category for color grouping: "race" (default), "ethnoracial", "income", "gent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
-#' @return Line graph of variable by month, grouped by race or neighborhood category
+#' @return Line graph of variable by month, grouped by race, ethnoracial, income, or gentrification category.
 #' @export
 
 line_graph <- function(
@@ -21,8 +21,21 @@ line_graph <- function(
   caption = paste0(frb_caption, ses_caption, period_caption)
 ) {
 
-  plot = ggplot(dat, aes(x = month, y = value, group = cat)) +
+  if (group == "race") {
+    colors = race_colors
+  } else if (group == "ethnoracial") {
+    colors = race_short_colors
+  } else if (group == "income") {
+    colors = inc_cat_colors
+  } else if (group == "gent") {
+    colors = gent_cat_colors
+  } else {
+    return("Please select 'race', 'ethnoracial', 'income', or 'gent'")
+  }
+
+  plot = ggplot(dat, aes(x = month, y = {{var}}, group = cat)) +
     geom_line(aes(color = cat), size = 0.8) +
+    scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
     scale_x_discrete(labels=c("1" = "Jan",
                               "2" = "Feb",
                               "3" = "Mar",
@@ -34,11 +47,12 @@ line_graph <- function(
                               "9" = "Sept",
                               "10" = "Oct"),
                      expand = c(0.03, 0.03)) +
+    scale_color_manual(values = colors) +
     theme_bw() + theme(
       # Title
       legend.title = element_blank(),
       # Legend
-      legend.text = element_text(size = 10),
+      legend.text = element_text(size = 9),
       legend.position = "bottom",
       # Caption
       plot.caption = element_text(size = 9, hjust = .5,face = "italic"),
@@ -57,7 +71,7 @@ line_graph <- function(
     guides(color = guide_legend(nrow = 1))
 
   if (save) {
-    ggsave(savename, plot, height = 5, width = 6)
+    ggsave(savename, plot, height = 5, width = 6.8)
   }
   return(plot)
 }

@@ -7,10 +7,17 @@ gent_cat_colors <-
 gent_cat <- c("Nongentrifiable", "Intense", "Moderate", "Weak", "People or Price")
 names(gent_cat_colors) <- gent_cat
 
+# refers to ethnoracial category
 race_short_colors <-
   c("#481567FF", "#33638DDF", "#FDE725FF", "#20A387FF")
 race_short <- c("Predominantly Black", "Black-Other", "White/White-Mixed", "Multiethnic/Other")
 names(race_short_colors) <- race_short
+
+# refers to race category
+race_colors <-
+  c("#17202A", "#DE3163", "#FFBF00", "#DFFF00", "#9FE2BF", "#6495ED")
+race_cat <- c("Overall", "Asian", "Black", "Hispanic", "White", "Other")
+names(race_colors) <- race_cat
 
 inc_cat_colors <-
   c("#c7cff2","#8897db","#697fe0","#4c66d9","#1437cc")
@@ -19,8 +26,8 @@ names(inc_cat_colors) <- inc_cat
 
 ses_cat_colors <-
   c("#9b9b9b", "#fcbba1", "#fc9272", "#faab8c","#fb6a4a", "#b63b36")
-ses_cat = c("All", "Low", "_Moderate", "LMM" ,"Middle", "High")
-ses_short = c("Low", "_Moderate", "Middle", "High")
+ses_cat = c("All", "Low", "Moderate", "LMM" ,"Middle", "High")
+ses_short = c("Low", "Moderate", "Middle", "High")
 names(ses_cat_colors) <- ses_cat
 
 period_cat_colors <-
@@ -135,6 +142,8 @@ usethis::use_data(gent_cat_colors,
                   gent_cat,
                   race_short_colors,
                   race_short,
+                  race_colors,
+                  race_cat,
                   inc_cat_colors,
                   inc_cat,
                   ses_cat_colors,

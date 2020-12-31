@@ -14,11 +14,11 @@ line_graph(
 )
 }
 \arguments{
-\item{dat}{Data with a column containing variable of interest, fips column, and grouping variable.}
+\item{dat}{Data with a columns containing variable of interest, numeric month variable ("month"), and grouping variable ("cat").}
 
-\item{var}{Name of variable to plot, as a string.}
+\item{var}{Name of variable to plot.}
 
-\item{group}{Category for color grouping: "race" (default) or "neighborhood"}
+\item{group}{Category for color grouping: "race" (default), "ethnoracial", "income", "gent"}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
@@ -27,7 +27,7 @@ line_graph(
 \item{caption}{Caption for figure}
 }
 \value{
-Line graph of variable by month, grouped by race or neighborhood category
+Line graph of variable by month, grouped by race, ethnoracial, income, or gentrification category.
 }
 \description{
 This function takes in data and produces a line graph of variables by month,
