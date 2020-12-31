@@ -22,7 +22,7 @@ plot_bar_periods <- function(
   scale_type = "percent",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_acs_caption, ses_caption, period_caption)
+  caption = paste0(frb_caption, ses_caption, period_caption)
 ) {
   ## Read Data
   library('tidyverse')
