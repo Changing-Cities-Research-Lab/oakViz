@@ -12,7 +12,7 @@ plot_lollipop(
   scale_type = "numeric",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_acs_caption)
+  caption = paste0(frb_acs_caption_splitline, ses_caption)
 )
 }
 \arguments{

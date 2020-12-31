@@ -184,7 +184,7 @@ plot_bar_ses <- function(
     scale_x_discrete(
       labels = x_labels) +
     scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
-    labs(x = NULL, y = NULL) +
+    labs(x = NULL, y = NULL, caption = caption) +
     theme +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
