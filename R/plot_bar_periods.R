@@ -22,7 +22,7 @@ plot_bar_periods <- function(
   scale_type = "percent",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_caption, ses_caption, period_caption)
+  caption = paste0(frb_acs_caption, ses_caption, period_caption)
 ) {
   ## Read Data
   library('tidyverse')
@@ -37,7 +37,7 @@ plot_bar_periods <- function(
 
   # Combine with either gentcat, racecat, inccat, ses, or period
   if (group == "gent") {
-    dat = dat %>% 
+    dat = dat %>%
       mutate(cat = factor(cat, levels = c(gent_cat))) %>%
       filter(!is.na(cat))
 
@@ -45,7 +45,7 @@ plot_bar_periods <- function(
     labels = gent_cat
 
   } else if (group == "ethnoracial") {
-    dat = dat %>% 
+    dat = dat %>%
       mutate(cat = factor(cat, levels = c(race_short))) %>%
       filter(!is.na(cat))
 
@@ -53,7 +53,7 @@ plot_bar_periods <- function(
     labels = race_short
 
   } else if (group == "income") {
-    dat = dat %>% 
+    dat = dat %>%
       mutate(cat = factor(cat, levels = c(inc_cat))) %>%
       filter(!is.na(cat))
 

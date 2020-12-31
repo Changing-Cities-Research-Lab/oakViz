@@ -25,7 +25,7 @@ plot_lollipop <- function(
   scale_type = "numeric",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_caption, ses_caption, period_caption)
+  caption = paste0(frb_acs_caption)
 ) {
   library('tidyverse')
 
