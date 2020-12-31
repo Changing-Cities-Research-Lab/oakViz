@@ -9,8 +9,6 @@
 #' @param data Data with column for variable of interest.
 #' @param var Column name of variable of interest.
 #' @param limits Y-axis limits.
-#' @param ses Displays SES facet columns when T, default is F.
-#' @param reverse Reverses direction of x-axis when T, default is F.
 #' @param x_title Title to display along x-axis
 #' @param scale_type Y-axis scale type: "numeric" or "percent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
@@ -23,26 +21,17 @@ plot_lollipop <- function(
   data,
   var,
   limits,
-  ses = F,
   x_title = NULL,
   scale_type = "numeric",
   save = F,
   savename = "plot.png",
   caption = paste0(frb_caption, ses_caption, period_caption)
-  ) {
+) {
   library('tidyverse')
 
   labels = c("Overall", gent_cat, race_short, inc_cat, ses_lollipop_cat)
   colors = c("white", gent_cat_colors, race_short_colors, inc_cat_colors, ses_lollipop_colors)
   names(colors) = labels
-
-  if(ses) {
-    data$ses <- factor(data$ses,
-                       levels = c("Low",
-                                  "Moderate",
-                                  "Middle",
-                                  "High"))
-  }
 
   if (scale_type == "percent") {
     label_type = scales::percent
@@ -72,6 +61,9 @@ plot_lollipop <- function(
     scale_color_manual(values = colors,
                        labels = labels) +
     scale_fill_manual(values = colors) +
+    facet_grid(rows = vars(facet),
+               scale = "free",
+               space = "free") +
     theme_bw() +
     theme(
       # Panel
@@ -95,26 +87,8 @@ plot_lollipop <- function(
     plot = plot + labs(y = x_title)
   }
 
-  if (ses) {
-    plot = plot +
-      facet_grid(rows = vars(facet),
-                 cols = vars(ses),
-                 scale = "free",
-                 space = "free")
-    width = 6.8
-    height = 5.1
-
-  } else {
-    plot = plot +
-      facet_grid(rows = vars(facet),
-                 scale = "free",
-                 space = "free")
-    width = 4.5
-    height = 4.5
-  }
-
   if (save) {
-    ggsave(savename, plot, height = height, width = width)
+    ggsave(savename, plot, height = 4.5, width = 4.5)
   }
   return(plot)
 
