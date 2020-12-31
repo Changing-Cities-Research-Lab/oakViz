@@ -61,7 +61,8 @@ line_graph <- function(
       axis.title.x = element_blank(),
       axis.text.x = element_text(size = 9),
       # Y-axis
-      axis.ticks.y=element_blank(),
+      axis.ticks.y = element_blank(),
+      axis.title.y = element_blank(),
       # Background
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank(),
