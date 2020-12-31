@@ -46,7 +46,7 @@ make_discrete_map <- function(shp_tracts,
                "Bottom Quintile" = "#D0D7F4")
 
     # Reverse order of levels for plotting
-    inccat$cat = fct_rev(inccat$cat)
+    data$cat = fct_rev(data$cat)
 
   } else if (discrete_cat == "ethnoracial") {
     data = racecat
