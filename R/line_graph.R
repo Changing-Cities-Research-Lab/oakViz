@@ -18,7 +18,7 @@ line_graph <- function(
   group = "race",
   save = F,
   savename = "plot.png",
-  caption = paste0(acs_caption, ses_caption, period_caption)
+  caption = paste0(acs_caption, "\nUnemployment Estimates were sourced from Catalist's DEEP-MAPS Project.")
 ) {
 
   if (group == "race") {
@@ -71,7 +71,7 @@ line_graph <- function(
       panel.border = element_blank()) +
     guides(color = guide_legend(nrow = 1))
   
-  plot <- plot + labs(caption)
+  plot <- plot + labs(caption = caption)
 
   if (save) {
     ggsave(savename, plot, height = 5, width = 6.8)
