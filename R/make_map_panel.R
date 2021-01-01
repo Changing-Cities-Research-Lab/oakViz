@@ -240,18 +240,38 @@ make_map_panel <- function(
     maps_all = c(maps_all, list(map))
   }
 
-  # arrange period maps into 4 panels
-  layout <- rbind(c(1, 2), c(3, 4), c(5, 5))
-  map_panel =
-    grid.arrange(maps_all[[1]], maps_all[[2]], maps_all[[3]], maps_all[[4]],
-                 legend,
-                 nrow = 3, ncol = 2,
-                 layout_matrix = layout,
-                 heights = c(5, 5, 1.2),
-                 bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
+  # arrange period maps into panels
+  map_number <- length(period_panels)
+  
+  if(map_number == 4) {
+    layout <- rbind(c(1, 2), c(3, 4), c(5, 5))
+    map_panel =
+      grid.arrange(maps_all[[1]], maps_all[[2]], maps_all[[3]], maps_all[[4]],
+                   legend,
+                   nrow = 1 + ceiling(map_number/2), ncol = 2,
+                   layout_matrix = layout,
+                   heights = c(rep(5, ceiling(map_number/2)), 1.2),
+                   bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
+    width = 7, 
+    height = 7.8
+  }
+  
+  if(map_number == 2) {
+    layout <- rbind(c(1, 2), c(3, 3))
+    map_panel =
+      grid.arrange(maps_all[[1]], maps_all[[2]], 
+                   legend,
+                   nrow = 2, ncol = 2,
+                   layout_matrix = layout,
+                   heights = c(5, 1.2),
+                   bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
+    width = 7, 
+    height = 4.1
+  }
+
 
   if (save) {
-    ggsave(savename, map_panel, height = 7.8, width = 7)
+    ggsave(savename, map_panel, height = height, width = width)
     return(map_panel)
   } else {
     return(map_panel)
