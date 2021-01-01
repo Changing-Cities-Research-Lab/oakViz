@@ -242,6 +242,8 @@ make_map_panel <- function(
 
   # arrange period maps into panels
   map_number <- length(period_panels)
+  width = 0
+  height = 0
   
   if(map_number == 4) {
     layout <- rbind(c(1, 2), c(3, 4), c(5, 5))
@@ -252,7 +254,7 @@ make_map_panel <- function(
                    layout_matrix = layout,
                    heights = c(rep(5, ceiling(map_number/2)), 1.2),
                    bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
-    width = 7, 
+    width = 7
     height = 7.8
   }
   
@@ -265,7 +267,7 @@ make_map_panel <- function(
                    layout_matrix = layout,
                    heights = c(5, 1.2),
                    bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
-    width = 7, 
+    width = 7
     height = 4.1
   }
 
