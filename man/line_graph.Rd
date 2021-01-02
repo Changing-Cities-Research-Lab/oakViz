@@ -7,6 +7,7 @@
 line_graph(
   dat,
   var,
+  y_title = NULL,
   group = "race",
   save = F,
   savename = "plot.png",
@@ -17,6 +18,8 @@ line_graph(
 \item{dat}{Data with a columns containing variable of interest, numeric month variable ("month"), and grouping variable ("cat").}
 
 \item{var}{Name of variable to plot.}
+
+\item{y_title}{Title to display along y-axis}
 
 \item{group}{Category for color grouping: "race" (default), "ethnoracial", "income", "gent"}
 
