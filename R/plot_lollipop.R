@@ -25,7 +25,7 @@ plot_lollipop <- function(
   scale_type = "numeric",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_acs_caption)
+  caption = paste0(frb_acs_caption_splitline, ses_caption)
 ) {
   library('tidyverse')
 
@@ -79,7 +79,7 @@ plot_lollipop <- function(
       # Legend
       legend.position = "none",
       # Caption
-      plot.caption = element_text(size = 6, hjust = .5, face = "italic")) +
+      plot.caption = element_text(size = 4.5, hjust = .5, face = "italic")) +
     labs(y = x_title, caption = caption) +
     coord_flip()
 

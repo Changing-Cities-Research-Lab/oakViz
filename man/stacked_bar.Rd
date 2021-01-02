@@ -10,7 +10,7 @@ stacked_bar(
   group = "period",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_caption, ses_caption, period_caption)
+  caption = paste0(frb_acs_caption, ses_caption, period_caption)
 )
 }
 \arguments{

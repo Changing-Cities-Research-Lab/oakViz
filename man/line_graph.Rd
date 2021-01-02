@@ -11,7 +11,8 @@ line_graph(
   group = "race",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_acs_caption, ses_caption, period_caption)
+  caption = paste0(acs_caption,
+    "\\nUnemployment Estimates were sourced from Catalist's DEEP-MAPS Project.")
 )
 }
 \arguments{

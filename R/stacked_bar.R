@@ -18,7 +18,7 @@ stacked_bar <- function(
   group = "period", # ses
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_caption, ses_caption, period_caption)
+  caption = paste0(frb_acs_caption, ses_caption, period_caption)
 ) {
   library(rgdal)
   library(foreach)

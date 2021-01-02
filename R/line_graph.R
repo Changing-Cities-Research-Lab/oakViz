@@ -5,7 +5,6 @@
 #'
 #' @param dat Data with a columns containing variable of interest, numeric month variable ("month"), and grouping variable ("cat").
 #' @param var Name of variable to plot.
-#' @param y_title Title to display along y-axis
 #' @param group Category for color grouping: "race" (default), "ethnoracial", "income", "gent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -16,11 +15,10 @@
 line_graph <- function(
   dat,
   var,
-  y_title = NULL,
   group = "race",
   save = F,
   savename = "plot.png",
-  caption = paste0(frb_acs_caption, ses_caption, period_caption)
+  caption = paste0(acs_caption, "\nUnemployment Estimates were sourced from Catalist's DEEP-MAPS Project.")
 ) {
 
   if (group == "race") {
@@ -29,10 +27,10 @@ line_graph <- function(
     colors = race_short_colors
   } else if (group == "income") {
     colors = inc_cat_colors
-  } else if (group == "gent") {
+  } else if (group == "gentrification") {
     colors = gent_cat_colors
   } else {
-    return("Please select 'race', 'ethnoracial', 'income', or 'gent'")
+    return("Please select 'race', 'ethnoracial', 'income', or 'gentrification'")
   }
 
   plot = ggplot(dat, aes(x = month, y = {{var}}, group = cat)) +
@@ -64,15 +62,15 @@ line_graph <- function(
       axis.text.x = element_text(size = 9),
       # Y-axis
       axis.ticks.y = element_blank(),
-      axis.title.y = element_text(size = 9),
+      axis.title.y = element_blank(),
       # Background
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank(),
       panel.background = element_blank(),
       axis.line = element_line(colour = "black"),
       panel.border = element_blank()) +
-    guides(color = guide_legend(nrow = 1)) +
-    labs(y = y_title, caption = caption)
+    guides(color = guide_legend(nrow = 1))
+
 
   if (save) {
     ggsave(savename, plot, height = 5, width = 6.8)
