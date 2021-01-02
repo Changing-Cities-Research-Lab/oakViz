@@ -20,7 +20,7 @@ line_graph(
 
 \item{var}{Name of variable to plot.}
 
-\item{y_title}{Title to display along y-axis}
+\item{y_title}{Title to display along y-axis.}
 
 \item{group}{Category for color grouping: "race" (default), "ethnoracial", "income", "gent"}
 

@@ -5,6 +5,7 @@
 #'
 #' @param dat Data with a columns containing variable of interest, numeric month variable ("month"), and grouping variable ("cat").
 #' @param var Name of variable to plot.
+#' @param y_title Title to display along y-axis.
 #' @param group Category for color grouping: "race" (default), "ethnoracial", "income", "gent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -15,6 +16,7 @@
 line_graph <- function(
   dat,
   var,
+  y_title = NULL,
   group = "race",
   save = F,
   savename = "plot.png",
@@ -62,15 +64,15 @@ line_graph <- function(
       axis.text.x = element_text(size = 9),
       # Y-axis
       axis.ticks.y = element_blank(),
-      axis.title.y = element_blank(),
+      axis.title.y = element_text(size = 9),
       # Background
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank(),
       panel.background = element_blank(),
       axis.line = element_line(colour = "black"),
       panel.border = element_blank()) +
-    guides(color = guide_legend(nrow = 1))
-
+    guides(color = guide_legend(nrow = 1)) +
+    labs(y = x_title, caption = caption)
 
   if (save) {
     ggsave(savename, plot, height = 5, width = 6.8)
