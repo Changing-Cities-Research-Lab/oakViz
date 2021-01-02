@@ -6,6 +6,7 @@
 #' @param dat Data with a column containing census tracts and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param limits Y-axis limits
+#' @param y_title Title to display along y-axis.
 #' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"
 #' @param scale_type Y-axis scale type: "numeric" or "percent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
@@ -18,6 +19,7 @@ plot_bar_periods <- function(
   dat,
   var,
   limits,
+  y_title = NULL,
   group = "gent", # gent, ethnoracial, income, ses, period
   scale_type = "percent",
   save = F,
@@ -96,12 +98,12 @@ plot_bar_periods <- function(
             panel.background = element_blank(),
             axis.line = element_line(colour = "black"),
             axis.text.x = element_blank(),
-            axis.title.y = element_blank(),
+            axis.title.y = element_text(size = 9),
             axis.title.x = element_blank(),
             legend.position = "none",
             plot.title = element_blank(),
             plot.caption = element_text(size = 7, hjust = .5, face = "italic")) +
-      labs(caption = caption)
+      labs(caption = caption, y = y_title)
 
   } else {
     plot <-
@@ -121,11 +123,11 @@ plot_bar_periods <- function(
             axis.line = element_line(colour = "black"),
             axis.text.x = element_text(angle = 45, hjust = 1),
             axis.title.y = element_blank(),
-            axis.title.x = element_blank(),
+            axis.title.x = element_text(size = 9),
             legend.position = "none",
             plot.title = element_blank(),
             plot.caption = element_text(size = 7, hjust = .5, face = "italic")) +
-      labs(caption = caption)
+      labs(caption = caption, y = y_title)
   }
 
   height = 5

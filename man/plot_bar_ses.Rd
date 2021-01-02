@@ -7,6 +7,7 @@
 plot_bar_ses(
   dat,
   fill = "dest",
+  y_title = NULL,
   save = F,
   savename = "plot.png",
   caption = paste0(frb_caption, ses_caption, period_caption)

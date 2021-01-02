@@ -7,6 +7,7 @@
 #' @param dat Data with a column containing census tracts and variable of interest. Aggregated data with column "period"
 #' @param var Name of column containing variable to plot.
 #' @param limits Y-axis limits
+#' @param y_title Title to display along y-axis.
 #' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
@@ -18,6 +19,7 @@ plot_bar_periods_ses_grid <- function(
   dat,
   var,
   limits,
+  y_title = NULL,
   group = "gent",
   save = F,
   savename = "plot.png",
@@ -102,13 +104,13 @@ plot_bar_periods_ses_grid <- function(
               panel.background = element_blank(),
               axis.line = element_line(colour = "black"),
               axis.text.x = element_blank(),
-              axis.title.y = element_blank(),
+              axis.title.y = element_text(size = 9),
               axis.title.x = element_blank(),
               legend.position = "none",
               plot.title = element_text(size = 12, hjust = .5),
               plot.caption = element_text(size = 7, hjust = .5, face = "italic"),
               plot.margin = margin(0.2,0.6,0.2,0.6, unit = "cm")) +
-        labs(title = ses_short[i])
+        labs(title = ses_short[i], y = y_title)
 
     } else {
       plot <-
@@ -127,13 +129,13 @@ plot_bar_periods_ses_grid <- function(
               panel.background = element_blank(),
               axis.line = element_line(colour = "black"),
               axis.text.x = element_text(angle = 45, hjust = 1),
-              axis.title.y = element_blank(),
+              axis.title.y = element_text(size = 9),
               axis.title.x = element_blank(),
               legend.position = "none",
               plot.title = element_text(size = 12, hjust = .5),
               plot.caption = element_text(size = 7, hjust = .5, face = "italic"),
               plot.margin = margin(0.2,0.6,0.2,0.6, unit = "cm")) +
-        labs(title = paste0(ses_short[i], " SES"))
+        labs(title = paste0(ses_short[i], " SES"), y = y_title)
     }
     # add plot to list of grobs
     plots_all = c(plots_all, list(plot))

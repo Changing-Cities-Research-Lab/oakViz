@@ -14,6 +14,7 @@
 plot_bar_ses <- function(
   dat,
   fill = "dest", # "move"
+  y_title = NULL,
   save = F,
   savename = "plot.png",
   caption = paste0(frb_caption, ses_caption, period_caption)
@@ -40,7 +41,7 @@ plot_bar_ses <- function(
       axis.ticks.x = element_blank(),
       # Y-axis
       axis.ticks.y=element_blank(),
-      axis.title.y=element_blank(),
+      axis.title.y=element_text(size = 10),
       axis.text.y=element_text(size = 10),
       # Background
       panel.grid.major = element_blank(),
@@ -184,7 +185,7 @@ plot_bar_ses <- function(
     scale_x_discrete(
       labels = x_labels) +
     scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
-    labs(x = NULL, y = NULL, caption = caption) +
+    labs(x = NULL, y = y_title, caption = caption) +
     theme +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 

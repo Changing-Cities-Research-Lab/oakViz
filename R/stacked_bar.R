@@ -6,6 +6,7 @@
 #' @param dat Data with a column containing variables of interest and grouping variables.
 #' @param fill Name of column containing fill variable: "ses" (default), "move", "dest".
 #' @param group Category for x-axis grouping: "period" (default), "ses"
+#' @param y_title Title to display along y-axis.
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
@@ -16,6 +17,7 @@ stacked_bar <- function(
   dat,
   fill = "ses", # "move", "dest"
   group = "period", # ses
+  y_title = NULL,
   save = F,
   savename = "plot.png",
   caption = paste0(frb_acs_caption, ses_caption, period_caption)
@@ -42,7 +44,7 @@ stacked_bar <- function(
       axis.ticks.x = element_blank(),
       # Y-axis
       axis.ticks.y=element_blank(),
-      axis.title.y=element_blank(),
+      axis.title.y=element_text(size = 10),
       axis.text.y=element_text(size = 10),
       # Background
       panel.grid.major = element_blank(),
@@ -223,7 +225,7 @@ stacked_bar <- function(
         scale_x_discrete(
           labels = x_labels) +
         scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
-        labs(x = NULL, y = NULL) +
+        labs(x = NULL, y = y_title) +
         theme +
         theme(legend.position = "bottom",
               axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -241,7 +243,7 @@ stacked_bar <- function(
         scale_x_discrete(
           labels = x_labels) +
         scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
-        labs(x = NULL, y = NULL) +
+        labs(x = NULL, y = y_title) +
         theme +
         theme(axis.text.x = element_blank())
     }

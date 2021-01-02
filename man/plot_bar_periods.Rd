@@ -8,6 +8,7 @@ plot_bar_periods(
   dat,
   var,
   limits,
+  y_title = NULL,
   group = "gent",
   scale_type = "percent",
   save = F,
@@ -21,6 +22,8 @@ plot_bar_periods(
 \item{var}{Name of column containing variable to plot.}
 
 \item{limits}{Y-axis limits}
+
+\item{y_title}{Title to display along y-axis.}
 
 \item{group}{Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"}
 

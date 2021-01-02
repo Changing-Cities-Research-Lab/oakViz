@@ -8,6 +8,7 @@ stacked_bar(
   dat,
   fill = "ses",
   group = "period",
+  y_title = NULL,
   save = F,
   savename = "plot.png",
   caption = paste0(frb_acs_caption, ses_caption, period_caption)
@@ -19,6 +20,8 @@ stacked_bar(
 \item{fill}{Name of column containing fill variable: "ses" (default), "move", "dest".}
 
 \item{group}{Category for x-axis grouping: "period" (default), "ses"}
+
+\item{y_title}{Title to display along y-axis.}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 
