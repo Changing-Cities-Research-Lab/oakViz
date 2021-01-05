@@ -66,7 +66,6 @@ line_graph <- function(
       axis.ticks.y = element_blank(),
       axis.title.y = element_text(size = 9),
       # Background
-      panel.grid.major.y = element_line(color = "grey80"),
       panel.grid.minor.y = element_line(color = "grey80"),
       panel.grid.major.x = element_blank(),
       panel.background = element_blank(),
