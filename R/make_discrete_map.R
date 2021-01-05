@@ -9,7 +9,7 @@
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Figure caption
-#' @return Map of discrete variable: gent, income, or ethnoracial category.
+#' @return Map of discrete variable: gentrification, income, or ethnoracial category.
 #' @export
 
 make_discrete_map <- function(shp_tracts,
@@ -60,23 +60,15 @@ make_discrete_map <- function(shp_tracts,
     return("Please select gent, income, or ethnoracial")
   }
 
-  # county tract map
+  # county tract map, filter out three tracts
   oak_tracts <-
     shp_tracts %>%
-    filter(GEOID10S %in% oak_ids$trtid10)
+    filter(GEOID10S %in% oak_ids$trtid10) %>%
+    filter(!GEOID10S %in% c(6001981900, 6001982000, 6001983200))
 
   data = oak_tracts %>%
     right_join(data, by = c("GEOID10S" = "tractid10")) %>%
     st_transform(CRS("+proj=longlat +datum=WGS84"))
-
-  # Read in list of tracts in the Bay Area above the minimum population for display
-  tracts_use <-
-    oak_ids
-
-  # Read in list of Oakland tract ids
-  oak_ids <-
-    oak_ids %>%
-    subset(trtid10 %in% tracts_use$trtid10)
 
   # map data
   # Google Street Map for Oakland ----
