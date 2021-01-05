@@ -66,13 +66,14 @@ line_graph <- function(
       axis.ticks.y = element_blank(),
       axis.title.y = element_text(size = 9),
       # Background
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(),
+      panel.grid.major.y = element_line(color = "grey80"),
+      panel.grid.minor.y = element_line(color = "grey80"),
+      panel.grid.major.x = element_blank(),
       panel.background = element_blank(),
       axis.line = element_line(colour = "black"),
       panel.border = element_blank()) +
     guides(color = guide_legend(nrow = 1)) +
-    labs(y = x_title, caption = caption)
+    labs(y = y_title, caption = caption)
 
   if (save) {
     ggsave(savename, plot, height = 5, width = 6.8)
