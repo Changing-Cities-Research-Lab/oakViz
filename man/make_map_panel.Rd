@@ -10,6 +10,8 @@ make_map_panel(
   shp_tracts,
   palette = "sequential",
   jenksbreaks = T,
+  neg_bins = 3,
+  pos_bins = 3,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::percent,
   limits = NULL,
@@ -29,6 +31,10 @@ make_map_panel(
 \item{palette}{Color palette: "sequential" (default) or "diverging"}
 
 \item{jenksbreaks}{Uses Jenks Breaks when T, otherwise uses continuous color scale}
+
+\item{neg_bins}{For Jenks breaks, number of negative color bins. Default is 3.}
+
+\item{pos_bins}{For Jenks breaks, number of positive color bins. Default is 3.}
 
 \item{breaks}{Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)}
 

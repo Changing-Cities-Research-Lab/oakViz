@@ -10,6 +10,8 @@ ses_period_map_panel(
   shp_tracts,
   palette = "sequential",
   jenksbreaks = T,
+  neg_bins = 3,
+  pos_bins = 3,
   breaks = scales::extended_breaks(n = 6),
   labels = scales::comma,
   limits = NULL,
@@ -29,6 +31,10 @@ ses_period_map_panel(
 
 \item{jenksbreaks}{Uses Jenks Breaks when T, otherwise uses continuous color scale}
 
+\item{neg_bins}{For Jenks breaks, number of negative color bins. Default is 3.}
+
+\item{pos_bins}{For Jenks breaks, number of positive color bins. Default is 3.}
+
 \item{breaks}{Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)}
 
 \item{labels}{Gradient scale labels, either character vector or scales::percent or scales::comma}
@@ -45,7 +51,7 @@ ses_period_map_panel(
 4x4 panel maps of variable of interest, by SES and period.
 }
 \description{
-This function takes in data and produces a 4x4 panel of inmigration
-counts using a gradient color scale, across SES and periods.
+This function takes in data and produces a 4x4 panel of data
+using a gradient color scale, across SES and periods.
 Not intended to be used with aggregated CCP data.
 }

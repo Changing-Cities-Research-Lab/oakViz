@@ -114,15 +114,6 @@ make_map <- function(data,
     right_join(data, by = c("GEOID10S" = "tractid10")) %>%
     st_transform(CRS("+proj=longlat +datum=WGS84"))
 
-  # Read in list of tracts in the Bay Area above the minimum population for display
-  tracts_use <-
-    oak_ids
-
-  # Read in list of Oakland tract ids
-  oak_ids <-
-    oak_ids %>%
-    subset(trtid10 %in% tracts_use$trtid10)
-
   # map data
   # Google Street Map for Oakland ----
   gmap_oak <- get_stamenmap(
