@@ -8,7 +8,9 @@
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param palette Color palette: "sequential" (default) or "diverging"
-#' @param jenksbreaks Uses Jenks Breaks when T, otherwise uses continuous color scale
+#' @param jenksbreaks Uses Jenks breaks when T, otherwise uses continuous color scale
+#' @param neg_bins For Jenks breaks, number of negative color bins. Default is 3.
+#' @param pos_bins For Jenks breaks, number of positive color bins. Default is 3.
 #' @param breaks Gradient scale breaks, either numeric vector or scales::extended_breaks(n = 6)
 #' @param labels Gradient scale labels, either character vector or scales::percent or scales::comma
 #' @param limits Manual limits for color scale, numeic vector: c(min, max)
@@ -24,7 +26,9 @@ make_map <- function(data,
                      shp_tracts,
                      palette = "sequential",
                      jenksbreaks = T,
-                     breaks = scales::extended_breaks(n = 6),
+                     neg_bins = 3,
+                     pos_bins = 3,
+                     breaks = scales::extended_breaks(n = 7),
                      labels = scales::percent,
                      limits = NULL,
                      coord = F,
@@ -50,6 +54,13 @@ make_map <- function(data,
     palette = "YlOrRd"
     direction = 1
 
+    # set number of Jenks breaks
+    if (jenksbreaks) {
+      breaks = data %>%
+        dplyr::pull({{var}}) %>%
+        BAMMtools::getJenksBreaks(k = 6)
+    }
+
   } else if (palette == "diverging") {
 
     # Get limits to center diverging palette around 0
@@ -62,6 +73,26 @@ make_map <- function(data,
     palette = "RdBu"
     direction = -1
 
+    # find Jenks breaks for negative and positive values separately, then combine
+    if (jenksbreaks) {
+      values = data %>%
+        dplyr::pull({{var}})
+
+      # add 0 value to range of values to split negative and positive values
+      values = c(0, values)
+
+      neg_values = values[which(values <= 0)]
+      pos_values = values[which(values >= 0)]
+
+      neg_breaks = neg_values %>%
+        getJenksBreaks(k = neg_bins + 1)
+      pos_breaks = pos_values %>%
+        getJenksBreaks(k = pos_bins + 1)
+
+      # Removes duplicate 0's in breaks
+      breaks = unique(c(neg_breaks, pos_breaks))
+    }
+
   } else {
     return("Please select sequential or diverging color palette.")
   }
@@ -71,12 +102,6 @@ make_map <- function(data,
     lim = limits
   }
 
-  # Sets Jenks breaks if T
-  if (jenksbreaks) {
-    breaks = data %>%
-      dplyr::pull({{var}}) %>%
-      getJenksBreaks(k = 6)
-  }
 
   # county tract map
   oak_tracts <-
@@ -126,7 +151,7 @@ make_map <- function(data,
       fill =
         guide_colorbar(
           barheight = 0.5,
-          barwidth = 15,
+          barwidth = 19,
           title = NULL,
           frame.colour = "black"
         )
@@ -134,6 +159,7 @@ make_map <- function(data,
     theme_void() +
     theme(
       legend.title = element_blank(),
+      legend.text = element_text(size = 7),
       legend.position = "bottom",
       legend.box.margin = margin(3,0,0,0, unit = "pt"),
       plot.title = element_blank(),
@@ -143,26 +169,49 @@ make_map <- function(data,
     ) +
     labs(caption = caption)
 
+  # discrete color bar
   if (jenksbreaks) {
-    map = map + scale_fill_fermenter(breaks = breaks,
-                                     type = type,
-                                     palette = palette,
-                                     direction = direction,
-                                     labels = labels)
+    # set colors manually if different number of negative and positive bins
+    if (neg_bins != pos_bins) {
+      # Custom palette
+      # one negative, 3 positive bins:
+      pal <- c("#67a9cf", "#fddbc7", "#ef8a62", "#b2182b")
+
+      scale_fill_fermenter_custom <- function(pal,
+                                              breaks,
+                                              labels) {
+        binned_scale("fill",
+                     "fermenter",
+                     ggplot2:::binned_pal(scales::manual_pal(unname(pal))),
+                     breaks = breaks,
+                     labels = labels
+                     )
+      }
+
+      map = map + scale_fill_fermenter_custom(pal,
+                                              breaks = breaks,
+                                              labels = labels)
+    } else {
+      map = map + scale_fill_fermenter(breaks = breaks,
+                                       type = type,
+                                       palette = palette,
+                                       direction = direction,
+                                       labels = labels)
+    }
+
+    # gradient color scale
   } else {
-    map = map + scale_fill_gradientn(
-      breaks = breaks,
-      labels = labels,
-      colors = alpha(MAP_COLORS, .8),
-      limits = lim)
+    map = map + scale_fill_gradientn(breaks = breaks,
+                                     labels = labels,
+                                     colors = alpha(MAP_COLORS, .8),
+                                     limits = lim)
   }
 
-
-  if (coord == T) {
-    map = map + geom_point(
-      data = data,
-      aes(x = lon, y = lat),
-      color = "navy", size = 2
+  # plot coordinate points
+  if (coord) {
+    map = map + geom_point(data = data,
+                           aes(x = lon, y = lat),
+                           color = "navy", size = 2
     )
   }
 
