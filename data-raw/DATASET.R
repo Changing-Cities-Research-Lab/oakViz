@@ -1,4 +1,3 @@
-## code to prepare `DATASET` dataset goes here
 
 # COLORS/LABELS
 # (used in plot_lollipop(), plot_bar_periods(), and plot_bar_periods_ses(), aggregate_categories())
