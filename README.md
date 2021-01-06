@@ -1,5 +1,5 @@
 # oakViz R Package
-R package for visualizing Oakland data
+R package for visualizing data for Oakland report
 
 ## data-raw/DATASET.R
 Script contains all loaded objects and parameters common across multiple functions. 
