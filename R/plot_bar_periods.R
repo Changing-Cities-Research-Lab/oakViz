@@ -1,4 +1,4 @@
-#' Produce grouped bar chart across four periods.
+#' Produce grouped bar chart across periods.
 #'
 #' This function takes in data and produces a bar chart grouped by either
 #' gentrification, ethnoracial, income, SES, or period category across four housing periods.
@@ -7,12 +7,12 @@
 #' @param var Name of column containing variable to plot.
 #' @param limits Y-axis limits
 #' @param y_title Title to display along y-axis.
-#' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", "income", "ses", or "period"
+#' @param group Category for x-axis grouping: "gent" (default), "ethnoracial", "race", "income", "ses", or "period"
 #' @param scale_type Y-axis scale type: "numeric" or "percent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
-#' @return Grouped bar chart across four periods.
+#' @return Grouped bar chart across periods.
 #' @export
 # Plot bar chart by group across periods
 plot_bar_periods <- function(
@@ -53,6 +53,14 @@ plot_bar_periods <- function(
 
     colors = race_short_colors
     labels = race_short
+
+  } else if (group == "race") {
+    dat = dat %>%
+      mutate(cat = factor(cat, levels = c(race_cat))) %>%
+      filter(!is.na(cat))
+
+    colors = race_colors
+    labels = race_cat
 
   } else if (group == "income") {
     dat = dat %>%
@@ -122,12 +130,14 @@ plot_bar_periods <- function(
             panel.background = element_blank(),
             axis.line = element_line(colour = "black"),
             axis.text.x = element_text(angle = 45, hjust = 1),
-            axis.title.y = element_blank(),
-            axis.title.x = element_text(size = 9),
+            axis.title.y = element_text(size = 9),
+            axis.title.x = element_blank(),
             legend.position = "none",
             plot.title = element_blank(),
             plot.caption = element_text(size = 7, hjust = .5, face = "italic")) +
-      labs(caption = caption, y = y_title)
+      labs(caption = caption, y = y_title) +
+      theme(panel.grid.minor.y = element_line(color = "grey80", size = 0.3),
+            panel.grid.major.y = element_line(color = "grey80", size = 0.3))
   }
 
   height = 5
