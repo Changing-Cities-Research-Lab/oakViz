@@ -135,7 +135,7 @@ make_map_panel <- function(
     color = "bw")
 
   maps_all = list()
-  period_panels = unique(data$periods)
+  period_panels = levels(data$periods)
 
   # Get common legend
   legend_map <-

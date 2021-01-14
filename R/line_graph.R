@@ -1,16 +1,16 @@
-#' Produce line graph of variable by month
+#' Produce line graph of variable by periods
 #'
-#' This function takes in data and produces a line graph of variables by month,
+#' This function takes in data and produces a line graph of variables by periods,
 #' grouped by neighborhood category or race.
 #'
-#' @param dat Data with a columns containing variable of interest, numeric month variable ("month"), and grouping variable ("cat").
+#' @param dat Data with a columns containing variable of interest, character periods variable ("periods"), and grouping variable ("cat").
 #' @param var Name of variable to plot.
 #' @param y_title Title to display along y-axis.
 #' @param group Category for color grouping: "race" (default), "ethnoracial", "income", "gent"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
-#' @return Line graph of variable by month, grouped by race, ethnoracial, income, or gentrification category.
+#' @return Line graph of variable by periods, grouped by race, ethnoracial, income, or gentrification category.
 #' @export
 
 line_graph <- function(
@@ -35,20 +35,10 @@ line_graph <- function(
     return("Please select 'race', 'ethnoracial', 'income', or 'gentrification'")
   }
 
-  plot = ggplot(dat, aes(x = month, y = {{var}}, group = cat)) +
+  plot = ggplot(dat, aes(x = periods, y = {{var}}, group = cat)) +
     geom_line(aes(color = cat), size = 0.8) +
     scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-    scale_x_discrete(labels=c("1" = "Jan",
-                              "2" = "Feb",
-                              "3" = "Mar",
-                              "4" = "Apr",
-                              "5" = "May",
-                              "6" = "Jun",
-                              "7" = "Jul",
-                              "8" = "Aug",
-                              "9" = "Sept",
-                              "10" = "Oct"),
-                     expand = c(0.03, 0.03)) +
+    scale_x_discrete(expand = c(0.03, 0.03)) +
     scale_color_manual(values = colors) +
     theme_bw() + theme(
       # Title
