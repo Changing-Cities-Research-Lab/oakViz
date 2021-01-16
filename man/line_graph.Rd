@@ -2,7 +2,7 @@
 % Please edit documentation in R/line_graph.R
 \name{line_graph}
 \alias{line_graph}
-\title{Produce line graph of variable by month}
+\title{Produce line graph of variable by periods}
 \usage{
 line_graph(
   dat,
@@ -16,7 +16,7 @@ line_graph(
 )
 }
 \arguments{
-\item{dat}{Data with a columns containing variable of interest, numeric month variable ("month"), and grouping variable ("cat").}
+\item{dat}{Data with a columns containing variable of interest, character periods variable ("periods"), and grouping variable ("cat").}
 
 \item{var}{Name of variable to plot.}
 
@@ -31,9 +31,9 @@ line_graph(
 \item{caption}{Caption for figure}
 }
 \value{
-Line graph of variable by month, grouped by race, ethnoracial, income, or gentrification category.
+Line graph of variable by periods, grouped by race, ethnoracial, income, or gentrification category.
 }
 \description{
-This function takes in data and produces a line graph of variables by month,
+This function takes in data and produces a line graph of variables by periods,
 grouped by neighborhood category or race.
 }

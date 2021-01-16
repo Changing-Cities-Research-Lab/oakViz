@@ -146,7 +146,7 @@ period_caption = "\nHousing Period Ranges: Boom = 2002-2006, Bust = 2007-2009, R
 frb_caption = "\nSource: Federal Reserve Bank of New York Consumer Credit Panel/Equifax Data."
 frb_acs_caption = "\nSource: Federal Reserve Bank of New York Consumer Credit Panel/Equifax Data and 2000 US Census, 2005-2009 ACS, and 2012-2016 ACS."
 frb_acs_caption_splitline = "\nSource: Federal Reserve Bank of New York Consumer Credit Panel/Equifax Data\nand 2000 US Census, 2005-2009 ACS, and 2012-2016 ACS."
-acs_caption = frb_acs_caption = "\nSource: 2000 US Census, 2005-2009 ACS, and 2012-2016 ACS."
+acs_caption = "\nSource: 2000 US Census, 2005-2009 ACS, and 2012-2016 ACS."
 
 usethis::use_data(gent_cat_colors,
                   gent_cat,
