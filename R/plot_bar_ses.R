@@ -36,7 +36,7 @@ plot_bar_ses <- function(
       legend.position = "right",
       legend.direction = "vertical",
       # Caption
-      plot.caption = element_text(size = 10, hjust = .5, face = "italic"),
+      plot.caption = element_text(size = 7, hjust = .5, face = "italic"),
       # X-axis
       axis.ticks.x = element_blank(),
       # Y-axis

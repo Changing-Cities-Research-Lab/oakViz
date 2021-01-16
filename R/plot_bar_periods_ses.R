@@ -135,7 +135,9 @@ plot_bar_periods_ses_grid <- function(
               plot.title = element_text(size = 12, hjust = .5),
               plot.caption = element_text(size = 7, hjust = .5, face = "italic"),
               plot.margin = margin(0.2,0.6,0.2,0.6, unit = "cm")) +
-        labs(title = paste0(ses_short[i], " SES"), y = y_title)
+        labs(title = paste0(ses_short[i], " SES"), y = y_title) +
+        theme(panel.grid.minor.y = element_line(color = "grey80", size = 0.3),
+              panel.grid.major.y = element_line(color = "grey80", size = 0.3))
     }
     # add plot to list of grobs
     plots_all = c(plots_all, list(plot))
