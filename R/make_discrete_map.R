@@ -102,7 +102,7 @@ make_discrete_map <- function(shp_tracts,
       legend.title = element_blank(),
       legend.position = "right",
       plot.title = element_blank(),
-      plot.caption = element_text(size = 7, hjust = .5),
+      plot.caption = element_text(size = 7, hjust = .5, face = "italic"),
       plot.margin = margin(2,3,2,3, unit = "pt"),
       panel.border = element_rect(colour = "black", fill=NA)
     ) +
