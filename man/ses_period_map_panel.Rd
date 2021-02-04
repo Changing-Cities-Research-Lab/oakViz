@@ -23,7 +23,7 @@ ses_period_map_panel(
 \arguments{
 \item{data}{Data with a column containing tractid10, year, ses, and variable of interest.}
 
-\item{var}{Name of column containing variable to plot.}
+\item{var}{Name of column containing variable to plot (absolute count, not pct).}
 
 \item{shp_tracts}{"US_tract_2010.shp" loaded object}
 
@@ -51,7 +51,7 @@ ses_period_map_panel(
 4x4 panel maps of variable of interest, by SES and period.
 }
 \description{
-This function takes in data and produces a 4x4 panel of data
-using a gradient color scale, across SES and periods.
+This function takes in data and produces a 4x4 panel of data across SES and periods.
 Not intended to be used with aggregated CCP data.
+Assumes 5\% sample of population, all counts are multiplied by 20.
 }

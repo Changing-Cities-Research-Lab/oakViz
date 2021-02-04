@@ -1,11 +1,11 @@
 #' Produce 4x4 map panel of variable of interest in Oakland
 #'
-#' This function takes in data and produces a 4x4 panel of data
-#' using a gradient color scale, across SES and periods.
+#' This function takes in data and produces a 4x4 panel of data across SES and periods.
 #' Not intended to be used with aggregated CCP data.
+#' Assumes 5% sample of population, all counts are multiplied by 20.
 #'
 #' @param data Data with a column containing tractid10, year, ses, and variable of interest.
-#' @param var Name of column containing variable to plot.
+#' @param var Name of column containing variable to plot (absolute count, not pct).
 #' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param palette Color palette: "sequential" (default) or "diverging"
 #' @param jenksbreaks Uses Jenks Breaks when T, otherwise uses continuous color scale
@@ -44,13 +44,17 @@ ses_period_map_panel <- function(
   library(grid)
   library(BAMMtools)
 
+  # Multiplies absolute counts by 20 to get full population estimate
+  data = data %>%
+    mutate({{var}} := {{var}} * 20)
+
 
   # Adjust color palette
   if (palette == "sequential") {
 
     # Get max and min values for common gradient scale
     max = data %>%
-      select({{var}})%>%
+      select({{var}}) %>%
       max(na.rm = T)
 
     min = data %>%
