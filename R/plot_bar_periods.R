@@ -135,7 +135,7 @@ plot_bar_periods <- function(
             legend.position = "none",
             plot.title = element_blank(),
             plot.caption = element_text(size = 7, hjust = .5, face = "italic"),
-            plot.margin = unit(c(1,1,1,1), "cm")) +
+            plot.margin = unit(c(1,1,1,6), "cm")) +
       labs(caption = caption, y = y_title) +
       theme(panel.grid.minor.y = element_line(color = "grey80", size = 0.3),
             panel.grid.major.y = element_line(color = "grey80", size = 0.3))
