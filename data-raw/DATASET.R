@@ -114,6 +114,9 @@ dest_order <- c("Outside Bay Area",
 # Oakland tractids
 oak_ids <- readr::read_csv("../../oak-data-repo/oakland_geographies/trtid10_oak.csv")
 
+# Bay Area tractids
+bay_ids <- readr::read_csv("../../oak-data-repo/oakland_geographies/trtid10_bayarea.csv")
+
 # gentrification data
 gentcat <- read_csv("../../oak-data-repo/gentrification_categories/gentcat_006a_50_oak.csv") %>%
   select(tractid10 = trtid10, cat = gentcat_006a_50)
@@ -176,6 +179,7 @@ usethis::use_data(gent_cat_colors,
                   move_order,
                   dest_order,
                   oak_ids,
+                  bay_ids,
                   gentcat,
                   racecat,
                   inccat,
