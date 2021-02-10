@@ -8,6 +8,9 @@ plot_lollipop(
   data,
   var,
   limits,
+  panel = F,
+  var2 = NULL,
+  panel_titles = NULL,
   x_title = NULL,
   scale_type = "numeric",
   save = F,
@@ -21,6 +24,12 @@ plot_lollipop(
 \item{var}{Column name of variable of interest.}
 
 \item{limits}{Y-axis limits.}
+
+\item{panel}{If T, creates horizontal panel of 2 plots}
+
+\item{var2}{Column name of second variable of interest, if panel = T}
+
+\item{panel_titles}{Vector of 2 strings containing titles for plots in panel}
 
 \item{x_title}{Title to display along x-axis}
 
