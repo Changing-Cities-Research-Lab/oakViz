@@ -44,10 +44,6 @@ ses_period_map_panel <- function(
   library(grid)
   library(BAMMtools)
 
-  # Multiplies absolute counts by 20 to get full population estimate
-  data = data %>%
-    mutate({{var}} := {{var}} * 20)
-
 
   # Adjust color palette
   if (palette == "sequential") {
