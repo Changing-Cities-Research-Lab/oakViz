@@ -261,9 +261,15 @@ make_map_panel <- function(
 
       # set colors manually if different number of negative and positive bins
       if (neg_bins != pos_bins) {
-        # Custom palette
+        # Custom palettes ***MUST SET CUSTOM COLORS
+
         # 1 negative, 3 positive bins:
-        pal <- c("#67a9cf", "#fddbc7", "#ef8a62", "#b2182b")
+        if (neg_bins == 1 & pos_bins == 3) {
+          pal <- c("#67a9cf", "#fddbc7", "#ef8a62", "#b2182b")
+          # 2 negative, 3 positive bins:
+        } else if (neg_bins == 2 & pos_bins == 3) {
+          pal <- c("#2166ac", "#67a9cf", "#fddbc7", "#ef8a62", "#b2182b")
+        }
 
         scale_fill_fermenter_custom <- function(pal,
                                                 breaks,
