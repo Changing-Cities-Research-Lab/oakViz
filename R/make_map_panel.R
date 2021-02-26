@@ -104,8 +104,12 @@ make_map_panel <- function(
       pos_breaks = pos_values %>%
         getJenksBreaks(k = pos_bins + 1)
 
-      # Removes duplicate 0's in breaks
+      # Removes duplicates in breaks
       breaks = unique(c(neg_breaks, pos_breaks))
+      
+      # Reset neg bins and pos bins to match actual breaks
+      neg_bins = length(breaks[which(breaks < 0)])
+      pos_bins = length(breaks[which(breaks > 0)])
     }
 
   } else {
