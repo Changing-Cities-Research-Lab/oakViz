@@ -132,7 +132,7 @@ racecat$cat <- factor(racecat$cat, levels = race_cat_plot_order)
 racecat$facet = "Ethnoracial"
 
 # income data
-inccat <- read_csv("../../oak-data-repo/income_categories/hinc09_categories.csv")
+inccat <- read_csv("../../oak-data-repo/income_categories/hinc8a_categories.csv")
 inccat$cat <- factor(inccat$cat, levels = inc_cat_plot_order)
 inccat$facet = "Income"
 
