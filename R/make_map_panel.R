@@ -106,7 +106,7 @@ make_map_panel <- function(
 
       # Removes duplicates in breaks
       breaks = unique(c(neg_breaks, pos_breaks))
-      
+
       # Reset neg bins and pos bins to match actual breaks
       neg_bins = length(breaks[which(breaks < 0)])
       pos_bins = length(breaks[which(breaks > 0)])
@@ -184,11 +184,13 @@ make_map_panel <- function(
       }
 
       scale_fill_fermenter_custom <- function(pal,
+                                              na.value = "grey60",
                                               breaks,
                                               labels) {
-        binned_scale("fill",
-                     "fermenter",
-                     ggplot2:::binned_pal(scales::manual_pal(unname(pal))),
+        binned_scale(aesthetics = "fill",
+                     scale_name = "fermenter",
+                     palette = ggplot2:::binned_pal(scales::manual_pal(pal)),
+                     na.value = na.value,
                      breaks = breaks,
                      labels = labels)
       }
@@ -222,13 +224,45 @@ make_map_panel <- function(
   # Plot maps
   foreach(i = 1:length(period_panels)) %do% {
     data_period = data %>%
-      dplyr::filter(periods == period_panels[i])
+      dplyr::filter(periods == period_panels[i]) %>%
+      mutate(var = {{var}})
+
+    # Force each jenks break point into the data, assigned to a non-Oakland tract
+    # This prevents color palette from being used sequentially when certain breaks aren't present
+
+    # Create column of breaks
+    var_null = breaks
+
+    # Get geometry data for non-Oakland tracts
+    non_oak_tracts <-
+      shp_tracts %>%
+      filter(!GEOID10S %in% oak_ids$trtid10) %>%
+      mutate(tractid10 = GEOID10S) %>%
+      select(tractid10) %>%
+      st_drop_geometry()
+
+    # Create column of NA tracts
+    tractid10 = non_oak_tracts[1:length(var_null),]
+
+    # Create data frame
+    df = data.frame(tractid10, var_null) %>%
+      mutate(var = var_null) %>%
+      select(tractid10, var)
+
+    df = shp_tracts %>%
+      right_join(df, by = c("GEOID10S" = "tractid10")) %>%
+      st_transform(CRS("+proj=longlat +datum=WGS84"))
+
+     print(data_period[1:5,])
+     print(df)
+    # Combine with original data frame
+     data_period = bind_rows(data_period, df)
 
     map <-
       ggmap(gmap_oak) +
       geom_sf(
         data = data_period,
-        aes(fill = {{var}}),
+        aes(fill = var),
         size = 0,
         alpha = 0.7,
         inherit.aes = FALSE
@@ -276,11 +310,13 @@ make_map_panel <- function(
         }
 
         scale_fill_fermenter_custom <- function(pal,
+                                                na.value = "grey60",
                                                 breaks,
                                                 labels) {
-          binned_scale("fill",
-                       "fermenter",
-                       ggplot2:::binned_pal(scales::manual_pal(unname(pal))),
+          binned_scale(aesthetics = "fill",
+                       scale_name = "fermenter",
+                       palette = ggplot2:::binned_pal(scales::manual_pal(pal)),
+                       na.value = na.value,
                        breaks = breaks,
                        labels = labels)
         }
