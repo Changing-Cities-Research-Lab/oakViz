@@ -233,7 +233,7 @@ make_map_panel <- function(
     # Create column of breaks
     var_null = breaks
 
-    # Get geometry data for non-Oakland tracts
+    # Get tractid data for non-Oakland tracts
     non_oak_tracts <-
       shp_tracts %>%
       filter(!GEOID10S %in% oak_ids$trtid10) %>%
@@ -241,7 +241,7 @@ make_map_panel <- function(
       select(tractid10) %>%
       st_drop_geometry()
 
-    # Create column of NA tracts
+    # Get tracts not in Oakland
     tractid10 = non_oak_tracts[1:length(var_null),]
 
     # Create data frame
@@ -249,12 +249,11 @@ make_map_panel <- function(
       mutate(var = var_null) %>%
       select(tractid10, var)
 
+    # Get geometry data
     df = shp_tracts %>%
       right_join(df, by = c("GEOID10S" = "tractid10")) %>%
       st_transform(CRS("+proj=longlat +datum=WGS84"))
 
-     print(data_period[1:5,])
-     print(df)
     # Combine with original data frame
      data_period = bind_rows(data_period, df)
 
