@@ -22,7 +22,7 @@ make_map_panel(
 )
 }
 \arguments{
-\item{data}{Data with a column containing census tracts, distinct periods, and variable of interest.}
+\item{data}{Data with a column containing census tracts; 2, 3, or 4 distinct periods; and variable of interest.}
 
 \item{var}{Name of column containing variable to plot.}
 
@@ -51,11 +51,11 @@ make_map_panel(
 \item{caption}{Figure caption}
 }
 \value{
-Map panel of variable of interest across four periods.
+Map panel of variable of interest across 2, 3, or 4 periods.
 }
 \description{
 This function takes in data and produces a panel of census tract maps of
-Oakland representing the variable using a gradient color scale, across
-four distinct periods. Should have "tractid10" column for census tracts
+Oakland representing the variable using a gradient or discrete color scale, across
+distinct periods. Should have "tractid10" column for census tracts
 and "periods" column for distinct time periods.
 }

@@ -1,11 +1,11 @@
 #' Produce Oakland map panel of continuous variable with gradient color scale
 #'
 #' This function takes in data and produces a panel of census tract maps of
-#' Oakland representing the variable using a gradient color scale, across
-#' four distinct periods. Should have "tractid10" column for census tracts
+#' Oakland representing the variable using a gradient or discrete color scale, across
+#' distinct periods. Should have "tractid10" column for census tracts
 #' and "periods" column for distinct time periods.
 #'
-#' @param data Data with a column containing census tracts, distinct periods, and variable of interest.
+#' @param data Data with a column containing census tracts; 2, 3, or 4 distinct periods; and variable of interest.
 #' @param var Name of column containing variable to plot.
 #' @param shp_tracts "US_tract_2010.shp" loaded object
 #' @param palette Color palette: "sequential" (default) or "diverging"
@@ -19,7 +19,7 @@
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Figure caption
-#' @return Map panel of variable of interest across four periods.
+#' @return Map panel of variable of interest across 2, 3, or 4 periods.
 #' @export
 
 make_map_panel <- function(
@@ -368,6 +368,19 @@ make_map_panel <- function(
                    bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
     width = 7
     height = 7.8
+  }
+
+  if(map_number == 3) {
+    layout <- rbind(c(1, 2, 3), c(4, 4, 4))
+    map_panel =
+      grid.arrange(maps_all[[1]], maps_all[[2]], maps_all[[3]],
+                   legend,
+                   nrow = 2, ncol = 3,
+                   layout_matrix = layout,
+                   heights = c(5.3, 1),
+                   bottom=textGrob(caption, gp=gpar(fontsize=9,font=3)))
+    width = 9.5
+    height = 4.3
   }
 
   if(map_number == 2) {
