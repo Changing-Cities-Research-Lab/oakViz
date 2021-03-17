@@ -189,10 +189,11 @@ ses_period_map_panel <- function(
       legend.position = "bottom",
       plot.title = element_text(size = 12, hjust = .5, vjust = 3),
       plot.margin = margin(3,-.5,3,-.5, unit = "pt"),
-      plot.caption = element_text(size = 8),
+      plot.caption = element_text(size = 6, hjust = .5, face = "italic"),
       panel.border = element_rect(colour = "black", fill=NA),
       strip.text.y.left = element_text(angle = 0)
-    )
+    ) +
+    labs(caption = caption)
 
   # discrete color bar
   if (jenksbreaks) {
