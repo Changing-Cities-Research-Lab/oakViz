@@ -178,7 +178,7 @@ make_map_panel <- function(
       # 1 negative, 3 positive bins:
       if (neg_bins == 1 & pos_bins == 3) {
         pal <- c("#67a9cf", "#fddbc7", "#ef8a62", "#b2182b")
-      # 2 negative, 3 positive bins:
+        # 2 negative, 3 positive bins:
       } else if (neg_bins == 2 & pos_bins == 3) {
         pal <- c("#2166ac", "#67a9cf", "#fddbc7", "#ef8a62", "#b2182b")
       }
@@ -227,74 +227,73 @@ make_map_panel <- function(
       dplyr::filter(periods == period_panels[i]) %>%
       mutate(var = {{var}})
 
-    # Force each jenks break point into the data, assigned to a non-Oakland tract
-    # This prevents color palette from being used sequentially when certain breaks aren't present
-
-    # Create column of breaks
-    var_null = breaks
-
-    # Get tractid data for non-Oakland tracts
-    non_oak_tracts <-
-      shp_tracts %>%
-      filter(!GEOID10S %in% oak_ids$trtid10) %>%
-      mutate(tractid10 = GEOID10S) %>%
-      select(tractid10) %>%
-      st_drop_geometry()
-
-    # Get tracts not in Oakland
-    tractid10 = non_oak_tracts[1:length(var_null),]
-
-    # Create data frame
-    df = data.frame(tractid10, var_null) %>%
-      mutate(var = var_null) %>%
-      select(tractid10, var)
-
-    # Get geometry data
-    df = shp_tracts %>%
-      right_join(df, by = c("GEOID10S" = "tractid10")) %>%
-      st_transform(CRS("+proj=longlat +datum=WGS84"))
-
-    # Combine with original data frame
-     data_period = bind_rows(data_period, df)
-
-    map <-
-      ggmap(gmap_oak) +
-      geom_sf(
-        data = data_period,
-        aes(fill = var),
-        size = 0,
-        alpha = 0.7,
-        inherit.aes = FALSE
-      ) +
-      geom_sf(
-        data = data_period,
-        size = 0.3,
-        alpha = 0,
-        inherit.aes = FALSE,
-        color = "black"
-      ) +
-      guides(
-        fill =
-          guide_colorbar(
-            barheight = 0.5,
-            barwidth = 15,
-            title = NULL,
-            frame.colour = "black"
-          )
-      ) +
-      theme_void() +
-      theme(
-        legend.title = element_blank(),
-        legend.position = "none",
-        plot.title = element_text(size = 12, hjust = .5, vjust = 3),
-        plot.margin = margin(3,-.5,3,-.5, unit = "pt"),
-        plot.caption = element_text(size = 8),
-        panel.border = element_rect(colour = "black", fill=NA)
-      ) +
-      labs(title = period_panels[i])
-
     # discrete color bar
     if (jenksbreaks) {
+      # Force each jenks break point into the data, assigned to a non-Oakland tract
+      # This prevents color palette from being used sequentially when certain breaks aren't present
+
+      # Create column of breaks
+      var_null = breaks
+
+      # Get tractid data for non-Oakland tracts
+      non_oak_tracts <-
+        shp_tracts %>%
+        filter(!GEOID10S %in% oak_ids$trtid10) %>%
+        mutate(tractid10 = GEOID10S) %>%
+        select(tractid10) %>%
+        st_drop_geometry()
+
+      # Get tracts not in Oakland
+      tractid10 = non_oak_tracts[1:length(var_null),]
+
+      # Create data frame
+      df = data.frame(tractid10, var_null) %>%
+        mutate(var = var_null) %>%
+        select(tractid10, var)
+
+      # Get geometry data
+      df = shp_tracts %>%
+        right_join(df, by = c("GEOID10S" = "tractid10")) %>%
+        st_transform(CRS("+proj=longlat +datum=WGS84"))
+
+      # Combine with original data frame
+      data_period = bind_rows(data_period, df)
+
+      map <-
+        ggmap(gmap_oak) +
+        geom_sf(
+          data = data_period,
+          aes(fill = var),
+          size = 0,
+          alpha = 0.7,
+          inherit.aes = FALSE
+        ) +
+        geom_sf(
+          data = data_period,
+          size = 0.3,
+          alpha = 0,
+          inherit.aes = FALSE,
+          color = "black"
+        ) +
+        guides(
+          fill =
+            guide_colorbar(
+              barheight = 0.5,
+              barwidth = 15,
+              title = NULL,
+              frame.colour = "black"
+            )
+        ) +
+        theme_void() +
+        theme(
+          legend.title = element_blank(),
+          legend.position = "none",
+          plot.title = element_text(size = 12, hjust = .5, vjust = 3),
+          plot.margin = margin(3,-.5,3,-.5, unit = "pt"),
+          plot.caption = element_text(size = 8),
+          panel.border = element_rect(colour = "black", fill=NA)
+        ) +
+        labs(title = period_panels[i])
 
       # set colors manually if different number of negative and positive bins
       if (neg_bins != pos_bins) {
@@ -332,6 +331,43 @@ make_map_panel <- function(
 
       # gradient color scale
     } else {
+
+      map <-
+        ggmap(gmap_oak) +
+        geom_sf(
+          data = data_period,
+          aes(fill = var),
+          size = 0,
+          alpha = 0.7,
+          inherit.aes = FALSE
+        ) +
+        geom_sf(
+          data = data_period,
+          size = 0.3,
+          alpha = 0,
+          inherit.aes = FALSE,
+          color = "black"
+        ) +
+        guides(
+          fill =
+            guide_colorbar(
+              barheight = 0.5,
+              barwidth = 15,
+              title = NULL,
+              frame.colour = "black"
+            )
+        ) +
+        theme_void() +
+        theme(
+          legend.title = element_blank(),
+          legend.position = "none",
+          plot.title = element_text(size = 12, hjust = .5, vjust = 3),
+          plot.margin = margin(3,-.5,3,-.5, unit = "pt"),
+          plot.caption = element_text(size = 8),
+          panel.border = element_rect(colour = "black", fill=NA)
+        ) +
+        labs(title = period_panels[i])
+
       map = map + scale_fill_gradientn(breaks = breaks,
                                        labels = labels,
                                        colors = alpha(MAP_COLORS, .8),
