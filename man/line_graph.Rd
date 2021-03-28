@@ -9,6 +9,7 @@ line_graph(
   var,
   y_title = NULL,
   group = "race",
+  facet_label = F,
   save = F,
   savename = "plot.png",
   caption = paste0(acs_caption,
@@ -23,6 +24,8 @@ line_graph(
 \item{y_title}{Title to display along y-axis.}
 
 \item{group}{Category for color grouping: "race" (default), "ethnoracial", "income", "gent"}
+
+\item{facet_label}{T if user has facetting variable "facet_label"}
 
 \item{save}{T if user would like to return plot object and save file, F (default) to just return object.}
 

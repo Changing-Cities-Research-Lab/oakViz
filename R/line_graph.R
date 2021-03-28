@@ -7,6 +7,7 @@
 #' @param var Name of variable to plot.
 #' @param y_title Title to display along y-axis.
 #' @param group Category for color grouping: "race" (default), "ethnoracial", "income", "gent"
+#' @param facet_label T if user has facetting variable "facet_label"
 #' @param save T if user would like to return plot object and save file, F (default) to just return object.
 #' @param savename File name of map for saving.
 #' @param caption Caption for figure
@@ -18,6 +19,7 @@ line_graph <- function(
   var,
   y_title = NULL,
   group = "race",
+  facet_label = F,
   save = F,
   savename = "plot.png",
   caption = paste0(acs_caption, "\nUnemployment Estimates were sourced from Catalist's DEEP-MAPS Project.")
@@ -64,8 +66,18 @@ line_graph <- function(
     guides(color = guide_legend(nrow = 1)) +
     labs(y = y_title, caption = caption)
 
+  height = 5
+  width = 6.8
+
+  if (facet_label) {
+    plot = plot +
+      facet_grid(~facet_label)
+    height = 4.5
+    width = 7
+  }
+
   if (save) {
-    ggsave(savename, plot, height = 5, width = 6.8)
+    ggsave(savename, plot, height = height, width = width)
   }
   return(plot)
 }
