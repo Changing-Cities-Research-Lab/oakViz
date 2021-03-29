@@ -35,6 +35,7 @@ make_discrete_map <- function(shp_tracts,
                "Weak"="#fdbf6f",
                "People or Price"="#b2df8a",
                "Nongentrifiable"="#7a7a7a")
+    title = "Gentrification"
 
   } else if (discrete_cat == "income") {
     data = inccat
@@ -48,6 +49,8 @@ make_discrete_map <- function(shp_tracts,
     # Reverse order of levels for plotting
     data$cat = fct_rev(data$cat)
 
+    title = "Income"
+
   } else if (discrete_cat == "ethnoracial") {
     data = racecat
 
@@ -55,6 +58,8 @@ make_discrete_map <- function(shp_tracts,
                "Black-Other" = "#33638DDF",
                "White/White-Mixed" = "#FDE725FF",
                "Multiethnic/Other" = "#20A387FF")
+
+    title = "Ethnoracial"
 
   } else {
     return("Please select gent, income, or ethnoracial")
@@ -100,13 +105,14 @@ make_discrete_map <- function(shp_tracts,
     theme_void() +
     theme(
       legend.title = element_blank(),
-      legend.position = "right",
-      plot.title = element_blank(),
+      legend.position = "bottom",
       plot.caption = element_text(size = 7, hjust = .5, face = "italic"),
+      plot.title = element_text(size = 25, hjust = .5),
       plot.margin = margin(2,3,2,3, unit = "pt"),
       panel.border = element_rect(colour = "black", fill=NA)
     ) +
-    labs(caption = caption)
+    labs(caption = caption,
+         title = title)
 
   if (coord == T) {
     + geom_point(
@@ -117,7 +123,7 @@ make_discrete_map <- function(shp_tracts,
   }
 
   if (save) {
-    ggsave(savename, map, height = 5, width = 7)
+    ggsave(savename, map, height = 7.5, width = 6)
     return(map)
   } else {
     return(map)
