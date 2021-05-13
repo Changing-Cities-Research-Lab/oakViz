@@ -90,6 +90,7 @@ landlord_location_stacked_bar <- function(
     facet_grid(col = vars(facet), scales = "free", space = "free") +
     scale_y_continuous(expand = c(0, 0.01), labels = scales::percent) +
     scale_fill_manual(values = c("#c7e9b4", "#7fcdbb", "#41b6c4", "#2c7fb8", "#253494")) +
+    labs(caption = caption) + 
     theme 
   plot_wrap
   
